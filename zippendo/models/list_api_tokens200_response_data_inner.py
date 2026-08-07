@@ -3,7 +3,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -33,11 +33,12 @@ class ListApiTokens200ResponseDataInner(BaseModel):
     name: StrictStr = Field(description="Token name for identification", json_schema_extra={"examples": ["Warehouse integration"]})
     token_prefix: StrictStr = Field(description="First 12 chars of the token for identification", alias="tokenPrefix", json_schema_extra={"examples": ["zipp_live_8f"]})
     scopes: List[StrictStr] = Field(description="Permission scopes granted by the token", json_schema_extra={"examples": [["read:shipments", "write:shipments"]]})
+    brand_id: Optional[StrictStr] = Field(description="Brand this token is restricted to, or null for organization-wide access", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     last_used_at: Optional[StrictStr] = Field(description="Timestamp the token was last used (ISO 8601), null if never used", alias="lastUsedAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     expires_at: Optional[StrictStr] = Field(description="Expiry timestamp (ISO 8601), null if it never expires", alias="expiresAt", json_schema_extra={"examples": ["2026-09-20T14:30:00.000Z"]})
     created_at: StrictStr = Field(description="Creation timestamp (ISO 8601)", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     created_by: ListApiTokens200ResponseDataInnerCreatedBy = Field(alias="createdBy")
-    __properties: ClassVar[List[str]] = ["id", "name", "tokenPrefix", "scopes", "lastUsedAt", "expiresAt", "createdAt", "createdBy"]
+    __properties: ClassVar[List[str]] = ["id", "name", "tokenPrefix", "scopes", "brandId", "lastUsedAt", "expiresAt", "createdAt", "createdBy"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -81,6 +82,11 @@ class ListApiTokens200ResponseDataInner(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of created_by
         if self.created_by:
             _dict['createdBy'] = self.created_by.to_dict()
+        # set to None if brand_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.brand_id is None and "brand_id" in self.model_fields_set:
+            _dict['brandId'] = None
+
         # set to None if last_used_at (nullable) is None
         # and model_fields_set contains the field
         if self.last_used_at is None and "last_used_at" in self.model_fields_set:
@@ -107,6 +113,7 @@ class ListApiTokens200ResponseDataInner(BaseModel):
             "name": obj.get("name"),
             "tokenPrefix": obj.get("tokenPrefix"),
             "scopes": obj.get("scopes"),
+            "brandId": obj.get("brandId"),
             "lastUsedAt": obj.get("lastUsedAt"),
             "expiresAt": obj.get("expiresAt"),
             "createdAt": obj.get("createdAt"),

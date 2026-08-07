@@ -604,7 +604,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_shipments**
-> ListShipments200Response list_shipments(org_id, page=page, limit=limit)
+> ListShipments200Response list_shipments(org_id, page=page, limit=limit, brand_id=brand_id)
 
 List shipments
 
@@ -643,10 +643,11 @@ with zippendo.ApiClient(configuration) as api_client:
     org_id = 'org_8f3kd92ld0' # str | Organization ID
     page = 1 # int | Page number (1-based) (optional) (default to 1)
     limit = 20 # int | Items per page (max 100) (optional) (default to 20)
+    brand_id = 'brnd_8f3kd92ld0' # str | Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand. (optional)
 
     try:
         # List shipments
-        api_response = api_instance.list_shipments(org_id, page=page, limit=limit)
+        api_response = api_instance.list_shipments(org_id, page=page, limit=limit, brand_id=brand_id)
         print("The response of ShipmentsApi->list_shipments:\n")
         pprint(api_response)
     except Exception as e:
@@ -663,6 +664,7 @@ Name | Type | Description  | Notes
  **org_id** | **str**| Organization ID | 
  **page** | **int**| Page number (1-based) | [optional] [default to 1]
  **limit** | **int**| Items per page (max 100) | [optional] [default to 20]
+ **brand_id** | **str**| Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand. | [optional] 
 
 ### Return type
 

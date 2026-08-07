@@ -3,7 +3,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -32,7 +32,8 @@ class CreateApiTokenRequest(BaseModel):
     name: Annotated[str, Field(min_length=1, strict=True, max_length=100)] = Field(description="Token name for identification", json_schema_extra={"examples": ["Warehouse integration"]})
     scopes: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="Permission scopes for the token", json_schema_extra={"examples": [["read:shipments", "write:shipments"]]})
     expires_in_days: Optional[Annotated[int, Field(le=365, strict=True, ge=1)]] = Field(default=None, description="Token expiry in days (optional, max 365)", alias="expiresInDays", json_schema_extra={"examples": [90]})
-    __properties: ClassVar[List[str]] = ["name", "scopes", "expiresInDays"]
+    brand_id: Optional[StrictStr] = Field(default=None, description="Restrict this token to a single brand. Requests made with it can only read and write that brand's data. Omit for organization-wide access.", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
+    __properties: ClassVar[List[str]] = ["name", "scopes", "expiresInDays", "brandId"]
 
     @field_validator('scopes')
     def scopes_validate_enum(cls, value):
@@ -81,6 +82,11 @@ class CreateApiTokenRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if brand_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.brand_id is None and "brand_id" in self.model_fields_set:
+            _dict['brandId'] = None
+
         return _dict
 
     @classmethod
@@ -95,7 +101,8 @@ class CreateApiTokenRequest(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "scopes": obj.get("scopes"),
-            "expiresInDays": obj.get("expiresInDays")
+            "expiresInDays": obj.get("expiresInDays"),
+            "brandId": obj.get("brandId")
         })
         return _obj
 

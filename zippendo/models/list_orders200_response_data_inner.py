@@ -3,7 +3,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -35,6 +35,7 @@ class ListOrders200ResponseDataInner(BaseModel):
     customer_name: Optional[StrictStr] = Field(default=None, description="Customer full name.", alias="customerName", json_schema_extra={"examples": ["Anna Jensen"]})
     customer_email: Optional[StrictStr] = Field(default=None, description="Customer email address.", alias="customerEmail", json_schema_extra={"examples": ["anna@example.dk"]})
     status: StrictStr = Field(description="Order fulfilment status derived from its shipments.", json_schema_extra={"examples": ["processing"]})
+    brand_id: Optional[StrictStr] = Field(description="Brand this record belongs to, or null when it is organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     subtotal_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Order subtotal before shipping and tax.", alias="subtotalAmount", json_schema_extra={"examples": [998]})
     total_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Order grand total.", alias="totalAmount", json_schema_extra={"examples": [1047]})
     currency: Optional[StrictStr] = Field(default=None, description="ISO 4217 currency code.", json_schema_extra={"examples": ["DKK"]})
@@ -42,7 +43,7 @@ class ListOrders200ResponseDataInner(BaseModel):
     order_channel: ListOrders200ResponseDataInnerOrderChannel = Field(alias="orderChannel")
     created_at: StrictStr = Field(description="Creation timestamp (ISO 8601).", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     updated_at: StrictStr = Field(description="Last update timestamp (ISO 8601).", alias="updatedAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
-    __properties: ClassVar[List[str]] = ["id", "orderNumber", "customerName", "customerEmail", "status", "subtotalAmount", "totalAmount", "currency", "shipmentCount", "orderChannel", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["id", "orderNumber", "customerName", "customerEmail", "status", "brandId", "subtotalAmount", "totalAmount", "currency", "shipmentCount", "orderChannel", "createdAt", "updatedAt"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -103,6 +104,11 @@ class ListOrders200ResponseDataInner(BaseModel):
         if self.customer_email is None and "customer_email" in self.model_fields_set:
             _dict['customerEmail'] = None
 
+        # set to None if brand_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.brand_id is None and "brand_id" in self.model_fields_set:
+            _dict['brandId'] = None
+
         # set to None if subtotal_amount (nullable) is None
         # and model_fields_set contains the field
         if self.subtotal_amount is None and "subtotal_amount" in self.model_fields_set:
@@ -135,6 +141,7 @@ class ListOrders200ResponseDataInner(BaseModel):
             "customerName": obj.get("customerName"),
             "customerEmail": obj.get("customerEmail"),
             "status": obj.get("status"),
+            "brandId": obj.get("brandId"),
             "subtotalAmount": obj.get("subtotalAmount"),
             "totalAmount": obj.get("totalAmount"),
             "currency": obj.get("currency"),

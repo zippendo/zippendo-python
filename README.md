@@ -42,6 +42,34 @@ Every call takes an `org_id` (your organization ID, found in the dashboard). It 
 call by design: one API token can be granted access to multiple organizations, and `org_id` selects
 which one the request acts on.
 
+## Brands
+
+A brand is a sub-account inside your organization — one company running several consumer-facing labels
+(say Pitaya and Kiwi) out of one Zippendo org, with each brand's orders and shipments kept separate.
+Scope a request to a single brand with the `X-Zippendo-Brand` header, which takes the brand's ID or slug.
+
+The header applies uniformly to every operation, so it is not a method parameter — set it once on the
+`ApiClient` and every call made through that client inherits it:
+
+```python
+with zippendo.ApiClient(config) as client:
+    client.set_default_header("X-Zippendo-Brand", "pitaya")  # brand ID or slug
+
+    shipments = zippendo.ShipmentsApi(client)
+    result = shipments.list_shipments("org_8f3kd92ld0", limit=50)  # Pitaya's shipments only
+```
+
+Omit the header and you get the organization-wide view across every brand. To work with both views in
+one program, build a second `ApiClient` from the same `Configuration` and leave its default header unset.
+
+An API token can instead be bound to a brand at creation time (`CreateApiTokenRequest(brand_id=...)`).
+Such a token is permanently confined to that brand, so the header is unnecessary — and sending
+`X-Zippendo-Brand` naming a *different* brand is refused with `BRAND_ACCESS_DENIED` (403); the binding is
+never widened. A header naming a brand that is not in the organization raises `BRAND_NOT_FOUND` (404).
+
+Brands themselves are created, edited and archived in the Zippendo dashboard — there is no brand
+management API in this SDK.
+
 ## Listing & pagination
 
 List endpoints accept `page` (1-based) and `limit`, and return a page with `data` plus `total`,

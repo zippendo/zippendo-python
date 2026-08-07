@@ -261,7 +261,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_orders**
-> ListOrders200Response list_orders(org_id, page=page, limit=limit, status=status, order_channel_id=order_channel_id, search=search)
+> ListOrders200Response list_orders(org_id, page=page, limit=limit, brand_id=brand_id, status=status, order_channel_id=order_channel_id, search=search)
 
 List orders
 
@@ -300,13 +300,14 @@ with zippendo.ApiClient(configuration) as api_client:
     org_id = 'org_8f3kd92ld0' # str | Organization ID
     page = 1 # int | Page number (1-based) (optional) (default to 1)
     limit = 20 # int | Items per page (max 100) (optional) (default to 20)
+    brand_id = 'brnd_8f3kd92ld0' # str | Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand. (optional)
     status = 'processing' # str | Order fulfilment status derived from its shipments. (optional)
     order_channel_id = 'clz9k2f0a0001abcd1234efgh' # str | Filter by order channel ID. (optional)
     search = 'Anna' # str | Search by order number or customer name/email. (optional)
 
     try:
         # List orders
-        api_response = api_instance.list_orders(org_id, page=page, limit=limit, status=status, order_channel_id=order_channel_id, search=search)
+        api_response = api_instance.list_orders(org_id, page=page, limit=limit, brand_id=brand_id, status=status, order_channel_id=order_channel_id, search=search)
         print("The response of OrdersApi->list_orders:\n")
         pprint(api_response)
     except Exception as e:
@@ -323,6 +324,7 @@ Name | Type | Description  | Notes
  **org_id** | **str**| Organization ID | 
  **page** | **int**| Page number (1-based) | [optional] [default to 1]
  **limit** | **int**| Items per page (max 100) | [optional] [default to 20]
+ **brand_id** | **str**| Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand. | [optional] 
  **status** | **str**| Order fulfilment status derived from its shipments. | [optional] 
  **order_channel_id** | **str**| Filter by order channel ID. | [optional] 
  **search** | **str**| Search by order number or customer name/email. | [optional] 

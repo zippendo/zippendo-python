@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **customer_name** | **str** | Customer full name. | [optional] 
 **customer_email** | **str** | Customer email address. | [optional] 
 **status** | **str** | Order fulfilment status derived from its shipments. | 
+**brand_id** | **str** | Brand this record belongs to, or null when it is organization-wide | 
 **subtotal_amount** | **float** | Order subtotal before shipping and tax. | [optional] 
 **total_amount** | **float** | Order grand total. | [optional] 
 **currency** | **str** | ISO 4217 currency code. | [optional] 

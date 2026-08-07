@@ -3,7 +3,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -35,10 +35,11 @@ class ListShipments200ResponseDataInner(BaseModel):
     type: StrictStr = Field(description="Direction of the shipment relative to the organization.", json_schema_extra={"examples": ["outbound"]})
     carrier_settings: ListShipments200ResponseDataInnerCarrierSettings = Field(alias="carrierSettings")
     status: StrictStr = Field(description="Lifecycle status of the shipment.", json_schema_extra={"examples": ["pending"]})
+    brand_id: Optional[StrictStr] = Field(description="Brand this record belongs to, or null when it is organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     address: Optional[ListShipments200ResponseDataInnerAddress] = None
     created_at: StrictStr = Field(description="Timestamp when the shipment was created.", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     updated_at: StrictStr = Field(description="Timestamp when the shipment was last updated.", alias="updatedAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
-    __properties: ClassVar[List[str]] = ["id", "reference", "type", "carrierSettings", "status", "address", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["id", "reference", "type", "carrierSettings", "status", "brandId", "address", "createdAt", "updatedAt"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -99,6 +100,11 @@ class ListShipments200ResponseDataInner(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
+        # set to None if brand_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.brand_id is None and "brand_id" in self.model_fields_set:
+            _dict['brandId'] = None
+
         # set to None if address (nullable) is None
         # and model_fields_set contains the field
         if self.address is None and "address" in self.model_fields_set:
@@ -121,6 +127,7 @@ class ListShipments200ResponseDataInner(BaseModel):
             "type": obj.get("type"),
             "carrierSettings": ListShipments200ResponseDataInnerCarrierSettings.from_dict(obj["carrierSettings"]) if obj.get("carrierSettings") is not None else None,
             "status": obj.get("status"),
+            "brandId": obj.get("brandId"),
             "address": ListShipments200ResponseDataInnerAddress.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt")

@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **type** | **str** | Direction of the shipment relative to the organization. | 
 **carrier_settings** | [**ListShipments200ResponseDataInnerCarrierSettings**](ListShipments200ResponseDataInnerCarrierSettings.md) |  | 
 **status** | **str** | Lifecycle status of the shipment. | 
+**brand_id** | **str** | Brand this record belongs to, or null when it is organization-wide | 
 **address** | [**ListShipments200ResponseDataInnerAddress**](ListShipments200ResponseDataInnerAddress.md) |  | [optional] 
 **created_at** | **str** | Timestamp when the shipment was created. | 
 **updated_at** | **str** | Timestamp when the shipment was last updated. | 

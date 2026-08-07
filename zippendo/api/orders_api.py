@@ -1,7 +1,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -915,6 +915,7 @@ class OrdersApi:
         org_id: Annotated[StrictStr, Field(description="Organization ID")],
         page: Annotated[Optional[Annotated[int, Field(le=9007199254740991, strict=True, ge=1)]], Field(description="Page number (1-based)")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
+        brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
@@ -941,6 +942,8 @@ class OrdersApi:
         :type page: int
         :param limit: Items per page (max 100)
         :type limit: int
+        :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
+        :type brand_id: str
         :param status: Order fulfilment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
@@ -973,6 +976,7 @@ class OrdersApi:
             org_id=org_id,
             page=page,
             limit=limit,
+            brand_id=brand_id,
             status=status,
             order_channel_id=order_channel_id,
             search=search,
@@ -1004,6 +1008,7 @@ class OrdersApi:
         org_id: Annotated[StrictStr, Field(description="Organization ID")],
         page: Annotated[Optional[Annotated[int, Field(le=9007199254740991, strict=True, ge=1)]], Field(description="Page number (1-based)")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
+        brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
@@ -1030,6 +1035,8 @@ class OrdersApi:
         :type page: int
         :param limit: Items per page (max 100)
         :type limit: int
+        :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
+        :type brand_id: str
         :param status: Order fulfilment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
@@ -1062,6 +1069,7 @@ class OrdersApi:
             org_id=org_id,
             page=page,
             limit=limit,
+            brand_id=brand_id,
             status=status,
             order_channel_id=order_channel_id,
             search=search,
@@ -1093,6 +1101,7 @@ class OrdersApi:
         org_id: Annotated[StrictStr, Field(description="Organization ID")],
         page: Annotated[Optional[Annotated[int, Field(le=9007199254740991, strict=True, ge=1)]], Field(description="Page number (1-based)")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
+        brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
@@ -1119,6 +1128,8 @@ class OrdersApi:
         :type page: int
         :param limit: Items per page (max 100)
         :type limit: int
+        :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
+        :type brand_id: str
         :param status: Order fulfilment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
@@ -1151,6 +1162,7 @@ class OrdersApi:
             org_id=org_id,
             page=page,
             limit=limit,
+            brand_id=brand_id,
             status=status,
             order_channel_id=order_channel_id,
             search=search,
@@ -1177,6 +1189,7 @@ class OrdersApi:
         org_id,
         page,
         limit,
+        brand_id,
         status,
         order_channel_id,
         search,
@@ -1211,6 +1224,10 @@ class OrdersApi:
         if limit is not None:
             
             _query_params.append(('limit', limit))
+            
+        if brand_id is not None:
+            
+            _query_params.append(('brandId', brand_id))
             
         if status is not None:
             

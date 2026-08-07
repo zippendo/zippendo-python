@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **name** | **str** | Token name for identification | 
 **token_prefix** | **str** | First 12 chars of the token for identification | 
 **scopes** | **List[str]** | Permission scopes granted by the token | 
+**brand_id** | **str** | Brand this token is restricted to, or null for organization-wide access | 
 **last_used_at** | **str** | Timestamp the token was last used (ISO 8601), null if never used | 
 **expires_at** | **str** | Expiry timestamp (ISO 8601), null if it never expires | 
 **created_at** | **str** | Creation timestamp (ISO 8601) | 
