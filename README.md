@@ -45,7 +45,7 @@ which one the request acts on.
 ## Brands
 
 A brand is a sub-account inside your organization — one company running several consumer-facing labels
-(say Pitaya and Kiwi) out of one Zippendo org, with each brand's orders and shipments kept separate.
+(say Acme and Globex) out of one Zippendo org, with each brand's orders and shipments kept separate.
 Scope a request to a single brand with the `X-Zippendo-Brand` header, which takes the brand's ID or slug.
 
 The header applies uniformly to every operation, so it is not a method parameter — set it once on the
@@ -53,10 +53,10 @@ The header applies uniformly to every operation, so it is not a method parameter
 
 ```python
 with zippendo.ApiClient(config) as client:
-    client.set_default_header("X-Zippendo-Brand", "pitaya")  # brand ID or slug
+    client.set_default_header("X-Zippendo-Brand", "acme")  # brand ID or slug
 
     shipments = zippendo.ShipmentsApi(client)
-    result = shipments.list_shipments("org_8f3kd92ld0", limit=50)  # Pitaya's shipments only
+    result = shipments.list_shipments("org_8f3kd92ld0", limit=50)  # Acme's shipments only
 ```
 
 Omit the header and you get the organization-wide view across every brand. To work with both views in
@@ -67,8 +67,33 @@ Such a token is permanently confined to that brand, so the header is unnecessary
 `X-Zippendo-Brand` naming a *different* brand is refused with `BRAND_ACCESS_DENIED` (403); the binding is
 never widened. A header naming a brand that is not in the organization raises `BRAND_NOT_FOUND` (404).
 
-Brands themselves are created, edited and archived in the Zippendo dashboard — there is no brand
-management API in this SDK.
+### Managing brands
+
+Brands are managed with `BrandsApi`. Use an organization-wide client for this — you are
+administering brands, not acting inside one:
+
+```python
+with zippendo.ApiClient(config) as client:
+    brands = zippendo.BrandsApi(client)
+
+    created = brands.create_org_brand(
+        "org_8f3kd92ld0",
+        zippendo.CreateOrgBrandRequest(name="Acme", company_name="Acme ApS"),
+    )
+
+    page = brands.list_org_brands("org_8f3kd92ld0")
+    brands.update_org_brand(
+        "org_8f3kd92ld0",
+        created.id,
+        zippendo.UpdateOrgBrandRequest(vat_number="DK12345678"),
+    )
+    brands.archive_org_brand("org_8f3kd92ld0", created.id)
+```
+
+Retire a brand with `archive_org_brand` — archived brands keep their slug and can be restored with
+`unarchive_org_brand`. Permanent deletion is dashboard-only: it is refused while any order, shipment,
+member or token still references the brand. Brands require a plan that includes them; creating one
+past your plan's limit returns `403`.
 
 ## Listing & pagination
 

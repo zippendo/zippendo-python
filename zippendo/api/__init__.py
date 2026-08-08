@@ -3,6 +3,7 @@
 # import apis into api package
 from zippendo.api.addresses_api import AddressesApi
 from zippendo.api.billing_api import BillingApi
+from zippendo.api.brands_api import BrandsApi
 from zippendo.api.carrier_catalog_api import CarrierCatalogApi
 from zippendo.api.carriers_api import CarriersApi
 from zippendo.api.orders_api import OrdersApi

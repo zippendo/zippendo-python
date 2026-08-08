@@ -5,7 +5,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -15,12 +15,13 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.3"
+__version__ = "1.1.0"
 
 # Define package exports
 __all__ = [
     "AddressesApi",
     "BillingApi",
+    "BrandsApi",
     "CarrierCatalogApi",
     "CarriersApi",
     "OrdersApi",
@@ -48,6 +49,7 @@ __all__ = [
     "BatchSplitShipmentRequest",
     "BatchSplitShipmentRequestShipmentsInner",
     "BatchSplitShipmentRequestShipmentsInnerOrderLinesInner",
+    "CheckBrandSlug200Response",
     "ConnectCarrierRequest",
     "CreateAddressRequest",
     "CreateApiToken201Response",
@@ -58,6 +60,7 @@ __all__ = [
     "CreateOrderRequest",
     "CreateOrderRequestOrderLinesInner",
     "CreateOrderRequestShippingAddress",
+    "CreateOrgBrandRequest",
     "CreateOrgWebhook201Response",
     "CreateOrgWebhookRequest",
     "CreateShipment201Response",
@@ -138,6 +141,8 @@ __all__ = [
     "ListOrders200Response",
     "ListOrders200ResponseDataInner",
     "ListOrders200ResponseDataInnerOrderChannel",
+    "ListOrgBrands200Response",
+    "ListOrgBrands200ResponseDataInner",
     "ListOrgWebhookDeliveries200Response",
     "ListOrgWebhookDeliveries200ResponseDataInner",
     "ListOrgWebhooks200Response",
@@ -176,6 +181,7 @@ __all__ = [
     "UpdateCarrierRequest",
     "UpdateOrderRequest",
     "UpdateOrg200Response",
+    "UpdateOrgBrandRequest",
     "UpdateOrgBrandingRequest",
     "UpdateOrgRequest",
     "UpdateOrgWebhookRequest",
@@ -188,6 +194,7 @@ __all__ = [
 # import apis into sdk package
 from zippendo.api.addresses_api import AddressesApi as AddressesApi
 from zippendo.api.billing_api import BillingApi as BillingApi
+from zippendo.api.brands_api import BrandsApi as BrandsApi
 from zippendo.api.carrier_catalog_api import CarrierCatalogApi as CarrierCatalogApi
 from zippendo.api.carriers_api import CarriersApi as CarriersApi
 from zippendo.api.orders_api import OrdersApi as OrdersApi
@@ -219,6 +226,7 @@ from zippendo.models.batch_split_shipment201_response import BatchSplitShipment2
 from zippendo.models.batch_split_shipment_request import BatchSplitShipmentRequest as BatchSplitShipmentRequest
 from zippendo.models.batch_split_shipment_request_shipments_inner import BatchSplitShipmentRequestShipmentsInner as BatchSplitShipmentRequestShipmentsInner
 from zippendo.models.batch_split_shipment_request_shipments_inner_order_lines_inner import BatchSplitShipmentRequestShipmentsInnerOrderLinesInner as BatchSplitShipmentRequestShipmentsInnerOrderLinesInner
+from zippendo.models.check_brand_slug200_response import CheckBrandSlug200Response as CheckBrandSlug200Response
 from zippendo.models.connect_carrier_request import ConnectCarrierRequest as ConnectCarrierRequest
 from zippendo.models.create_address_request import CreateAddressRequest as CreateAddressRequest
 from zippendo.models.create_api_token201_response import CreateApiToken201Response as CreateApiToken201Response
@@ -229,6 +237,7 @@ from zippendo.models.create_order201_response_shipping_address import CreateOrde
 from zippendo.models.create_order_request import CreateOrderRequest as CreateOrderRequest
 from zippendo.models.create_order_request_order_lines_inner import CreateOrderRequestOrderLinesInner as CreateOrderRequestOrderLinesInner
 from zippendo.models.create_order_request_shipping_address import CreateOrderRequestShippingAddress as CreateOrderRequestShippingAddress
+from zippendo.models.create_org_brand_request import CreateOrgBrandRequest as CreateOrgBrandRequest
 from zippendo.models.create_org_webhook201_response import CreateOrgWebhook201Response as CreateOrgWebhook201Response
 from zippendo.models.create_org_webhook_request import CreateOrgWebhookRequest as CreateOrgWebhookRequest
 from zippendo.models.create_shipment201_response import CreateShipment201Response as CreateShipment201Response
@@ -309,6 +318,8 @@ from zippendo.models.list_carriers200_response_data_inner_config_value import Li
 from zippendo.models.list_orders200_response import ListOrders200Response as ListOrders200Response
 from zippendo.models.list_orders200_response_data_inner import ListOrders200ResponseDataInner as ListOrders200ResponseDataInner
 from zippendo.models.list_orders200_response_data_inner_order_channel import ListOrders200ResponseDataInnerOrderChannel as ListOrders200ResponseDataInnerOrderChannel
+from zippendo.models.list_org_brands200_response import ListOrgBrands200Response as ListOrgBrands200Response
+from zippendo.models.list_org_brands200_response_data_inner import ListOrgBrands200ResponseDataInner as ListOrgBrands200ResponseDataInner
 from zippendo.models.list_org_webhook_deliveries200_response import ListOrgWebhookDeliveries200Response as ListOrgWebhookDeliveries200Response
 from zippendo.models.list_org_webhook_deliveries200_response_data_inner import ListOrgWebhookDeliveries200ResponseDataInner as ListOrgWebhookDeliveries200ResponseDataInner
 from zippendo.models.list_org_webhooks200_response import ListOrgWebhooks200Response as ListOrgWebhooks200Response
@@ -347,6 +358,7 @@ from zippendo.models.update_api_token_request import UpdateApiTokenRequest as Up
 from zippendo.models.update_carrier_request import UpdateCarrierRequest as UpdateCarrierRequest
 from zippendo.models.update_order_request import UpdateOrderRequest as UpdateOrderRequest
 from zippendo.models.update_org200_response import UpdateOrg200Response as UpdateOrg200Response
+from zippendo.models.update_org_brand_request import UpdateOrgBrandRequest as UpdateOrgBrandRequest
 from zippendo.models.update_org_branding_request import UpdateOrgBrandingRequest as UpdateOrgBrandingRequest
 from zippendo.models.update_org_request import UpdateOrgRequest as UpdateOrgRequest
 from zippendo.models.update_org_webhook_request import UpdateOrgWebhookRequest as UpdateOrgWebhookRequest
