@@ -22,7 +22,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from zippendo.models.list_addresses200_response_data_inner import ListAddresses200ResponseDataInner
-from zippendo.models.list_shipping_rules200_response_data_inner_additional_parameters_inner import ListShippingRules200ResponseDataInnerAdditionalParametersInner
+from zippendo.models.list_shipping_rules200_response_data_inner_additional_parameters_value import ListShippingRules200ResponseDataInnerAdditionalParametersValue
 from zippendo.models.list_shipping_rules200_response_data_inner_carrier import ListShippingRules200ResponseDataInnerCarrier
 from zippendo.models.list_shipping_rules200_response_data_inner_conditions_inner import ListShippingRules200ResponseDataInnerConditionsInner
 from zippendo.models.list_shipping_rules200_response_data_inner_label_printer import ListShippingRules200ResponseDataInnerLabelPrinter
@@ -42,7 +42,7 @@ class ListShippingRules200ResponseDataInner(BaseModel):
     carrier_id: StrictStr = Field(description="Carrier ID", alias="carrierId", json_schema_extra={"examples": ["carr_01HZX9K2QF"]})
     product_id: StrictStr = Field(description="Product ID from carrier", alias="productId", json_schema_extra={"examples": ["PNL13"]})
     services: List[StrictStr] = Field(description="List of selected services", json_schema_extra={"examples": [["EMAIL_NOTIFICATION"]]})
-    additional_parameters: List[ListShippingRules200ResponseDataInnerAdditionalParametersInner] = Field(description="Carrier-specific extra parameters. DEPRECATED array form `[{ name, val }]` where `name` is the carrier parameter `key` (from the product's `additionalParameters[].key`, e.g. `returnFunctionality`) and `val` is the stringified value. This will change to a `{ key: value }` object in a future version — writes already accept either shape.", alias="additionalParameters", json_schema_extra={"examples": [[{"name": "returnFunctionality", "val": "LABELLESS"}]]})
+    additional_parameters: Dict[str, ListShippingRules200ResponseDataInnerAdditionalParametersValue] = Field(description="Carrier-specific extra parameters, keyed by the carrier parameter `key` from the product's `additionalParameters[].key`.", alias="additionalParameters", json_schema_extra={"examples": [{"returnFunctionality": "LABELLESS", "returnQrEmail": True}]})
     address_id: StrictStr = Field(description="Sender address ID", alias="addressId", json_schema_extra={"examples": ["addr_01HZX9K2QF"]})
     receiving_countries: List[StrictStr] = Field(description="List of supported country codes", alias="receivingCountries", json_schema_extra={"examples": [["DK", "SE"]]})
     email_notification: StrictBool = Field(description="Send email notification to recipient", alias="emailNotification", json_schema_extra={"examples": [True]})
@@ -117,13 +117,13 @@ class ListShippingRules200ResponseDataInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in additional_parameters (list)
-        _items = []
+        # override the default output from pydantic by calling `to_dict()` of each value in additional_parameters (dict)
+        _field_dict = {}
         if self.additional_parameters:
-            for _item_additional_parameters in self.additional_parameters:
-                if _item_additional_parameters:
-                    _items.append(_item_additional_parameters.to_dict())
-            _dict['additionalParameters'] = _items
+            for _key_additional_parameters in self.additional_parameters:
+                if self.additional_parameters[_key_additional_parameters]:
+                    _field_dict[_key_additional_parameters] = self.additional_parameters[_key_additional_parameters].to_dict()
+            _dict['additionalParameters'] = _field_dict
         # override the default output from pydantic by calling `to_dict()` of each item in conditions (list)
         _items = []
         if self.conditions:
@@ -220,7 +220,12 @@ class ListShippingRules200ResponseDataInner(BaseModel):
             "carrierId": obj.get("carrierId"),
             "productId": obj.get("productId"),
             "services": obj.get("services"),
-            "additionalParameters": [ListShippingRules200ResponseDataInnerAdditionalParametersInner.from_dict(_item) for _item in obj["additionalParameters"]] if obj.get("additionalParameters") is not None else None,
+            "additionalParameters": dict(
+                (_k, ListShippingRules200ResponseDataInnerAdditionalParametersValue.from_dict(_v))
+                for _k, _v in obj["additionalParameters"].items()
+            )
+            if obj.get("additionalParameters") is not None
+            else None,
             "addressId": obj.get("addressId"),
             "receivingCountries": obj.get("receivingCountries"),
             "emailNotification": obj.get("emailNotification") if obj.get("emailNotification") is not None else False,

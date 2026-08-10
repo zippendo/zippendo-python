@@ -15,10 +15,10 @@
 
 import unittest
 
-from zippendo.models.create_shipping_rule_request_additional_parameters_any_of_inner import CreateShippingRuleRequestAdditionalParametersAnyOfInner
+from zippendo.models.create_shipping_rule_request_additional_parameters_value_any_of import CreateShippingRuleRequestAdditionalParametersValueAnyOf
 
-class TestCreateShippingRuleRequestAdditionalParametersAnyOfInner(unittest.TestCase):
-    """CreateShippingRuleRequestAdditionalParametersAnyOfInner unit test stubs"""
+class TestCreateShippingRuleRequestAdditionalParametersValueAnyOf(unittest.TestCase):
+    """CreateShippingRuleRequestAdditionalParametersValueAnyOf unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,28 +26,31 @@ class TestCreateShippingRuleRequestAdditionalParametersAnyOfInner(unittest.TestC
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateShippingRuleRequestAdditionalParametersAnyOfInner:
-        """Test CreateShippingRuleRequestAdditionalParametersAnyOfInner
+    def make_instance(self, include_optional) -> CreateShippingRuleRequestAdditionalParametersValueAnyOf:
+        """Test CreateShippingRuleRequestAdditionalParametersValueAnyOf
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateShippingRuleRequestAdditionalParametersAnyOfInner`
+        # uncomment below to create an instance of `CreateShippingRuleRequestAdditionalParametersValueAnyOf`
         """
-        model = CreateShippingRuleRequestAdditionalParametersAnyOfInner()
+        model = CreateShippingRuleRequestAdditionalParametersValueAnyOf()
         if include_optional:
-            return CreateShippingRuleRequestAdditionalParametersAnyOfInner(
-                name = 'returnFunctionality',
-                val = 'LABELLESS'
+            return CreateShippingRuleRequestAdditionalParametersValueAnyOf(
+                id = 'sp_pn_4521',
+                name = 'Føtex Nørrebro',
+                address = 'Nørrebrogade 20, 2200 København N',
+                coordinates = [55.6987,12.5501]
             )
         else:
-            return CreateShippingRuleRequestAdditionalParametersAnyOfInner(
-                name = 'returnFunctionality',
-                val = 'LABELLESS',
+            return CreateShippingRuleRequestAdditionalParametersValueAnyOf(
+                id = 'sp_pn_4521',
+                name = 'Føtex Nørrebro',
+                address = 'Nørrebrogade 20, 2200 København N',
         )
         """
 
-    def testCreateShippingRuleRequestAdditionalParametersAnyOfInner(self):
-        """Test CreateShippingRuleRequestAdditionalParametersAnyOfInner"""
+    def testCreateShippingRuleRequestAdditionalParametersValueAnyOf(self):
+        """Test CreateShippingRuleRequestAdditionalParametersValueAnyOf"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

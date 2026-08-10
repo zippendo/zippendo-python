@@ -24,11 +24,11 @@ from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
 from pydantic import Field
 
-CREATESHIPPINGRULEREQUESTADDITIONALPARAMETERSANYOFVALUEANYOFCOORDINATESINNER_ANY_OF_SCHEMAS = ["float"]
+LISTSHIPPINGRULES200RESPONSEDATAINNERADDITIONALPARAMETERSVALUEANYOFCOORDINATESINNER_ANY_OF_SCHEMAS = ["float"]
 
-class CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner(BaseModel):
+class ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner(BaseModel):
     """
-    CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner
+    ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner
     """
 
     # data type: float
@@ -58,7 +58,7 @@ class CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInn
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
-        instance = CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner.model_construct()
+        instance = ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner.model_construct()
         error_messages = []
         # validate data type: float
         try:
@@ -74,7 +74,7 @@ class CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInn
             error_messages.append(str(e))
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner with anyOf schemas: float. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner with anyOf schemas: float. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -108,7 +108,7 @@ class CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInn
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner with anyOf schemas: float. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner with anyOf schemas: float. Details: " + ", ".join(error_messages))
         else:
             return instance
 

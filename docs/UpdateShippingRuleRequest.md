@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **carrier_id** | **str** | Carrier ID | [optional] 
 **product_id** | **str** | Product ID from carrier | [optional] 
 **services** | **List[str]** | List of selected services | [optional] 
-**additional_parameters** | [**CreateShippingRuleRequestAdditionalParameters**](CreateShippingRuleRequestAdditionalParameters.md) |  | [optional] 
+**additional_parameters** | [**Dict[str, CreateShippingRuleRequestAdditionalParametersValue]**](CreateShippingRuleRequestAdditionalParametersValue.md) | Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60;. Omit to leave the rule&#39;s parameters unchanged. | [optional] 
 **address_id** | **str** | Sender address ID | [optional] 
 **receiving_countries** | **List[str]** | List of supported country codes | [optional] 
 **email_notification** | **bool** | Send email notification to recipient | [optional] [default to False]

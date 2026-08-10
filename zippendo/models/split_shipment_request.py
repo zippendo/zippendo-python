@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from zippendo.models.create_shipping_rule_request_additional_parameters_value import CreateShippingRuleRequestAdditionalParametersValue
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -33,7 +34,7 @@ class SplitShipmentRequest(BaseModel):
     carrier_id: Optional[StrictStr] = Field(default=None, description="Carrier for the new shipment. Copied from the original if omitted.", alias="carrierId", json_schema_extra={"examples": ["car_pn_001"]})
     product_id: Optional[StrictStr] = Field(default=None, description="Carrier product for the new shipment. Copied from the original if omitted.", alias="productId", json_schema_extra={"examples": ["prod_mypack_home"]})
     services: Optional[List[StrictStr]] = Field(default=None, description="Service codes for the new shipment. Copied from the original if omitted.", json_schema_extra={"examples": [["A7"]]})
-    additional_parameters: Optional[Dict[str, Any]] = Field(default=None, description="Carrier-specific parameters for the new shipment.", alias="additionalParameters", json_schema_extra={"examples": [{"notificationEmail": "anna@example.dk"}]})
+    additional_parameters: Optional[Dict[str, CreateShippingRuleRequestAdditionalParametersValue]] = Field(default=None, description="Carrier-specific parameters for the new shipment. Copied from the original if omitted.", alias="additionalParameters", json_schema_extra={"examples": [{"notificationEmail": "anna@example.dk"}]})
     reference: Optional[StrictStr] = Field(default=None, description="Reference for the new shipment. Defaults to the original reference with a suffix.", json_schema_extra={"examples": ["ORDER-1042-split"]})
     __properties: ClassVar[List[str]] = ["parcelId", "orderLineIds", "carrierId", "productId", "services", "additionalParameters", "reference"]
 
@@ -76,6 +77,13 @@ class SplitShipmentRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each value in additional_parameters (dict)
+        _field_dict = {}
+        if self.additional_parameters:
+            for _key_additional_parameters in self.additional_parameters:
+                if self.additional_parameters[_key_additional_parameters]:
+                    _field_dict[_key_additional_parameters] = self.additional_parameters[_key_additional_parameters].to_dict()
+            _dict['additionalParameters'] = _field_dict
         return _dict
 
     @classmethod
@@ -93,7 +101,12 @@ class SplitShipmentRequest(BaseModel):
             "carrierId": obj.get("carrierId"),
             "productId": obj.get("productId"),
             "services": obj.get("services"),
-            "additionalParameters": obj.get("additionalParameters"),
+            "additionalParameters": dict(
+                (_k, CreateShippingRuleRequestAdditionalParametersValue.from_dict(_v))
+                for _k, _v in obj["additionalParameters"].items()
+            )
+            if obj.get("additionalParameters") is not None
+            else None,
             "reference": obj.get("reference")
         })
         return _obj

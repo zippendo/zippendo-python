@@ -21,19 +21,19 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from zippendo.models.create_shipping_rule_request_additional_parameters_any_of_value_any_of_coordinates_inner import CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner
+from zippendo.models.list_shipping_rules200_response_data_inner_additional_parameters_value_any_of_coordinates_inner import ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValueAnyOf(BaseModel):
+class CreateShippingRuleRequestAdditionalParametersValueAnyOf(BaseModel):
     """
-    ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValueAnyOf
+    CreateShippingRuleRequestAdditionalParametersValueAnyOf
     """ # noqa: E501
     id: StrictStr = Field(description="Identifier of the selected service point.", json_schema_extra={"examples": ["sp_pn_4521"]})
     name: StrictStr = Field(description="Display name of the service point.", json_schema_extra={"examples": ["Føtex Nørrebro"]})
     address: StrictStr = Field(description="Formatted address of the service point.", json_schema_extra={"examples": ["Nørrebrogade 20, 2200 København N"]})
-    coordinates: Optional[Annotated[List[CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner], Field(min_length=2, max_length=2)]] = Field(default=None, description="Latitude/longitude of the service point.", json_schema_extra={"examples": [[55.6987, 12.5501]]})
+    coordinates: Optional[Annotated[List[ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner], Field(min_length=2, max_length=2)]] = Field(default=None, description="Latitude/longitude of the service point.", json_schema_extra={"examples": [[55.6987, 12.5501]]})
     __properties: ClassVar[List[str]] = ["id", "name", "address", "coordinates"]
 
     model_config = ConfigDict(
@@ -54,7 +54,7 @@ class ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValueA
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValueAnyOf from a JSON string"""
+        """Create an instance of CreateShippingRuleRequestAdditionalParametersValueAnyOf from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +86,7 @@ class ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValueA
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValueAnyOf from a dict"""
+        """Create an instance of CreateShippingRuleRequestAdditionalParametersValueAnyOf from a dict"""
         if obj is None:
             return None
 
@@ -97,7 +97,7 @@ class ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValueA
             "id": obj.get("id"),
             "name": obj.get("name"),
             "address": obj.get("address"),
-            "coordinates": [CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner.from_dict(_item) for _item in obj["coordinates"]] if obj.get("coordinates") is not None else None
+            "coordinates": [ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner.from_dict(_item) for _item in obj["coordinates"]] if obj.get("coordinates") is not None else None
         })
         return _obj
 

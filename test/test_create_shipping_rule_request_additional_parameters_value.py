@@ -15,10 +15,10 @@
 
 import unittest
 
-from zippendo.models.create_shipping_rule_request_additional_parameters import CreateShippingRuleRequestAdditionalParameters
+from zippendo.models.create_shipping_rule_request_additional_parameters_value import CreateShippingRuleRequestAdditionalParametersValue
 
-class TestCreateShippingRuleRequestAdditionalParameters(unittest.TestCase):
-    """CreateShippingRuleRequestAdditionalParameters unit test stubs"""
+class TestCreateShippingRuleRequestAdditionalParametersValue(unittest.TestCase):
+    """CreateShippingRuleRequestAdditionalParametersValue unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,24 +26,31 @@ class TestCreateShippingRuleRequestAdditionalParameters(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateShippingRuleRequestAdditionalParameters:
-        """Test CreateShippingRuleRequestAdditionalParameters
+    def make_instance(self, include_optional) -> CreateShippingRuleRequestAdditionalParametersValue:
+        """Test CreateShippingRuleRequestAdditionalParametersValue
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateShippingRuleRequestAdditionalParameters`
+        # uncomment below to create an instance of `CreateShippingRuleRequestAdditionalParametersValue`
         """
-        model = CreateShippingRuleRequestAdditionalParameters()
+        model = CreateShippingRuleRequestAdditionalParametersValue()
         if include_optional:
-            return CreateShippingRuleRequestAdditionalParameters(
+            return CreateShippingRuleRequestAdditionalParametersValue(
+                id = 'sp_pn_4521',
+                name = 'Føtex Nørrebro',
+                address = 'Nørrebrogade 20, 2200 København N',
+                coordinates = [55.6987, 12.5501]
             )
         else:
-            return CreateShippingRuleRequestAdditionalParameters(
+            return CreateShippingRuleRequestAdditionalParametersValue(
+                id = 'sp_pn_4521',
+                name = 'Føtex Nørrebro',
+                address = 'Nørrebrogade 20, 2200 København N',
         )
         """
 
-    def testCreateShippingRuleRequestAdditionalParameters(self):
-        """Test CreateShippingRuleRequestAdditionalParameters"""
+    def testCreateShippingRuleRequestAdditionalParametersValue(self):
+        """Test CreateShippingRuleRequestAdditionalParametersValue"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

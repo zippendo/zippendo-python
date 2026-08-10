@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **carrier_id** | **str** | Carrier for all new shipments. Copied from the original if omitted. | [optional] 
 **product_id** | **str** | Carrier product for all new shipments. Copied from the original if omitted. | [optional] 
 **services** | **List[str]** | Service codes for all new shipments. Copied from the original if omitted. | [optional] 
-**additional_parameters** | **Dict[str, object]** | Carrier-specific parameters for all new shipments. | [optional] 
+**additional_parameters** | [**Dict[str, CreateShippingRuleRequestAdditionalParametersValue]**](CreateShippingRuleRequestAdditionalParametersValue.md) | Carrier-specific parameters for all new shipments. Copied from the original if omitted. | [optional] 
 
 ## Example
 

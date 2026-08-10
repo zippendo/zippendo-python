@@ -15,10 +15,10 @@
 
 import unittest
 
-from zippendo.models.list_shipments200_response_data_inner_carrier_settings_additional_parameters_value import ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue
+from zippendo.models.list_shipping_rules200_response_data_inner_additional_parameters_value import ListShippingRules200ResponseDataInnerAdditionalParametersValue
 
-class TestListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue(unittest.TestCase):
-    """ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue unit test stubs"""
+class TestListShippingRules200ResponseDataInnerAdditionalParametersValue(unittest.TestCase):
+    """ListShippingRules200ResponseDataInnerAdditionalParametersValue unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,31 +26,31 @@ class TestListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersVa
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue:
-        """Test ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue
+    def make_instance(self, include_optional) -> ListShippingRules200ResponseDataInnerAdditionalParametersValue:
+        """Test ListShippingRules200ResponseDataInnerAdditionalParametersValue
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue`
+        # uncomment below to create an instance of `ListShippingRules200ResponseDataInnerAdditionalParametersValue`
         """
-        model = ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue()
+        model = ListShippingRules200ResponseDataInnerAdditionalParametersValue()
         if include_optional:
-            return ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue(
+            return ListShippingRules200ResponseDataInnerAdditionalParametersValue(
                 id = 'sp_pn_4521',
                 name = 'Føtex Nørrebro',
                 address = 'Nørrebrogade 20, 2200 København N',
                 coordinates = [55.6987, 12.5501]
             )
         else:
-            return ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue(
+            return ListShippingRules200ResponseDataInnerAdditionalParametersValue(
                 id = 'sp_pn_4521',
                 name = 'Føtex Nørrebro',
                 address = 'Nørrebrogade 20, 2200 København N',
         )
         """
 
-    def testListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue(self):
-        """Test ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue"""
+    def testListShippingRules200ResponseDataInnerAdditionalParametersValue(self):
+        """Test ListShippingRules200ResponseDataInnerAdditionalParametersValue"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **carrier_id** | **str** | Carrier ID | 
 **product_id** | **str** | Product ID from carrier | 
 **services** | **List[str]** | List of selected services | 
-**additional_parameters** | [**List[ListShippingRules200ResponseDataInnerAdditionalParametersInner]**](ListShippingRules200ResponseDataInnerAdditionalParametersInner.md) | Carrier-specific extra parameters. DEPRECATED array form &#x60;[{ name, val }]&#x60; where &#x60;name&#x60; is the carrier parameter &#x60;key&#x60; (from the product&#39;s &#x60;additionalParameters[].key&#x60;, e.g. &#x60;returnFunctionality&#x60;) and &#x60;val&#x60; is the stringified value. This will change to a &#x60;{ key: value }&#x60; object in a future version — writes already accept either shape. | 
+**additional_parameters** | [**Dict[str, ListShippingRules200ResponseDataInnerAdditionalParametersValue]**](ListShippingRules200ResponseDataInnerAdditionalParametersValue.md) | Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60;. | 
 **address_id** | **str** | Sender address ID | 
 **receiving_countries** | **List[str]** | List of supported country codes | 
 **email_notification** | **bool** | Send email notification to recipient | [default to False]

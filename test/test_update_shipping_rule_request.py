@@ -42,7 +42,7 @@ class TestUpdateShippingRuleRequest(unittest.TestCase):
                 carrier_id = 'carr_01HZX9K2QF',
                 product_id = 'PNL13',
                 services = ["EMAIL_NOTIFICATION"],
-                additional_parameters = {"returnFunctionality":"LABELLESS","returnQrEmail":true},
+                additional_parameters = {"returnFunctionality":"LABELLESS"},
                 address_id = 'addr_01HZX9K2QF',
                 receiving_countries = ["DK","SE"],
                 email_notification = True,

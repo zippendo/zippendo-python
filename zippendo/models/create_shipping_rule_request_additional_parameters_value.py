@@ -18,30 +18,33 @@ from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
-from typing import Dict, List, Optional
-from zippendo.models.create_shipping_rule_request_additional_parameters_any_of_inner import CreateShippingRuleRequestAdditionalParametersAnyOfInner
-from zippendo.models.create_shipping_rule_request_additional_parameters_any_of_value import CreateShippingRuleRequestAdditionalParametersAnyOfValue
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, ValidationError, field_validator
+from typing import Optional, Union
+from zippendo.models.create_shipping_rule_request_additional_parameters_value_any_of import CreateShippingRuleRequestAdditionalParametersValueAnyOf
 from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
 from pydantic import Field
 
-CREATESHIPPINGRULEREQUESTADDITIONALPARAMETERS_ANY_OF_SCHEMAS = ["Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue]", "List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]"]
+CREATESHIPPINGRULEREQUESTADDITIONALPARAMETERSVALUE_ANY_OF_SCHEMAS = ["CreateShippingRuleRequestAdditionalParametersValueAnyOf", "bool", "float", "str"]
 
-class CreateShippingRuleRequestAdditionalParameters(BaseModel):
+class CreateShippingRuleRequestAdditionalParametersValue(BaseModel):
     """
-    Carrier-specific extra parameters. Accepts EITHER the `{ key: value }` object (preferred) OR the legacy `[{ name, val }]` array, so you can migrate on your own schedule. Each key / `name` is the carrier parameter `key` from the product's `additionalParameters[].key` (e.g. `returnFunctionality`).
+    CreateShippingRuleRequestAdditionalParametersValue
     """
 
-    # data type: List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]
-    anyof_schema_1_validator: Optional[List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]] = None
-    # data type: Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue]
-    anyof_schema_2_validator: Optional[Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue]] = None
+    # data type: str
+    anyof_schema_1_validator: Optional[StrictStr] = None
+    # data type: float
+    anyof_schema_2_validator: Optional[Union[StrictFloat, StrictInt]] = None
+    # data type: bool
+    anyof_schema_3_validator: Optional[StrictBool] = None
+    # data type: CreateShippingRuleRequestAdditionalParametersValueAnyOf
+    anyof_schema_4_validator: Optional[CreateShippingRuleRequestAdditionalParametersValueAnyOf] = None
     if TYPE_CHECKING:
-        actual_instance: Optional[Union[Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue], List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]]] = None
+        actual_instance: Optional[Union[CreateShippingRuleRequestAdditionalParametersValueAnyOf, bool, float, str]] = None
     else:
         actual_instance: Any = None
-    any_of_schemas: Set[str] = { "Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue]", "List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]" }
+    any_of_schemas: Set[str] = { "CreateShippingRuleRequestAdditionalParametersValueAnyOf", "bool", "float", "str" }
 
     model_config = {
         "validate_assignment": True,
@@ -60,23 +63,35 @@ class CreateShippingRuleRequestAdditionalParameters(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
-        instance = CreateShippingRuleRequestAdditionalParameters.model_construct()
+        instance = CreateShippingRuleRequestAdditionalParametersValue.model_construct()
         error_messages = []
-        # validate data type: List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]
+        # validate data type: str
         try:
             instance.anyof_schema_1_validator = v
             return v
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
-        # validate data type: Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue]
+        # validate data type: float
         try:
             instance.anyof_schema_2_validator = v
             return v
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # validate data type: bool
+        try:
+            instance.anyof_schema_3_validator = v
+            return v
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # validate data type: CreateShippingRuleRequestAdditionalParametersValueAnyOf
+        if not isinstance(v, CreateShippingRuleRequestAdditionalParametersValueAnyOf):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `CreateShippingRuleRequestAdditionalParametersValueAnyOf`")
+        else:
+            return v
+
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in CreateShippingRuleRequestAdditionalParameters with anyOf schemas: Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue], List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in CreateShippingRuleRequestAdditionalParametersValue with anyOf schemas: CreateShippingRuleRequestAdditionalParametersValueAnyOf, bool, float, str. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -89,7 +104,7 @@ class CreateShippingRuleRequestAdditionalParameters(BaseModel):
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         error_messages = []
-        # deserialize data into List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]
+        # deserialize data into str
         try:
             # validation
             instance.anyof_schema_1_validator = json.loads(json_str)
@@ -98,7 +113,7 @@ class CreateShippingRuleRequestAdditionalParameters(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
-        # deserialize data into Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue]
+        # deserialize data into float
         try:
             # validation
             instance.anyof_schema_2_validator = json.loads(json_str)
@@ -107,10 +122,25 @@ class CreateShippingRuleRequestAdditionalParameters(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into bool
+        try:
+            # validation
+            instance.anyof_schema_3_validator = json.loads(json_str)
+            # assign value to actual_instance
+            instance.actual_instance = instance.anyof_schema_3_validator
+            return instance
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # anyof_schema_4_validator: Optional[CreateShippingRuleRequestAdditionalParametersValueAnyOf] = None
+        try:
+            instance.actual_instance = CreateShippingRuleRequestAdditionalParametersValueAnyOf.from_json(json_str)
+            return instance
+        except (ValidationError, ValueError) as e:
+             error_messages.append(str(e))
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into CreateShippingRuleRequestAdditionalParameters with anyOf schemas: Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue], List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into CreateShippingRuleRequestAdditionalParametersValue with anyOf schemas: CreateShippingRuleRequestAdditionalParametersValueAnyOf, bool, float, str. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -124,7 +154,7 @@ class CreateShippingRuleRequestAdditionalParameters(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue], List[CreateShippingRuleRequestAdditionalParametersAnyOfInner]]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], CreateShippingRuleRequestAdditionalParametersValueAnyOf, bool, float, str]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

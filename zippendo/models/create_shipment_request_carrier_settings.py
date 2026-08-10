@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from zippendo.models.create_shipping_rule_request_additional_parameters_any_of_value import CreateShippingRuleRequestAdditionalParametersAnyOfValue
+from zippendo.models.create_shipping_rule_request_additional_parameters_value import CreateShippingRuleRequestAdditionalParametersValue
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -32,7 +32,7 @@ class CreateShipmentRequestCarrierSettings(BaseModel):
     carrier_id: StrictStr = Field(description="Identifier of the carrier to use.", alias="carrierId", json_schema_extra={"examples": ["car_pn_001"]})
     product_id: StrictStr = Field(description="Identifier of the carrier product/service.", alias="productId", json_schema_extra={"examples": ["prod_mypack_home"]})
     services: List[StrictStr] = Field(description="Additional service codes requested from the carrier.", json_schema_extra={"examples": [["A7"]]})
-    additional_parameters: Dict[str, CreateShippingRuleRequestAdditionalParametersAnyOfValue] = Field(description="Carrier-specific extra parameters as key/value pairs.", alias="additionalParameters", json_schema_extra={"examples": [{"notificationEmail": "anna@example.dk"}]})
+    additional_parameters: Dict[str, CreateShippingRuleRequestAdditionalParametersValue] = Field(description="Carrier-specific extra parameters as key/value pairs.", alias="additionalParameters", json_schema_extra={"examples": [{"notificationEmail": "anna@example.dk"}]})
     __properties: ClassVar[List[str]] = ["carrierId", "productId", "services", "additionalParameters"]
 
     model_config = ConfigDict(
@@ -97,7 +97,7 @@ class CreateShipmentRequestCarrierSettings(BaseModel):
             "productId": obj.get("productId"),
             "services": obj.get("services"),
             "additionalParameters": dict(
-                (_k, CreateShippingRuleRequestAdditionalParametersAnyOfValue.from_dict(_v))
+                (_k, CreateShippingRuleRequestAdditionalParametersValue.from_dict(_v))
                 for _k, _v in obj["additionalParameters"].items()
             )
             if obj.get("additionalParameters") is not None
