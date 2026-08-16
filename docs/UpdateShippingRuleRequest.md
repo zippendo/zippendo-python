@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **document_printer_id** | **str** | ID of the document printer | [optional] 
 **return_shipping_rule_id** | **str** | ID of the return shipping rule | [optional] 
 **auto_create_return_shipment** | **bool** | Automatically create and send a return shipment on dispatch | [optional] [default to False]
+**brand_id** | **str** | Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide | [optional] 
 
 ## Example
 

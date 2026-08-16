@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **url** | **str** | Webhook endpoint URL | 
 **events** | **List[str]** | Events to subscribe to | 
 **is_active** | **bool** | Whether the webhook is active | [optional] [default to True]
+**brand_id** | **str** | Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide | [optional] 
 
 ## Example
 

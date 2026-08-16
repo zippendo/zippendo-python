@@ -3,7 +3,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  List endpoints additionally take a `?brandScope=own|shared|both` parameter to narrow further within whichever brand context already applies. `own` returns only rows assigned to that brand, and requires a brand context — a brand-bound token, a resolved brand session, or the `X-Zippendo-Brand` header above — otherwise `400`. `shared` returns only the organization-wide rows (equivalent to filtering `brandId=none`). The default, `both`, keeps the existing behaviour: a brand context sees its own rows plus the organization-wide ones. Set `X-Zippendo-Brand-Scope` as a client default to apply the same choice to every request instead of repeating the query parameter on each call — an explicit `brandScope` query parameter always wins over the header, and a blank header value is ignored.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -19,11 +19,12 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from zippendo.models.get_billing_usage200_response_add_ons_inner import GetBillingUsage200ResponseAddOnsInner
 from zippendo.models.get_billing_usage200_response_current_period import GetBillingUsage200ResponseCurrentPeriod
 from zippendo.models.get_billing_usage200_response_limits import GetBillingUsage200ResponseLimits
 from zippendo.models.get_billing_usage200_response_shipments import GetBillingUsage200ResponseShipments
+from zippendo.models.get_billing_usage200_response_zippy_messages import GetBillingUsage200ResponseZippyMessages
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -36,7 +37,8 @@ class GetBillingUsage200Response(BaseModel):
     shipments: GetBillingUsage200ResponseShipments
     limits: GetBillingUsage200ResponseLimits
     add_ons: List[GetBillingUsage200ResponseAddOnsInner] = Field(description="Active add-ons on the subscription", alias="addOns", json_schema_extra={"examples": [[]]})
-    __properties: ClassVar[List[str]] = ["currentPeriod", "shipments", "limits", "addOns"]
+    zippy_messages: Optional[GetBillingUsage200ResponseZippyMessages] = Field(default=None, alias="zippyMessages")
+    __properties: ClassVar[List[str]] = ["currentPeriod", "shipments", "limits", "addOns", "zippyMessages"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -93,6 +95,9 @@ class GetBillingUsage200Response(BaseModel):
                 if _item_add_ons:
                     _items.append(_item_add_ons.to_dict())
             _dict['addOns'] = _items
+        # override the default output from pydantic by calling `to_dict()` of zippy_messages
+        if self.zippy_messages:
+            _dict['zippyMessages'] = self.zippy_messages.to_dict()
         return _dict
 
     @classmethod
@@ -108,7 +113,8 @@ class GetBillingUsage200Response(BaseModel):
             "currentPeriod": GetBillingUsage200ResponseCurrentPeriod.from_dict(obj["currentPeriod"]) if obj.get("currentPeriod") is not None else None,
             "shipments": GetBillingUsage200ResponseShipments.from_dict(obj["shipments"]) if obj.get("shipments") is not None else None,
             "limits": GetBillingUsage200ResponseLimits.from_dict(obj["limits"]) if obj.get("limits") is not None else None,
-            "addOns": [GetBillingUsage200ResponseAddOnsInner.from_dict(_item) for _item in obj["addOns"]] if obj.get("addOns") is not None else None
+            "addOns": [GetBillingUsage200ResponseAddOnsInner.from_dict(_item) for _item in obj["addOns"]] if obj.get("addOns") is not None else None,
+            "zippyMessages": GetBillingUsage200ResponseZippyMessages.from_dict(obj["zippyMessages"]) if obj.get("zippyMessages") is not None else None
         })
         return _obj
 

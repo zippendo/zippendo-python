@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **carrier_slug** | **str** | Carrier slug identifier | 
 **config** | [**Dict[str, ListCarriers200ResponseDataInnerConfigValue]**](ListCarriers200ResponseDataInnerConfigValue.md) | Carrier configuration (required and optional fields) | 
 **org_id** | **str** | Owning organization ID | 
+**brand_id** | **str** | Brand this record belongs to, or null when it is organization-wide | 
 **created_at** | **str** | Creation timestamp (ISO 8601) | 
 **updated_at** | **str** | Last update timestamp (ISO 8601) | 
 **logo** | **str** | Carrier logo URL | [optional] 

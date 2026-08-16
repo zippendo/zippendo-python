@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **customs** | **Dict[str, str]** | Customs identifiers keyed by type | [optional] 
 **address_types** | **List[str]** | Address types (sender, pickup, return) | 
 **org_id** | **str** | Owning organization ID | 
+**brand_id** | **str** | Brand this record belongs to, or null when it is organization-wide | 
 **created_at** | **str** | Creation timestamp (ISO 8601) | 
 **updated_at** | **str** | Last update timestamp (ISO 8601) | 
 

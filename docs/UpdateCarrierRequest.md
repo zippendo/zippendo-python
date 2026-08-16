@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **name** | **str** | Carrier display name | [optional] 
 **carrier_slug** | **str** | Carrier slug identifier | [optional] 
 **config** | [**Dict[str, ListCarriers200ResponseDataInnerConfigValue]**](ListCarriers200ResponseDataInnerConfigValue.md) | Carrier configuration (required and optional fields) | [optional] 
+**brand_id** | **str** | Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide | [optional] 
 
 ## Example
 

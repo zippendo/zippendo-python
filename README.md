@@ -67,6 +67,17 @@ Such a token is permanently confined to that brand, so the header is unnecessary
 `X-Zippendo-Brand` naming a *different* brand is refused with `BRAND_ACCESS_DENIED` (403); the binding is
 never widened. A header naming a brand that is not in the organization raises `BRAND_NOT_FOUND` (404).
 
+List operations also take a `brand_scope` query parameter (`"own"` / `"shared"` / `"both"`) to narrow
+further within whichever brand context already applies: `"own"` returns only that brand's rows and
+needs a brand context (otherwise `400`); `"shared"` returns only the unassigned rows (equivalent to
+`brand_id="none"`). Set `X-Zippendo-Brand-Scope` as a default header the same way to cover every call:
+
+```python
+client.set_default_header("X-Zippendo-Brand-Scope", "own")
+```
+
+An explicit `brand_scope` argument passed to a call still wins over the header.
+
 ### Managing brands
 
 Brands are managed with `BrandsApi`. Use an organization-wide client for this — you are

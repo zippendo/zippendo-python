@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **shipments** | [**GetBillingUsage200ResponseShipments**](GetBillingUsage200ResponseShipments.md) |  | 
 **limits** | [**GetBillingUsage200ResponseLimits**](GetBillingUsage200ResponseLimits.md) |  | 
 **add_ons** | [**List[GetBillingUsage200ResponseAddOnsInner]**](GetBillingUsage200ResponseAddOnsInner.md) | Active add-ons on the subscription | 
+**zippy_messages** | [**GetBillingUsage200ResponseZippyMessages**](GetBillingUsage200ResponseZippyMessages.md) |  | [optional] 
 
 ## Example
 

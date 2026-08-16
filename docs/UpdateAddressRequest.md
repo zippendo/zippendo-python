@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **email** | **str** | Email address | [optional] 
 **customs** | **Dict[str, str]** | Customs identifiers | [optional] 
 **address_types** | **List[str]** | Address types (sender, pickup, return) | [optional] 
+**brand_id** | **str** | Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide | [optional] 
 
 ## Example
 

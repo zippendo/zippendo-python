@@ -430,7 +430,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_carriers**
-> ListCarriers200Response list_carriers(org_id, page=page, limit=limit)
+> ListCarriers200Response list_carriers(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope)
 
 List carriers
 
@@ -469,10 +469,12 @@ with zippendo.ApiClient(configuration) as api_client:
     org_id = 'org_01HZX9K2QF' # str | Organization ID
     page = 1 # int | Page number (1-based) (optional) (default to 1)
     limit = 20 # int | Items per page (max 100) (optional) (default to 20)
+    brand_id = 'brnd_8f3kd92ld0' # str | Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand. (optional)
+    brand_scope = 'own' # str | How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context. (optional)
 
     try:
         # List carriers
-        api_response = api_instance.list_carriers(org_id, page=page, limit=limit)
+        api_response = api_instance.list_carriers(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope)
         print("The response of CarriersApi->list_carriers:\n")
         pprint(api_response)
     except Exception as e:
@@ -489,6 +491,8 @@ Name | Type | Description  | Notes
  **org_id** | **str**| Organization ID | 
  **page** | **int**| Page number (1-based) | [optional] [default to 1]
  **limit** | **int**| Items per page (max 100) | [optional] [default to 20]
+ **brand_id** | **str**| Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand. | [optional] 
+ **brand_scope** | **str**| How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context. | [optional] 
 
 ### Return type
 

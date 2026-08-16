@@ -1,7 +1,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  List endpoints additionally take a `?brandScope=own|shared|both` parameter to narrow further within whichever brand context already applies. `own` returns only rows assigned to that brand, and requires a brand context — a brand-bound token, a resolved brand session, or the `X-Zippendo-Brand` header above — otherwise `400`. `shared` returns only the organization-wide rows (equivalent to filtering `brandId=none`). The default, `both`, keeps the existing behaviour: a brand context sees its own rows plus the organization-wide ones. Set `X-Zippendo-Brand-Scope` as a client default to apply the same choice to every request instead of repeating the query parameter on each call — an explicit `brandScope` query parameter always wins over the header, and a blank header value is ignored.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -916,6 +916,7 @@ class OrdersApi:
         page: Annotated[Optional[Annotated[int, Field(le=9007199254740991, strict=True, ge=1)]], Field(description="Page number (1-based)")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
+        brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
@@ -944,6 +945,8 @@ class OrdersApi:
         :type limit: int
         :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
         :type brand_id: str
+        :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
+        :type brand_scope: str
         :param status: Order fulfilment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
@@ -977,6 +980,7 @@ class OrdersApi:
             page=page,
             limit=limit,
             brand_id=brand_id,
+            brand_scope=brand_scope,
             status=status,
             order_channel_id=order_channel_id,
             search=search,
@@ -1009,6 +1013,7 @@ class OrdersApi:
         page: Annotated[Optional[Annotated[int, Field(le=9007199254740991, strict=True, ge=1)]], Field(description="Page number (1-based)")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
+        brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
@@ -1037,6 +1042,8 @@ class OrdersApi:
         :type limit: int
         :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
         :type brand_id: str
+        :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
+        :type brand_scope: str
         :param status: Order fulfilment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
@@ -1070,6 +1077,7 @@ class OrdersApi:
             page=page,
             limit=limit,
             brand_id=brand_id,
+            brand_scope=brand_scope,
             status=status,
             order_channel_id=order_channel_id,
             search=search,
@@ -1102,6 +1110,7 @@ class OrdersApi:
         page: Annotated[Optional[Annotated[int, Field(le=9007199254740991, strict=True, ge=1)]], Field(description="Page number (1-based)")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
+        brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
@@ -1130,6 +1139,8 @@ class OrdersApi:
         :type limit: int
         :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
         :type brand_id: str
+        :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
+        :type brand_scope: str
         :param status: Order fulfilment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
@@ -1163,6 +1174,7 @@ class OrdersApi:
             page=page,
             limit=limit,
             brand_id=brand_id,
+            brand_scope=brand_scope,
             status=status,
             order_channel_id=order_channel_id,
             search=search,
@@ -1190,6 +1202,7 @@ class OrdersApi:
         page,
         limit,
         brand_id,
+        brand_scope,
         status,
         order_channel_id,
         search,
@@ -1228,6 +1241,10 @@ class OrdersApi:
         if brand_id is not None:
             
             _query_params.append(('brandId', brand_id))
+            
+        if brand_scope is not None:
+            
+            _query_params.append(('brandScope', brand_scope))
             
         if status is not None:
             

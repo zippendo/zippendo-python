@@ -32,6 +32,7 @@ Name | Type | Description | Notes
 **return_shipping_rule_id** | **str** | ID of the return shipping rule | 
 **auto_create_return_shipment** | **bool** | Automatically create and send a return shipment on dispatch | [default to False]
 **org_id** | **str** | Owning organization ID | 
+**brand_id** | **str** | Brand this record belongs to, or null when it is organization-wide | 
 **created_at** | **str** | Creation timestamp (ISO 8601) | 
 **updated_at** | **str** | Last update timestamp (ISO 8601) | 
 **carrier** | [**ListShippingRules200ResponseDataInnerCarrier**](ListShippingRules200ResponseDataInnerCarrier.md) |  | 

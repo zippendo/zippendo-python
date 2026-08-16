@@ -3,7 +3,7 @@
 """
     Zippendo Public API
 
-    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
+    Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  List endpoints additionally take a `?brandScope=own|shared|both` parameter to narrow further within whichever brand context already applies. `own` returns only rows assigned to that brand, and requires a brand context — a brand-bound token, a resolved brand session, or the `X-Zippendo-Brand` header above — otherwise `400`. `shared` returns only the organization-wide rows (equivalent to filtering `brandId=none`). The default, `both`, keeps the existing behaviour: a brand context sees its own rows plus the organization-wide ones. Set `X-Zippendo-Brand-Scope` as a client default to apply the same choice to every request instead of repeating the query parameter on each call — an explicit `brandScope` query parameter always wins over the header, and a blank header value is ignored.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
 
     The version of the OpenAPI document: 1.0.0
     Contact: support@zippendo.com
@@ -62,6 +62,7 @@ class ListShippingRules200ResponseDataInner(BaseModel):
     return_shipping_rule_id: Optional[StrictStr] = Field(description="ID of the return shipping rule", alias="returnShippingRuleId")
     auto_create_return_shipment: StrictBool = Field(description="Automatically create and send a return shipment on dispatch", alias="autoCreateReturnShipment", json_schema_extra={"examples": [False]})
     org_id: StrictStr = Field(description="Owning organization ID", alias="orgId", json_schema_extra={"examples": ["org_01HZX9K2QF"]})
+    brand_id: Optional[StrictStr] = Field(description="Brand this record belongs to, or null when it is organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     created_at: StrictStr = Field(description="Creation timestamp (ISO 8601)", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T09:00:00.000Z"]})
     updated_at: StrictStr = Field(description="Last update timestamp (ISO 8601)", alias="updatedAt", json_schema_extra={"examples": ["2026-06-22T09:00:00.000Z"]})
     carrier: ListShippingRules200ResponseDataInnerCarrier
@@ -69,7 +70,7 @@ class ListShippingRules200ResponseDataInner(BaseModel):
     label_printer: Optional[ListShippingRules200ResponseDataInnerLabelPrinter] = Field(default=None, alias="labelPrinter")
     document_printer: Optional[ListShippingRules200ResponseDataInnerLabelPrinter] = Field(default=None, alias="documentPrinter")
     return_shipping_rule: Optional[ListShippingRules200ResponseDataInnerReturnShippingRule] = Field(default=None, alias="returnShippingRule")
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "orgId", "createdAt", "updatedAt", "carrier", "address", "labelPrinter", "documentPrinter", "returnShippingRule"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "orgId", "brandId", "createdAt", "updatedAt", "carrier", "address", "labelPrinter", "documentPrinter", "returnShippingRule"]
 
     @field_validator('direction')
     def direction_validate_enum(cls, value):
@@ -186,6 +187,11 @@ class ListShippingRules200ResponseDataInner(BaseModel):
         if self.return_shipping_rule_id is None and "return_shipping_rule_id" in self.model_fields_set:
             _dict['returnShippingRuleId'] = None
 
+        # set to None if brand_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.brand_id is None and "brand_id" in self.model_fields_set:
+            _dict['brandId'] = None
+
         # set to None if label_printer (nullable) is None
         # and model_fields_set contains the field
         if self.label_printer is None and "label_printer" in self.model_fields_set:
@@ -245,6 +251,7 @@ class ListShippingRules200ResponseDataInner(BaseModel):
             "returnShippingRuleId": obj.get("returnShippingRuleId"),
             "autoCreateReturnShipment": obj.get("autoCreateReturnShipment") if obj.get("autoCreateReturnShipment") is not None else False,
             "orgId": obj.get("orgId"),
+            "brandId": obj.get("brandId"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),
             "carrier": ListShippingRules200ResponseDataInnerCarrier.from_dict(obj["carrier"]) if obj.get("carrier") is not None else None,

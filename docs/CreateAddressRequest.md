@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **email** | **str** | Email address | 
 **customs** | **Dict[str, str]** | Customs identifiers (voec, eori, sprn, ioss, fda, duns) | [optional] 
 **address_types** | **List[str]** | Address types (sender, pickup, return) | [optional] [default to ["sender"]]
+**brand_id** | **str** | Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide | [optional] 
 
 ## Example
 
