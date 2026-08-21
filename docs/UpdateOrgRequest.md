@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **currency** | **str** | Billing currency (ISO 4217 code) | [optional] 
 **vat_number** | **str** | Company VAT/tax ID for invoices | [optional] 
 **overage_enabled** | **bool** | Allow shipments beyond plan limit (overage charges apply) | [optional] 
+**phone** | **str** | Billing/contact phone number | [optional] 
 **billing_email** | **str** | Billing email for invoices | [optional] 
 **company_name** | **str** | Legal company name | [optional] 
 **address_line1** | **str** | Address line 1 | [optional] 

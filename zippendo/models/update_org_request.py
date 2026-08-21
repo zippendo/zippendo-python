@@ -35,6 +35,7 @@ class UpdateOrgRequest(BaseModel):
     currency: Optional[StrictStr] = Field(default=None, description="Billing currency (ISO 4217 code)", json_schema_extra={"examples": ["DKK"]})
     vat_number: Optional[StrictStr] = Field(default=None, description="Company VAT/tax ID for invoices", alias="vatNumber", json_schema_extra={"examples": ["DK12345678"]})
     overage_enabled: Optional[StrictBool] = Field(default=None, description="Allow shipments beyond plan limit (overage charges apply)", alias="overageEnabled", json_schema_extra={"examples": [False]})
+    phone: Optional[Annotated[str, Field(strict=True, max_length=32)]] = Field(default=None, description="Billing/contact phone number", json_schema_extra={"examples": ["+45 50 47 02 20"]})
     billing_email: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Billing email for invoices", alias="billingEmail", json_schema_extra={"examples": ["billing@nordic-logistics.dk"]})
     company_name: Optional[StrictStr] = Field(default=None, description="Legal company name", alias="companyName", json_schema_extra={"examples": ["Nordic Logistics ApS"]})
     address_line1: Optional[StrictStr] = Field(default=None, description="Address line 1", alias="addressLine1", json_schema_extra={"examples": ["Havnegade 12"]})
@@ -43,7 +44,7 @@ class UpdateOrgRequest(BaseModel):
     postal_code: Optional[StrictStr] = Field(default=None, description="Postal code", alias="postalCode", json_schema_extra={"examples": ["1058"]})
     country: Optional[StrictStr] = Field(default=None, description="Country (ISO 3166-1 alpha-2 code)", json_schema_extra={"examples": ["DK"]})
     customs: Optional[Dict[str, StrictStr]] = Field(default=None, description="Organization-wide customs identifiers (EORI, IOSS, VOEC, etc.); null clears all")
-    __properties: ClassVar[List[str]] = ["name", "slug", "description", "currency", "vatNumber", "overageEnabled", "billingEmail", "companyName", "addressLine1", "addressLine2", "city", "postalCode", "country", "customs"]
+    __properties: ClassVar[List[str]] = ["name", "slug", "description", "currency", "vatNumber", "overageEnabled", "phone", "billingEmail", "companyName", "addressLine1", "addressLine2", "city", "postalCode", "country", "customs"]
 
     @field_validator('slug', mode="before")
     def slug_validate_regular_expression(cls, value):
@@ -63,6 +64,16 @@ class UpdateOrgRequest(BaseModel):
 
         if value not in set(['DKK', 'EUR', 'USD', 'GBP', 'SEK', 'NOK']):
             raise ValueError("must be one of enum values ('DKK', 'EUR', 'USD', 'GBP', 'SEK', 'NOK')")
+        return value
+
+    @field_validator('phone', mode="before")
+    def phone_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if isinstance(value, str) and not re.match(r"^\+?[\d\s()-]{4,31}$", value):
+            raise ValueError(r"must validate the regular expression /^\+?[\d\s()-]{4,31}$/")
         return value
 
     @field_validator('billing_email', mode="before")
@@ -118,6 +129,11 @@ class UpdateOrgRequest(BaseModel):
         # and model_fields_set contains the field
         if self.vat_number is None and "vat_number" in self.model_fields_set:
             _dict['vatNumber'] = None
+
+        # set to None if phone (nullable) is None
+        # and model_fields_set contains the field
+        if self.phone is None and "phone" in self.model_fields_set:
+            _dict['phone'] = None
 
         # set to None if billing_email (nullable) is None
         # and model_fields_set contains the field
@@ -177,6 +193,7 @@ class UpdateOrgRequest(BaseModel):
             "currency": obj.get("currency"),
             "vatNumber": obj.get("vatNumber"),
             "overageEnabled": obj.get("overageEnabled"),
+            "phone": obj.get("phone"),
             "billingEmail": obj.get("billingEmail"),
             "companyName": obj.get("companyName"),
             "addressLine1": obj.get("addressLine1"),
