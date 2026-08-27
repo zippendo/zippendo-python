@@ -21,10 +21,11 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from zippendo.models.create_shipment_request_carrier_settings import CreateShipmentRequestCarrierSettings
 from zippendo.models.create_shipment_request_parcels_inner import CreateShipmentRequestParcelsInner
 from zippendo.models.create_shipment_request_parties_inner import CreateShipmentRequestPartiesInner
 from zippendo.models.create_shipment_request_pickup_details import CreateShipmentRequestPickupDetails
+from zippendo.models.update_shipment_request_carrier_settings import UpdateShipmentRequestCarrierSettings
+from zippendo.models.update_shipment_request_droppoint import UpdateShipmentRequestDroppoint
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -38,7 +39,7 @@ class UpdateShipmentRequest(BaseModel):
     service_point_id: Optional[StrictStr] = Field(default=None, description="Selected carrier service point identifier.", alias="servicePointId", json_schema_extra={"examples": ["sp_pn_4521"]})
     parties: Optional[Annotated[List[CreateShipmentRequestPartiesInner], Field(min_length=1)]] = Field(default=None, description="Parties involved in the shipment. Optional when orderId is provided.")
     type: Optional[StrictStr] = Field(default=None, description="Direction of the shipment relative to the organization.", json_schema_extra={"examples": ["outbound"]})
-    carrier_settings: Optional[CreateShipmentRequestCarrierSettings] = Field(default=None, alias="carrierSettings")
+    carrier_settings: Optional[UpdateShipmentRequestCarrierSettings] = Field(default=None, alias="carrierSettings")
     parcels: Optional[Annotated[List[CreateShipmentRequestParcelsInner], Field(min_length=1)]] = Field(default=None, description="Parcels to include. Optional when orderId is provided.")
     pickup_details: Optional[CreateShipmentRequestPickupDetails] = Field(default=None, alias="pickupDetails")
     term_of_trade: Optional[StrictStr] = Field(default='DAP', description="Incoterm governing the shipment.", alias="termOfTrade", json_schema_extra={"examples": ["DAP"]})
@@ -47,7 +48,8 @@ class UpdateShipmentRequest(BaseModel):
     label_printer_id: Optional[StrictStr] = Field(default=None, description="Printer to assign for labels.", alias="labelPrinterId", json_schema_extra={"examples": ["prn_label_01"]})
     document_printer_id: Optional[StrictStr] = Field(default=None, description="Printer to assign for documents.", alias="documentPrinterId", json_schema_extra={"examples": ["prn_doc_01"]})
     shipping_rule_id: Optional[StrictStr] = Field(default=None, description="Shipping rule to apply to the shipment. Pass null to clear.", alias="shippingRuleId", json_schema_extra={"examples": ["rule_3c4d5e6f"]})
-    __properties: ClassVar[List[str]] = ["reference", "addressId", "servicePointId", "parties", "type", "carrierSettings", "parcels", "pickupDetails", "termOfTrade", "status", "orderId", "labelPrinterId", "documentPrinterId", "shippingRuleId"]
+    droppoint: Optional[UpdateShipmentRequestDroppoint] = None
+    __properties: ClassVar[List[str]] = ["reference", "addressId", "servicePointId", "parties", "type", "carrierSettings", "parcels", "pickupDetails", "termOfTrade", "status", "orderId", "labelPrinterId", "documentPrinterId", "shippingRuleId", "droppoint"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -128,6 +130,9 @@ class UpdateShipmentRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of pickup_details
         if self.pickup_details:
             _dict['pickupDetails'] = self.pickup_details.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of droppoint
+        if self.droppoint:
+            _dict['droppoint'] = self.droppoint.to_dict()
         # set to None if address_id (nullable) is None
         # and model_fields_set contains the field
         if self.address_id is None and "address_id" in self.model_fields_set:
@@ -180,7 +185,7 @@ class UpdateShipmentRequest(BaseModel):
             "servicePointId": obj.get("servicePointId"),
             "parties": [CreateShipmentRequestPartiesInner.from_dict(_item) for _item in obj["parties"]] if obj.get("parties") is not None else None,
             "type": obj.get("type"),
-            "carrierSettings": CreateShipmentRequestCarrierSettings.from_dict(obj["carrierSettings"]) if obj.get("carrierSettings") is not None else None,
+            "carrierSettings": UpdateShipmentRequestCarrierSettings.from_dict(obj["carrierSettings"]) if obj.get("carrierSettings") is not None else None,
             "parcels": [CreateShipmentRequestParcelsInner.from_dict(_item) for _item in obj["parcels"]] if obj.get("parcels") is not None else None,
             "pickupDetails": CreateShipmentRequestPickupDetails.from_dict(obj["pickupDetails"]) if obj.get("pickupDetails") is not None else None,
             "termOfTrade": obj.get("termOfTrade") if obj.get("termOfTrade") is not None else 'DAP',
@@ -188,7 +193,8 @@ class UpdateShipmentRequest(BaseModel):
             "orderId": obj.get("orderId"),
             "labelPrinterId": obj.get("labelPrinterId"),
             "documentPrinterId": obj.get("documentPrinterId"),
-            "shippingRuleId": obj.get("shippingRuleId")
+            "shippingRuleId": obj.get("shippingRuleId"),
+            "droppoint": UpdateShipmentRequestDroppoint.from_dict(obj["droppoint"]) if obj.get("droppoint") is not None else None
         })
         return _obj
 

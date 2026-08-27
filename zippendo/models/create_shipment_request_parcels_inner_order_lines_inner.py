@@ -30,7 +30,7 @@ class CreateShipmentRequestParcelsInnerOrderLinesInner(BaseModel):
     CreateShipmentRequestParcelsInnerOrderLinesInner
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="Unique order line identifier.", json_schema_extra={"examples": ["ol_9c1d2e3f"]})
-    sku: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Stock keeping unit of the product.", json_schema_extra={"examples": ["SKU-1024"]})
+    sku: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Stock keeping unit of the product. Optional — not every webshop assigns SKUs.", json_schema_extra={"examples": ["SKU-1024"]})
     quantity: Annotated[int, Field(le=9007199254740991, strict=True, ge=1)] = Field(description="Number of units in this order line.", json_schema_extra={"examples": [2]})
     description: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Human-readable product description.", json_schema_extra={"examples": ["Wool sweater, navy"]})
     unit_price: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Price per unit in the order line currency.", alias="unitPrice", json_schema_extra={"examples": [299.95]})
@@ -80,6 +80,11 @@ class CreateShipmentRequestParcelsInnerOrderLinesInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if sku (nullable) is None
+        # and model_fields_set contains the field
+        if self.sku is None and "sku" in self.model_fields_set:
+            _dict['sku'] = None
+
         # set to None if description (nullable) is None
         # and model_fields_set contains the field
         if self.description is None and "description" in self.model_fields_set:

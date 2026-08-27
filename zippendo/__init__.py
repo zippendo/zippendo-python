@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.1.4"
+__version__ = "1.2.0"
 
 # Define package exports
 __all__ = [
@@ -78,6 +78,7 @@ __all__ = [
     "CreateShipment201ResponseTracking",
     "CreateShipmentRequest",
     "CreateShipmentRequestCarrierSettings",
+    "CreateShipmentRequestDroppoint",
     "CreateShipmentRequestParcelsInner",
     "CreateShipmentRequestParcelsInnerDimensions",
     "CreateShipmentRequestParcelsInnerOrderLinesInner",
@@ -184,6 +185,8 @@ __all__ = [
     "UpdateOrgRequest",
     "UpdateOrgWebhookRequest",
     "UpdateShipmentRequest",
+    "UpdateShipmentRequestCarrierSettings",
+    "UpdateShipmentRequestDroppoint",
     "UpdateShippingRuleRequest",
     "VerifyApiToken200Response",
     "VerifyApiTokenRequest",
@@ -253,6 +256,7 @@ from zippendo.models.create_shipment201_response_shipping_rule import CreateShip
 from zippendo.models.create_shipment201_response_tracking import CreateShipment201ResponseTracking as CreateShipment201ResponseTracking
 from zippendo.models.create_shipment_request import CreateShipmentRequest as CreateShipmentRequest
 from zippendo.models.create_shipment_request_carrier_settings import CreateShipmentRequestCarrierSettings as CreateShipmentRequestCarrierSettings
+from zippendo.models.create_shipment_request_droppoint import CreateShipmentRequestDroppoint as CreateShipmentRequestDroppoint
 from zippendo.models.create_shipment_request_parcels_inner import CreateShipmentRequestParcelsInner as CreateShipmentRequestParcelsInner
 from zippendo.models.create_shipment_request_parcels_inner_dimensions import CreateShipmentRequestParcelsInnerDimensions as CreateShipmentRequestParcelsInnerDimensions
 from zippendo.models.create_shipment_request_parcels_inner_order_lines_inner import CreateShipmentRequestParcelsInnerOrderLinesInner as CreateShipmentRequestParcelsInnerOrderLinesInner
@@ -359,6 +363,8 @@ from zippendo.models.update_org_branding_request import UpdateOrgBrandingRequest
 from zippendo.models.update_org_request import UpdateOrgRequest as UpdateOrgRequest
 from zippendo.models.update_org_webhook_request import UpdateOrgWebhookRequest as UpdateOrgWebhookRequest
 from zippendo.models.update_shipment_request import UpdateShipmentRequest as UpdateShipmentRequest
+from zippendo.models.update_shipment_request_carrier_settings import UpdateShipmentRequestCarrierSettings as UpdateShipmentRequestCarrierSettings
+from zippendo.models.update_shipment_request_droppoint import UpdateShipmentRequestDroppoint as UpdateShipmentRequestDroppoint
 from zippendo.models.update_shipping_rule_request import UpdateShippingRuleRequest as UpdateShippingRuleRequest
 from zippendo.models.verify_api_token200_response import VerifyApiToken200Response as VerifyApiToken200Response
 from zippendo.models.verify_api_token_request import VerifyApiTokenRequest as VerifyApiTokenRequest

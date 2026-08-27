@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **service_point_id** | **str** | Selected carrier service point identifier. | [optional] 
 **parties** | [**List[CreateShipmentRequestPartiesInner]**](CreateShipmentRequestPartiesInner.md) | Parties involved in the shipment. Optional when orderId is provided. | [optional] 
 **type** | **str** | Direction of the shipment relative to the organization. | 
-**carrier_settings** | [**CreateShipmentRequestCarrierSettings**](CreateShipmentRequestCarrierSettings.md) |  | 
+**carrier_settings** | [**CreateShipmentRequestCarrierSettings**](CreateShipmentRequestCarrierSettings.md) |  | [optional] 
 **parcels** | [**List[CreateShipmentRequestParcelsInner]**](CreateShipmentRequestParcelsInner.md) | Parcels to include. Optional when orderId is provided. | [optional] 
 **pickup_details** | [**CreateShipmentRequestPickupDetails**](CreateShipmentRequestPickupDetails.md) |  | [optional] 
 **term_of_trade** | **str** | Incoterm governing the shipment. | [optional] [default to 'DAP']
@@ -18,6 +18,8 @@ Name | Type | Description | Notes
 **order_id** | **str** | Order to derive parties and parcels from. | [optional] 
 **label_printer_id** | **str** | Printer to assign for labels. | [optional] 
 **document_printer_id** | **str** | Printer to assign for documents. | [optional] 
+**shipping_rule_id** | **str** | Create the shipment from this shipping rule: carrier settings and the sender address derive from the rule (explicit carrierSettings and addressId are then ignored). | [optional] 
+**droppoint** | [**CreateShipmentRequestDroppoint**](CreateShipmentRequestDroppoint.md) |  | [optional] 
 
 ## Example
 

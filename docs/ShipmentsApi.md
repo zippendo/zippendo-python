@@ -276,7 +276,7 @@ Name | Type | Description  | Notes
 
 Create shipment
 
-Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order.
+Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order. When shippingRuleId is provided, carrier settings and the sender address derive from the rule.
 
 ### Example
 

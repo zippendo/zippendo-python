@@ -15,10 +15,10 @@
 
 import unittest
 
-from zippendo.models.create_shipment_request_parcels_inner_order_lines_inner import CreateShipmentRequestParcelsInnerOrderLinesInner
+from zippendo.models.create_shipment_request_droppoint import CreateShipmentRequestDroppoint
 
-class TestCreateShipmentRequestParcelsInnerOrderLinesInner(unittest.TestCase):
-    """CreateShipmentRequestParcelsInnerOrderLinesInner unit test stubs"""
+class TestCreateShipmentRequestDroppoint(unittest.TestCase):
+    """CreateShipmentRequestDroppoint unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,35 +26,31 @@ class TestCreateShipmentRequestParcelsInnerOrderLinesInner(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateShipmentRequestParcelsInnerOrderLinesInner:
-        """Test CreateShipmentRequestParcelsInnerOrderLinesInner
+    def make_instance(self, include_optional) -> CreateShipmentRequestDroppoint:
+        """Test CreateShipmentRequestDroppoint
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateShipmentRequestParcelsInnerOrderLinesInner`
+        # uncomment below to create an instance of `CreateShipmentRequestDroppoint`
         """
-        model = CreateShipmentRequestParcelsInnerOrderLinesInner()
+        model = CreateShipmentRequestDroppoint()
         if include_optional:
-            return CreateShipmentRequestParcelsInnerOrderLinesInner(
-                id = 'ol_9c1d2e3f',
-                sku = 'SKU-1024',
-                quantity = 2,
-                description = 'Wool sweater, navy',
-                unit_price = 299.95,
-                currency = 'DKK',
-                vat_percent = 25,
-                location = 'A-12-3',
-                country_of_origin = 'DK',
-                tarrif_number = '61101100'
+            return CreateShipmentRequestDroppoint(
+                id = 'sp_pn_4521',
+                name = 'Føtex Nørrebro',
+                address = 'Nørrebrogade 20, 2200 København N',
+                coordinates = [55.6987,12.5501]
             )
         else:
-            return CreateShipmentRequestParcelsInnerOrderLinesInner(
-                quantity = 2,
+            return CreateShipmentRequestDroppoint(
+                id = 'sp_pn_4521',
+                name = 'Føtex Nørrebro',
+                address = 'Nørrebrogade 20, 2200 København N',
         )
         """
 
-    def testCreateShipmentRequestParcelsInnerOrderLinesInner(self):
-        """Test CreateShipmentRequestParcelsInnerOrderLinesInner"""
+    def testCreateShipmentRequestDroppoint(self):
+        """Test CreateShipmentRequestDroppoint"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

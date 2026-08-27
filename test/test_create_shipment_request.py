@@ -101,16 +101,13 @@ class TestCreateShipmentRequest(unittest.TestCase):
                 status = 'pending',
                 order_id = 'ord_5e6f7a8b',
                 label_printer_id = 'prn_label_01',
-                document_printer_id = 'prn_doc_01'
+                document_printer_id = 'prn_doc_01',
+                shipping_rule_id = 'rule_3c4d5e6f',
+                droppoint = {"id":"SP-1234","name":"Brugsen Vesterbro","address":"Vesterbrogade 12, 1620 København"}
             )
         else:
             return CreateShipmentRequest(
                 type = 'outbound',
-                carrier_settings = zippendo.models.create_shipment_request_carrier_settings.createShipment_request_carrierSettings(
-                    carrier_id = 'car_pn_001', 
-                    product_id = 'prod_mypack_home', 
-                    services = ["A7"], 
-                    additional_parameters = {"notificationEmail":"anna@example.dk"}, ),
         )
         """
 

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **service_point_id** | **str** | Selected carrier service point identifier. | [optional] 
 **parties** | [**List[CreateShipmentRequestPartiesInner]**](CreateShipmentRequestPartiesInner.md) | Parties involved in the shipment. Optional when orderId is provided. | [optional] 
 **type** | **str** | Direction of the shipment relative to the organization. | [optional] 
-**carrier_settings** | [**CreateShipmentRequestCarrierSettings**](CreateShipmentRequestCarrierSettings.md) |  | [optional] 
+**carrier_settings** | [**UpdateShipmentRequestCarrierSettings**](UpdateShipmentRequestCarrierSettings.md) |  | [optional] 
 **parcels** | [**List[CreateShipmentRequestParcelsInner]**](CreateShipmentRequestParcelsInner.md) | Parcels to include. Optional when orderId is provided. | [optional] 
 **pickup_details** | [**CreateShipmentRequestPickupDetails**](CreateShipmentRequestPickupDetails.md) |  | [optional] 
 **term_of_trade** | **str** | Incoterm governing the shipment. | [optional] [default to 'DAP']
@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **label_printer_id** | **str** | Printer to assign for labels. | [optional] 
 **document_printer_id** | **str** | Printer to assign for documents. | [optional] 
 **shipping_rule_id** | **str** | Shipping rule to apply to the shipment. Pass null to clear. | [optional] 
+**droppoint** | [**UpdateShipmentRequestDroppoint**](UpdateShipmentRequestDroppoint.md) |  | [optional] 
 
 ## Example
 

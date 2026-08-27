@@ -25,9 +25,9 @@ from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class CreateShipmentRequestCarrierSettings(BaseModel):
+class UpdateShipmentRequestCarrierSettings(BaseModel):
     """
-    Carrier configuration for the shipment. Optional when shippingRuleId is provided.
+    UpdateShipmentRequestCarrierSettings
     """ # noqa: E501
     carrier_id: StrictStr = Field(description="Identifier of the carrier to use.", alias="carrierId", json_schema_extra={"examples": ["car_pn_001"]})
     product_id: StrictStr = Field(description="Identifier of the carrier product/service.", alias="productId", json_schema_extra={"examples": ["prod_mypack_home"]})
@@ -53,7 +53,7 @@ class CreateShipmentRequestCarrierSettings(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateShipmentRequestCarrierSettings from a JSON string"""
+        """Create an instance of UpdateShipmentRequestCarrierSettings from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -85,7 +85,7 @@ class CreateShipmentRequestCarrierSettings(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateShipmentRequestCarrierSettings from a dict"""
+        """Create an instance of UpdateShipmentRequestCarrierSettings from a dict"""
         if obj is None:
             return None
 

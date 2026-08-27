@@ -49,7 +49,6 @@ class TestCreateShipment201ResponseParcelsInnerOrderLinesInner(unittest.TestCase
             )
         else:
             return CreateShipment201ResponseParcelsInnerOrderLinesInner(
-                sku = 'SKU-1024',
                 quantity = 2,
         )
         """

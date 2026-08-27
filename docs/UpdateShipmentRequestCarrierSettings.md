@@ -1,6 +1,5 @@
-# CreateShipmentRequestCarrierSettings
+# UpdateShipmentRequestCarrierSettings
 
-Carrier configuration for the shipment. Optional when shippingRuleId is provided.
 
 ## Properties
 
@@ -14,19 +13,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from zippendo.models.create_shipment_request_carrier_settings import CreateShipmentRequestCarrierSettings
+from zippendo.models.update_shipment_request_carrier_settings import UpdateShipmentRequestCarrierSettings
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of CreateShipmentRequestCarrierSettings from a JSON string
-create_shipment_request_carrier_settings_instance = CreateShipmentRequestCarrierSettings.from_json(json)
+# create an instance of UpdateShipmentRequestCarrierSettings from a JSON string
+update_shipment_request_carrier_settings_instance = UpdateShipmentRequestCarrierSettings.from_json(json)
 # print the JSON string representation of the object
-print(CreateShipmentRequestCarrierSettings.to_json())
+print(UpdateShipmentRequestCarrierSettings.to_json())
 
 # convert the object into a dict
-create_shipment_request_carrier_settings_dict = create_shipment_request_carrier_settings_instance.to_dict()
-# create an instance of CreateShipmentRequestCarrierSettings from a dict
-create_shipment_request_carrier_settings_from_dict = CreateShipmentRequestCarrierSettings.from_dict(create_shipment_request_carrier_settings_dict)
+update_shipment_request_carrier_settings_dict = update_shipment_request_carrier_settings_instance.to_dict()
+# create an instance of UpdateShipmentRequestCarrierSettings from a dict
+update_shipment_request_carrier_settings_from_dict = UpdateShipmentRequestCarrierSettings.from_dict(update_shipment_request_carrier_settings_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

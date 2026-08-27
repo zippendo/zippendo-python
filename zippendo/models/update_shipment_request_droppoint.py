@@ -19,21 +19,22 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
-from zippendo.models.create_shipping_rule_request_additional_parameters_value import CreateShippingRuleRequestAdditionalParametersValue
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from zippendo.models.list_shipping_rules200_response_data_inner_additional_parameters_value_any_of_coordinates_inner import ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class CreateShipmentRequestCarrierSettings(BaseModel):
+class UpdateShipmentRequestDroppoint(BaseModel):
     """
-    Carrier configuration for the shipment. Optional when shippingRuleId is provided.
+    Display details of the selected service point, stored alongside `servicePointId`. Used when applying a service-point shipping rule (whose parameters otherwise replace the stored droppoint).
     """ # noqa: E501
-    carrier_id: StrictStr = Field(description="Identifier of the carrier to use.", alias="carrierId", json_schema_extra={"examples": ["car_pn_001"]})
-    product_id: StrictStr = Field(description="Identifier of the carrier product/service.", alias="productId", json_schema_extra={"examples": ["prod_mypack_home"]})
-    services: List[StrictStr] = Field(description="Additional service codes requested from the carrier.", json_schema_extra={"examples": [["A7"]]})
-    additional_parameters: Dict[str, CreateShippingRuleRequestAdditionalParametersValue] = Field(description="Carrier-specific extra parameters as key/value pairs.", alias="additionalParameters", json_schema_extra={"examples": [{"notificationEmail": "anna@example.dk"}]})
-    __properties: ClassVar[List[str]] = ["carrierId", "productId", "services", "additionalParameters"]
+    id: StrictStr = Field(description="Identifier of the selected service point.", json_schema_extra={"examples": ["sp_pn_4521"]})
+    name: StrictStr = Field(description="Display name of the service point.", json_schema_extra={"examples": ["Føtex Nørrebro"]})
+    address: StrictStr = Field(description="Formatted address of the service point.", json_schema_extra={"examples": ["Nørrebrogade 20, 2200 København N"]})
+    coordinates: Optional[Annotated[List[ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner], Field(min_length=2, max_length=2)]] = Field(default=None, description="Latitude/longitude of the service point.", json_schema_extra={"examples": [[55.6987, 12.5501]]})
+    __properties: ClassVar[List[str]] = ["id", "name", "address", "coordinates"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -53,7 +54,7 @@ class CreateShipmentRequestCarrierSettings(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateShipmentRequestCarrierSettings from a JSON string"""
+        """Create an instance of UpdateShipmentRequestDroppoint from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,18 +75,18 @@ class CreateShipmentRequestCarrierSettings(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each value in additional_parameters (dict)
-        _field_dict = {}
-        if self.additional_parameters:
-            for _key_additional_parameters in self.additional_parameters:
-                if self.additional_parameters[_key_additional_parameters]:
-                    _field_dict[_key_additional_parameters] = self.additional_parameters[_key_additional_parameters].to_dict()
-            _dict['additionalParameters'] = _field_dict
+        # override the default output from pydantic by calling `to_dict()` of each item in coordinates (list)
+        _items = []
+        if self.coordinates:
+            for _item_coordinates in self.coordinates:
+                if _item_coordinates:
+                    _items.append(_item_coordinates.to_dict())
+            _dict['coordinates'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateShipmentRequestCarrierSettings from a dict"""
+        """Create an instance of UpdateShipmentRequestDroppoint from a dict"""
         if obj is None:
             return None
 
@@ -93,15 +94,10 @@ class CreateShipmentRequestCarrierSettings(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "carrierId": obj.get("carrierId"),
-            "productId": obj.get("productId"),
-            "services": obj.get("services"),
-            "additionalParameters": dict(
-                (_k, CreateShippingRuleRequestAdditionalParametersValue.from_dict(_v))
-                for _k, _v in obj["additionalParameters"].items()
-            )
-            if obj.get("additionalParameters") is not None
-            else None
+            "id": obj.get("id"),
+            "name": obj.get("name"),
+            "address": obj.get("address"),
+            "coordinates": [ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner.from_dict(_item) for _item in obj["coordinates"]] if obj.get("coordinates") is not None else None
         })
         return _obj
 

@@ -15,10 +15,10 @@
 
 import unittest
 
-from zippendo.models.create_shipment_request_parcels_inner_order_lines_inner import CreateShipmentRequestParcelsInnerOrderLinesInner
+from zippendo.models.update_shipment_request_carrier_settings import UpdateShipmentRequestCarrierSettings
 
-class TestCreateShipmentRequestParcelsInnerOrderLinesInner(unittest.TestCase):
-    """CreateShipmentRequestParcelsInnerOrderLinesInner unit test stubs"""
+class TestUpdateShipmentRequestCarrierSettings(unittest.TestCase):
+    """UpdateShipmentRequestCarrierSettings unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,35 +26,32 @@ class TestCreateShipmentRequestParcelsInnerOrderLinesInner(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateShipmentRequestParcelsInnerOrderLinesInner:
-        """Test CreateShipmentRequestParcelsInnerOrderLinesInner
+    def make_instance(self, include_optional) -> UpdateShipmentRequestCarrierSettings:
+        """Test UpdateShipmentRequestCarrierSettings
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateShipmentRequestParcelsInnerOrderLinesInner`
+        # uncomment below to create an instance of `UpdateShipmentRequestCarrierSettings`
         """
-        model = CreateShipmentRequestParcelsInnerOrderLinesInner()
+        model = UpdateShipmentRequestCarrierSettings()
         if include_optional:
-            return CreateShipmentRequestParcelsInnerOrderLinesInner(
-                id = 'ol_9c1d2e3f',
-                sku = 'SKU-1024',
-                quantity = 2,
-                description = 'Wool sweater, navy',
-                unit_price = 299.95,
-                currency = 'DKK',
-                vat_percent = 25,
-                location = 'A-12-3',
-                country_of_origin = 'DK',
-                tarrif_number = '61101100'
+            return UpdateShipmentRequestCarrierSettings(
+                carrier_id = 'car_pn_001',
+                product_id = 'prod_mypack_home',
+                services = ["A7"],
+                additional_parameters = {"notificationEmail":"anna@example.dk"}
             )
         else:
-            return CreateShipmentRequestParcelsInnerOrderLinesInner(
-                quantity = 2,
+            return UpdateShipmentRequestCarrierSettings(
+                carrier_id = 'car_pn_001',
+                product_id = 'prod_mypack_home',
+                services = ["A7"],
+                additional_parameters = {"notificationEmail":"anna@example.dk"},
         )
         """
 
-    def testCreateShipmentRequestParcelsInnerOrderLinesInner(self):
-        """Test CreateShipmentRequestParcelsInnerOrderLinesInner"""
+    def testUpdateShipmentRequestCarrierSettings(self):
+        """Test UpdateShipmentRequestCarrierSettings"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

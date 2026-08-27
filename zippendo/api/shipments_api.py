@@ -965,7 +965,7 @@ class ShipmentsApi:
     ) -> CreateShipment201Response:
         """Create shipment
 
-        Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order.
+        Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order. When shippingRuleId is provided, carrier settings and the sender address derive from the rule.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -1039,7 +1039,7 @@ class ShipmentsApi:
     ) -> ApiResponse[CreateShipment201Response]:
         """Create shipment
 
-        Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order.
+        Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order. When shippingRuleId is provided, carrier settings and the sender address derive from the rule.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -1113,7 +1113,7 @@ class ShipmentsApi:
     ) -> RESTResponseType:
         """Create shipment
 
-        Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order.
+        Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order. When shippingRuleId is provided, carrier settings and the sender address derive from the rule.
 
         :param org_id: Organization ID (required)
         :type org_id: str

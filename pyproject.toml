@@ -1,6 +1,6 @@
 [project]
 name = "zippendo"
-version = "1.1.4"
+version = "1.2.0"
 description = "Zippendo Public API"
 authors = [
   {name = "Zippendo Support",email = "support@zippendo.com"},

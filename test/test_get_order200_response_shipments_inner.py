@@ -52,6 +52,7 @@ class TestGetOrder200ResponseShipmentsInner(unittest.TestCase):
                     product_id = 'prod_mypack_home', 
                     services = ["A7"], 
                     additional_parameters = {"notificationEmail":"anna@example.dk"}, ),
+                service_point_id = 'sp_pn_4521',
                 created_at = '2026-06-22T14:30:00.000Z',
                 updated_at = '2026-06-22T14:30:00.000Z',
                 shipping_rule_id = 'clz9k2f0a0002abcd5678ijkl',
