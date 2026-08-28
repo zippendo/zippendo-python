@@ -51,7 +51,8 @@ class TestBatchSendShipments200Response(unittest.TestCase):
                 summary = zippendo.models.batch_send_shipments_200_response_summary.batchSendShipments_200_response_summary(
                     total = 3, 
                     sent = 2, 
-                    failed = 1, )
+                    failed = 1, 
+                    skipped = 0, )
             )
         else:
             return BatchSendShipments200Response(
@@ -70,7 +71,8 @@ class TestBatchSendShipments200Response(unittest.TestCase):
                 summary = zippendo.models.batch_send_shipments_200_response_summary.batchSendShipments_200_response_summary(
                     total = 3, 
                     sent = 2, 
-                    failed = 1, ),
+                    failed = 1, 
+                    skipped = 0, ),
         )
         """
 

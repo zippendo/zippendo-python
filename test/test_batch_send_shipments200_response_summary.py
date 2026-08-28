@@ -38,13 +38,15 @@ class TestBatchSendShipments200ResponseSummary(unittest.TestCase):
             return BatchSendShipments200ResponseSummary(
                 total = 3,
                 sent = 2,
-                failed = 1
+                failed = 1,
+                skipped = 0
             )
         else:
             return BatchSendShipments200ResponseSummary(
                 total = 3,
                 sent = 2,
                 failed = 1,
+                skipped = 0,
         )
         """
 
