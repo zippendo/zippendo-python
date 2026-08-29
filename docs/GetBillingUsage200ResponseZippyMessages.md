@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **used** | **float** | Zippy messages used this period | 
 **charges** | **float** | Zippy message charges so far, in øre | 
+**limit** | **float** | Maximum Zippy messages per month (-1 for unlimited) | 
 
 ## Example
 

@@ -37,12 +37,14 @@ class TestGetBillingUsage200ResponseZippyMessages(unittest.TestCase):
         if include_optional:
             return GetBillingUsage200ResponseZippyMessages(
                 used = 42,
-                charges = 4158
+                charges = 4158,
+                limit = -1
             )
         else:
             return GetBillingUsage200ResponseZippyMessages(
                 used = 42,
                 charges = 4158,
+                limit = -1,
         )
         """
 

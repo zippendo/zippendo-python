@@ -30,7 +30,8 @@ class GetBillingUsage200ResponseZippyMessages(BaseModel):
     """ # noqa: E501
     used: Union[StrictFloat, StrictInt] = Field(description="Zippy messages used this period", json_schema_extra={"examples": [42]})
     charges: Union[StrictFloat, StrictInt] = Field(description="Zippy message charges so far, in øre", json_schema_extra={"examples": [4158]})
-    __properties: ClassVar[List[str]] = ["used", "charges"]
+    limit: Union[StrictFloat, StrictInt] = Field(description="Maximum Zippy messages per month (-1 for unlimited)", json_schema_extra={"examples": [-1]})
+    __properties: ClassVar[List[str]] = ["used", "charges", "limit"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -84,7 +85,8 @@ class GetBillingUsage200ResponseZippyMessages(BaseModel):
 
         _obj = cls.model_validate({
             "used": obj.get("used"),
-            "charges": obj.get("charges")
+            "charges": obj.get("charges"),
+            "limit": obj.get("limit")
         })
         return _obj
 
