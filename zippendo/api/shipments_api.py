@@ -2136,6 +2136,9 @@ class ShipmentsApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Filter by shipment status.")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by direction.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search by shipment reference or parcel tracking number.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2163,6 +2166,12 @@ class ShipmentsApi:
         :type brand_id: str
         :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
         :type brand_scope: str
+        :param status: Filter by shipment status.
+        :type status: str
+        :param type: Filter by direction.
+        :type type: str
+        :param search: Search by shipment reference or parcel tracking number.
+        :type search: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2191,6 +2200,9 @@ class ShipmentsApi:
             limit=limit,
             brand_id=brand_id,
             brand_scope=brand_scope,
+            status=status,
+            type=type,
+            search=search,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2221,6 +2233,9 @@ class ShipmentsApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Filter by shipment status.")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by direction.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search by shipment reference or parcel tracking number.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2248,6 +2263,12 @@ class ShipmentsApi:
         :type brand_id: str
         :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
         :type brand_scope: str
+        :param status: Filter by shipment status.
+        :type status: str
+        :param type: Filter by direction.
+        :type type: str
+        :param search: Search by shipment reference or parcel tracking number.
+        :type search: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2276,6 +2297,9 @@ class ShipmentsApi:
             limit=limit,
             brand_id=brand_id,
             brand_scope=brand_scope,
+            status=status,
+            type=type,
+            search=search,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2306,6 +2330,9 @@ class ShipmentsApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Filter by shipment status.")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by direction.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search by shipment reference or parcel tracking number.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2333,6 +2360,12 @@ class ShipmentsApi:
         :type brand_id: str
         :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
         :type brand_scope: str
+        :param status: Filter by shipment status.
+        :type status: str
+        :param type: Filter by direction.
+        :type type: str
+        :param search: Search by shipment reference or parcel tracking number.
+        :type search: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2361,6 +2394,9 @@ class ShipmentsApi:
             limit=limit,
             brand_id=brand_id,
             brand_scope=brand_scope,
+            status=status,
+            type=type,
+            search=search,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2386,6 +2422,9 @@ class ShipmentsApi:
         limit,
         brand_id,
         brand_scope,
+        status,
+        type,
+        search,
         _request_auth,
         _content_type,
         _headers,
@@ -2425,6 +2464,18 @@ class ShipmentsApi:
         if brand_scope is not None:
             
             _query_params.append(('brandScope', brand_scope))
+            
+        if status is not None:
+            
+            _query_params.append(('status', status))
+            
+        if type is not None:
+            
+            _query_params.append(('type', type))
+            
+        if search is not None:
+            
+            _query_params.append(('search', search))
             
         # process the header parameters
         # process the form parameters
