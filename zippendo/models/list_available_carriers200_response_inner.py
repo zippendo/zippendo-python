@@ -40,7 +40,9 @@ class ListAvailableCarriers200ResponseInner(BaseModel):
     optional_fields: Optional[List[ListAvailableCarriers200ResponseInnerRequiredFieldsInner]] = Field(default=None, description="Optional configuration fields for the carrier", alias="optionalFields")
     deprecated: Optional[StrictBool] = Field(default=None, description="Whether this integration is deprecated (still works, but discouraged)", json_schema_extra={"examples": [True]})
     deprecation_message: Optional[StrictStr] = Field(default=None, description="Guidance shown alongside the deprecated tag (e.g. what to migrate to)", alias="deprecationMessage", json_schema_extra={"examples": ["The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration."]})
-    __properties: ClassVar[List[str]] = ["name", "slug", "group", "description", "logo", "brandColor", "learnMoreUrl", "requiredFields", "optionalFields", "deprecated", "deprecationMessage"]
+    generates_customs_documents: Optional[StrictBool] = Field(default=None, description="Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label.", alias="generatesCustomsDocuments", json_schema_extra={"examples": [True]})
+    generates_commercial_invoice: Optional[StrictBool] = Field(default=None, description="Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents.", alias="generatesCommercialInvoice", json_schema_extra={"examples": [True]})
+    __properties: ClassVar[List[str]] = ["name", "slug", "group", "description", "logo", "brandColor", "learnMoreUrl", "requiredFields", "optionalFields", "deprecated", "deprecationMessage", "generatesCustomsDocuments", "generatesCommercialInvoice"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -117,7 +119,9 @@ class ListAvailableCarriers200ResponseInner(BaseModel):
             "requiredFields": [ListAvailableCarriers200ResponseInnerRequiredFieldsInner.from_dict(_item) for _item in obj["requiredFields"]] if obj.get("requiredFields") is not None else None,
             "optionalFields": [ListAvailableCarriers200ResponseInnerRequiredFieldsInner.from_dict(_item) for _item in obj["optionalFields"]] if obj.get("optionalFields") is not None else None,
             "deprecated": obj.get("deprecated"),
-            "deprecationMessage": obj.get("deprecationMessage")
+            "deprecationMessage": obj.get("deprecationMessage"),
+            "generatesCustomsDocuments": obj.get("generatesCustomsDocuments"),
+            "generatesCommercialInvoice": obj.get("generatesCommercialInvoice")
         })
         return _obj
 

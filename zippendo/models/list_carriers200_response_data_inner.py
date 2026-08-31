@@ -41,7 +41,9 @@ class ListCarriers200ResponseDataInner(BaseModel):
     brand_color: Optional[StrictStr] = Field(default=None, description="Carrier brand color (hex)", alias="brandColor", json_schema_extra={"examples": ["#005BAA"]})
     deprecated: Optional[StrictBool] = Field(default=None, description="Whether this carrier integration is deprecated (still works, but discouraged)", json_schema_extra={"examples": [True]})
     deprecation_message: Optional[StrictStr] = Field(default=None, description="Guidance shown alongside the deprecated tag (e.g. what to migrate to)", alias="deprecationMessage", json_schema_extra={"examples": ["The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration."]})
-    __properties: ClassVar[List[str]] = ["id", "name", "carrierSlug", "config", "orgId", "brandId", "createdAt", "updatedAt", "logo", "brandColor", "deprecated", "deprecationMessage"]
+    generates_customs_documents: Optional[StrictBool] = Field(default=None, description="Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label.", alias="generatesCustomsDocuments", json_schema_extra={"examples": [True]})
+    generates_commercial_invoice: Optional[StrictBool] = Field(default=None, description="Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents.", alias="generatesCommercialInvoice", json_schema_extra={"examples": [True]})
+    __properties: ClassVar[List[str]] = ["id", "name", "carrierSlug", "config", "orgId", "brandId", "createdAt", "updatedAt", "logo", "brandColor", "deprecated", "deprecationMessage", "generatesCustomsDocuments", "generatesCommercialInvoice"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -122,7 +124,9 @@ class ListCarriers200ResponseDataInner(BaseModel):
             "logo": obj.get("logo"),
             "brandColor": obj.get("brandColor"),
             "deprecated": obj.get("deprecated"),
-            "deprecationMessage": obj.get("deprecationMessage")
+            "deprecationMessage": obj.get("deprecationMessage"),
+            "generatesCustomsDocuments": obj.get("generatesCustomsDocuments"),
+            "generatesCommercialInvoice": obj.get("generatesCommercialInvoice")
         })
         return _obj
 

@@ -47,7 +47,9 @@ class TestListCarriers200ResponseDataInner(unittest.TestCase):
                 logo = 'https://cdn.zippendo.com/logos/postnord.svg',
                 brand_color = '#005BAA',
                 deprecated = True,
-                deprecation_message = 'The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.'
+                deprecation_message = 'The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.',
+                generates_customs_documents = True,
+                generates_commercial_invoice = True
             )
         else:
             return ListCarriers200ResponseDataInner(

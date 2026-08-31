@@ -49,7 +49,9 @@ class TestListCarriers200Response(unittest.TestCase):
                         logo = 'https://cdn.zippendo.com/logos/postnord.svg', 
                         brand_color = '#005BAA', 
                         deprecated = True, 
-                        deprecation_message = 'The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.', )
+                        deprecation_message = 'The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.', 
+                        generates_customs_documents = True, 
+                        generates_commercial_invoice = True, )
                     ],
                 total = 137,
                 page = 1,
@@ -71,7 +73,9 @@ class TestListCarriers200Response(unittest.TestCase):
                         logo = 'https://cdn.zippendo.com/logos/postnord.svg', 
                         brand_color = '#005BAA', 
                         deprecated = True, 
-                        deprecation_message = 'The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.', )
+                        deprecation_message = 'The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.', 
+                        generates_customs_documents = True, 
+                        generates_commercial_invoice = True, )
                     ],
                 total = 137,
                 page = 1,

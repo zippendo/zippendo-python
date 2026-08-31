@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **optional_fields** | [**List[ListAvailableCarriers200ResponseInnerRequiredFieldsInner]**](ListAvailableCarriers200ResponseInnerRequiredFieldsInner.md) | Optional configuration fields for the carrier | [optional] 
 **deprecated** | **bool** | Whether this integration is deprecated (still works, but discouraged) | [optional] 
 **deprecation_message** | **str** | Guidance shown alongside the deprecated tag (e.g. what to migrate to) | [optional] 
+**generates_customs_documents** | **bool** | Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label. | [optional] 
+**generates_commercial_invoice** | **bool** | Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents. | [optional] 
 
 ## Example
 
