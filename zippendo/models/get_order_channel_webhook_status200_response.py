@@ -18,27 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List
+from zippendo.models.get_order_channel_webhook_status200_response_webhooks_inner import GetOrderChannelWebhookStatus200ResponseWebhooksInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
+class GetOrderChannelWebhookStatus200Response(BaseModel):
     """
-    Summary of the order's source channel.
+    GetOrderChannelWebhookStatus200Response
     """ # noqa: E501
-    id: StrictStr = Field(description="Order channel ID.", json_schema_extra={"examples": ["clz9k2f0a0001abcd1234efgh"]})
-    name: StrictStr = Field(description="Order channel name.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
-    type: StrictStr = Field(description="Type of the order channel (sales platform).", json_schema_extra={"examples": ["shopify"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "type"]
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['shopify', 'woocommerce', 'manual', 'custom']):
-            raise ValueError("must be one of enum values ('shopify', 'woocommerce', 'manual', 'custom')")
-        return value
+    enabled: StrictBool = Field(description="Whether webhooks are enabled for the channel.", json_schema_extra={"examples": [True]})
+    webhook_url: StrictStr = Field(description="Expected callback URL for this channel.", alias="webhookUrl", json_schema_extra={"examples": ["https://api.zippendo.dk/webhooks/order-channels/clz9k2f0a0001abcd1234efgh"]})
+    webhooks: List[GetOrderChannelWebhookStatus200ResponseWebhooksInner] = Field(description="Webhooks registered for this channel's callback URL.")
+    __properties: ClassVar[List[str]] = ["enabled", "webhookUrl", "webhooks"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -58,7 +52,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a JSON string"""
+        """Create an instance of GetOrderChannelWebhookStatus200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,11 +73,18 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in webhooks (list)
+        _items = []
+        if self.webhooks:
+            for _item_webhooks in self.webhooks:
+                if _item_webhooks:
+                    _items.append(_item_webhooks.to_dict())
+            _dict['webhooks'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a dict"""
+        """Create an instance of GetOrderChannelWebhookStatus200Response from a dict"""
         if obj is None:
             return None
 
@@ -91,9 +92,9 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "type": obj.get("type")
+            "enabled": obj.get("enabled"),
+            "webhookUrl": obj.get("webhookUrl"),
+            "webhooks": [GetOrderChannelWebhookStatus200ResponseWebhooksInner.from_dict(_item) for _item in obj["webhooks"]] if obj.get("webhooks") is not None else None
         })
         return _obj
 

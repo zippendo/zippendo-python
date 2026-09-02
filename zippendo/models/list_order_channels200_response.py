@@ -18,27 +18,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Union
+from zippendo.models.list_order_channels200_response_data_inner import ListOrderChannels200ResponseDataInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
+class ListOrderChannels200Response(BaseModel):
     """
-    Summary of the order's source channel.
+    ListOrderChannels200Response
     """ # noqa: E501
-    id: StrictStr = Field(description="Order channel ID.", json_schema_extra={"examples": ["clz9k2f0a0001abcd1234efgh"]})
-    name: StrictStr = Field(description="Order channel name.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
-    type: StrictStr = Field(description="Type of the order channel (sales platform).", json_schema_extra={"examples": ["shopify"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "type"]
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['shopify', 'woocommerce', 'manual', 'custom']):
-            raise ValueError("must be one of enum values ('shopify', 'woocommerce', 'manual', 'custom')")
-        return value
+    data: List[ListOrderChannels200ResponseDataInner] = Field(description="Page of results")
+    total: Union[StrictFloat, StrictInt] = Field(description="Total matching items across all pages", json_schema_extra={"examples": [137]})
+    page: Union[StrictFloat, StrictInt] = Field(description="Current page number (1-based)", json_schema_extra={"examples": [1]})
+    limit: Union[StrictFloat, StrictInt] = Field(description="Items per page", json_schema_extra={"examples": [20]})
+    total_pages: Union[StrictFloat, StrictInt] = Field(description="Total number of pages", alias="totalPages", json_schema_extra={"examples": [7]})
+    __properties: ClassVar[List[str]] = ["data", "total", "page", "limit", "totalPages"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -58,7 +54,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a JSON string"""
+        """Create an instance of ListOrderChannels200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,11 +75,18 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
+        _items = []
+        if self.data:
+            for _item_data in self.data:
+                if _item_data:
+                    _items.append(_item_data.to_dict())
+            _dict['data'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a dict"""
+        """Create an instance of ListOrderChannels200Response from a dict"""
         if obj is None:
             return None
 
@@ -91,9 +94,11 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "type": obj.get("type")
+            "data": [ListOrderChannels200ResponseDataInner.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None,
+            "total": obj.get("total"),
+            "page": obj.get("page"),
+            "limit": obj.get("limit"),
+            "totalPages": obj.get("totalPages")
         })
         return _obj
 

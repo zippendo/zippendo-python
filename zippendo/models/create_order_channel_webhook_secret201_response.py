@@ -18,26 +18,27 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
+class CreateOrderChannelWebhookSecret201Response(BaseModel):
     """
-    Summary of the order's source channel.
+    CreateOrderChannelWebhookSecret201Response
     """ # noqa: E501
-    id: StrictStr = Field(description="Order channel ID.", json_schema_extra={"examples": ["clz9k2f0a0001abcd1234efgh"]})
-    name: StrictStr = Field(description="Order channel name.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
-    type: StrictStr = Field(description="Type of the order channel (sales platform).", json_schema_extra={"examples": ["shopify"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "type"]
+    secret: StrictStr = Field(description="The webhook signing secret. Returned only once — store it in your system; every push to the ingest URL must carry an HMAC-SHA256 hex signature of the raw body computed with it.", json_schema_extra={"examples": ["zwhs_XeVJ1n8vJZbJ0N3mYQ2fV0dK9cA5tR7uW4pL6sH8gB0"]})
+    webhook_url: StrictStr = Field(description="The ingest URL your system pushes signed order events to.", alias="webhookUrl", json_schema_extra={"examples": ["https://api.zippendo.com/webhooks/order-channels/clz9k2f0a0001abcd1234efgh"]})
+    created_at: datetime = Field(description="When this secret was issued (ISO 8601).", alias="createdAt", json_schema_extra={"examples": ["2026-09-02T14:30:00Z"]})
+    __properties: ClassVar[List[str]] = ["secret", "webhookUrl", "createdAt"]
 
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['shopify', 'woocommerce', 'manual', 'custom']):
-            raise ValueError("must be one of enum values ('shopify', 'woocommerce', 'manual', 'custom')")
+    @field_validator('created_at', mode="before")
+    def created_at_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if isinstance(value, str) and not re.match(r"^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$", value):
+            raise ValueError(r"must validate the regular expression /^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$/")
         return value
 
     model_config = ConfigDict(
@@ -58,7 +59,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a JSON string"""
+        """Create an instance of CreateOrderChannelWebhookSecret201Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,7 +84,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a dict"""
+        """Create an instance of CreateOrderChannelWebhookSecret201Response from a dict"""
         if obj is None:
             return None
 
@@ -91,9 +92,9 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "type": obj.get("type")
+            "secret": obj.get("secret"),
+            "webhookUrl": obj.get("webhookUrl"),
+            "createdAt": obj.get("createdAt")
         })
         return _obj
 

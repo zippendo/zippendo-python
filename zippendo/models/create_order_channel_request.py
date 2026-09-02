@@ -18,26 +18,30 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from zippendo.models.create_order_channel_request_settings import CreateOrderChannelRequestSettings
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
+class CreateOrderChannelRequest(BaseModel):
     """
-    Summary of the order's source channel.
+    CreateOrderChannelRequest
     """ # noqa: E501
-    id: StrictStr = Field(description="Order channel ID.", json_schema_extra={"examples": ["clz9k2f0a0001abcd1234efgh"]})
-    name: StrictStr = Field(description="Order channel name.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
-    type: StrictStr = Field(description="Type of the order channel (sales platform).", json_schema_extra={"examples": ["shopify"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "type"]
+    name: Annotated[str, Field(min_length=1, strict=True, max_length=100)] = Field(description="Display name for the channel.", json_schema_extra={"examples": ["Anna's webshop"]})
+    type: StrictStr = Field(description="Type of the order channel. Platform channels (Shopify, WooCommerce) are created via their connect flows.", json_schema_extra={"examples": ["custom"]})
+    brand_id: Optional[StrictStr] = Field(default=None, description="Brand this channel belongs to; null for organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
+    enabled: Optional[StrictBool] = Field(default=True, description="Whether the channel is active.", json_schema_extra={"examples": [True]})
+    settings: Optional[CreateOrderChannelRequestSettings] = None
+    __properties: ClassVar[List[str]] = ["name", "type", "brandId", "enabled", "settings"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['shopify', 'woocommerce', 'manual', 'custom']):
-            raise ValueError("must be one of enum values ('shopify', 'woocommerce', 'manual', 'custom')")
+        if value not in set(['manual', 'custom']):
+            raise ValueError("must be one of enum values ('manual', 'custom')")
         return value
 
     model_config = ConfigDict(
@@ -58,7 +62,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a JSON string"""
+        """Create an instance of CreateOrderChannelRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,11 +83,19 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of settings
+        if self.settings:
+            _dict['settings'] = self.settings.to_dict()
+        # set to None if brand_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.brand_id is None and "brand_id" in self.model_fields_set:
+            _dict['brandId'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a dict"""
+        """Create an instance of CreateOrderChannelRequest from a dict"""
         if obj is None:
             return None
 
@@ -91,9 +103,11 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
             "name": obj.get("name"),
-            "type": obj.get("type")
+            "type": obj.get("type"),
+            "brandId": obj.get("brandId"),
+            "enabled": obj.get("enabled") if obj.get("enabled") is not None else True,
+            "settings": CreateOrderChannelRequestSettings.from_dict(obj["settings"]) if obj.get("settings") is not None else None
         })
         return _obj
 

@@ -18,27 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
+class RevokeOrderChannelWebhookSecret200Response(BaseModel):
     """
-    Summary of the order's source channel.
+    RevokeOrderChannelWebhookSecret200Response
     """ # noqa: E501
-    id: StrictStr = Field(description="Order channel ID.", json_schema_extra={"examples": ["clz9k2f0a0001abcd1234efgh"]})
-    name: StrictStr = Field(description="Order channel name.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
-    type: StrictStr = Field(description="Type of the order channel (sales platform).", json_schema_extra={"examples": ["shopify"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "type"]
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['shopify', 'woocommerce', 'manual', 'custom']):
-            raise ValueError("must be one of enum values ('shopify', 'woocommerce', 'manual', 'custom')")
-        return value
+    revoked: StrictBool = Field(description="Whether the signing secret was revoked.", json_schema_extra={"examples": [True]})
+    __properties: ClassVar[List[str]] = ["revoked"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -58,7 +49,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a JSON string"""
+        """Create an instance of RevokeOrderChannelWebhookSecret200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,7 +74,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a dict"""
+        """Create an instance of RevokeOrderChannelWebhookSecret200Response from a dict"""
         if obj is None:
             return None
 
@@ -91,9 +82,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "type": obj.get("type")
+            "revoked": obj.get("revoked")
         })
         return _obj
 

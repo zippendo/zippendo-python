@@ -42,8 +42,10 @@ class CreateOrderRequest(BaseModel):
     total_amount: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Order grand total.", alias="totalAmount", json_schema_extra={"examples": [1047]})
     currency: Optional[Annotated[str, Field(min_length=3, strict=True, max_length=3)]] = Field(default=None, description="ISO 4217 currency code.", json_schema_extra={"examples": ["DKK"]})
     notes: Optional[StrictStr] = Field(default=None, description="Free-form internal notes.", json_schema_extra={"examples": ["Leave at front desk"]})
+    shipping_rule_id: Optional[StrictStr] = Field(default=None, description="Shipping rule to ship this order with. When set, a shipment is created immediately (and dispatched if the channel has autoShipOnCreate enabled).", alias="shippingRuleId", json_schema_extra={"examples": ["clz9k2f0a0007abcd2468qrst"]})
+    shipping_method_title: Optional[StrictStr] = Field(default=None, description="Shipping-method title from the source checkout; matched against the order channel's shipping-method mappings to pick a shipping rule.", alias="shippingMethodTitle", json_schema_extra={"examples": ["GLS Hjemmelevering"]})
     external_data: Optional[Dict[str, Any]] = Field(default=None, description="Raw platform-specific payload for reference.", alias="externalData")
-    __properties: ClassVar[List[str]] = ["orderNumber", "externalId", "orderChannelId", "customerName", "customerEmail", "shippingAddress", "orderLines", "subtotalAmount", "totalAmount", "currency", "notes", "externalData"]
+    __properties: ClassVar[List[str]] = ["orderNumber", "externalId", "orderChannelId", "customerName", "customerEmail", "shippingAddress", "orderLines", "subtotalAmount", "totalAmount", "currency", "notes", "shippingRuleId", "shippingMethodTitle", "externalData"]
 
     @field_validator('customer_email', mode="before")
     def customer_email_validate_regular_expression(cls, value):
@@ -144,6 +146,16 @@ class CreateOrderRequest(BaseModel):
         if self.notes is None and "notes" in self.model_fields_set:
             _dict['notes'] = None
 
+        # set to None if shipping_rule_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.shipping_rule_id is None and "shipping_rule_id" in self.model_fields_set:
+            _dict['shippingRuleId'] = None
+
+        # set to None if shipping_method_title (nullable) is None
+        # and model_fields_set contains the field
+        if self.shipping_method_title is None and "shipping_method_title" in self.model_fields_set:
+            _dict['shippingMethodTitle'] = None
+
         # set to None if external_data (nullable) is None
         # and model_fields_set contains the field
         if self.external_data is None and "external_data" in self.model_fields_set:
@@ -172,6 +184,8 @@ class CreateOrderRequest(BaseModel):
             "totalAmount": obj.get("totalAmount"),
             "currency": obj.get("currency"),
             "notes": obj.get("notes"),
+            "shippingRuleId": obj.get("shippingRuleId"),
+            "shippingMethodTitle": obj.get("shippingMethodTitle"),
             "externalData": obj.get("externalData")
         })
         return _obj

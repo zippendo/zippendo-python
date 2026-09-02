@@ -81,6 +81,8 @@ class TestCreateOrderRequest(unittest.TestCase):
                 total_amount = 1047,
                 currency = 'DKK',
                 notes = 'Leave at front desk',
+                shipping_rule_id = 'clz9k2f0a0007abcd2468qrst',
+                shipping_method_title = 'GLS Hjemmelevering',
                 external_data = {
                     'key' : null
                     }

@@ -92,6 +92,7 @@ Name | Type | Description  | Notes
 **400** | Default Response |  -  |
 **403** | Default Response |  -  |
 **404** | Default Response |  -  |
+**409** | Default Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

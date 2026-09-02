@@ -106,6 +106,7 @@ class OrdersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -180,6 +181,7 @@ class OrdersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -254,6 +256,7 @@ class OrdersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,

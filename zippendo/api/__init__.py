@@ -6,6 +6,7 @@ from zippendo.api.billing_api import BillingApi
 from zippendo.api.brands_api import BrandsApi
 from zippendo.api.carrier_catalog_api import CarrierCatalogApi
 from zippendo.api.carriers_api import CarriersApi
+from zippendo.api.order_channels_api import OrderChannelsApi
 from zippendo.api.orders_api import OrdersApi
 from zippendo.api.orgs_api import OrgsApi
 from zippendo.api.quotes_api import QuotesApi

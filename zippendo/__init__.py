@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.2.4"
+__version__ = "1.2.5"
 
 # Define package exports
 __all__ = [
@@ -24,6 +24,7 @@ __all__ = [
     "BrandsApi",
     "CarrierCatalogApi",
     "CarriersApi",
+    "OrderChannelsApi",
     "OrdersApi",
     "OrgsApi",
     "QuotesApi",
@@ -57,6 +58,10 @@ __all__ = [
     "CreateOrder201Response",
     "CreateOrder201ResponseOrderLinesInner",
     "CreateOrder201ResponseShippingAddress",
+    "CreateOrderChannelRequest",
+    "CreateOrderChannelRequestSettings",
+    "CreateOrderChannelRequestSettingsShippingMethodMappingsInner",
+    "CreateOrderChannelWebhookSecret201Response",
     "CreateOrderRequest",
     "CreateOrderRequestOrderLinesInner",
     "CreateOrderRequestShippingAddress",
@@ -114,6 +119,8 @@ __all__ = [
     "GetOrder200Response",
     "GetOrder200ResponseShipmentsInner",
     "GetOrder200ResponseShippingRule",
+    "GetOrderChannelWebhookStatus200Response",
+    "GetOrderChannelWebhookStatus200ResponseWebhooksInner",
     "GetOrg200Response",
     "GetOrg200ResponseCount",
     "GetOrgBranding200Response",
@@ -137,6 +144,10 @@ __all__ = [
     "ListCarriers200Response",
     "ListCarriers200ResponseDataInner",
     "ListCarriers200ResponseDataInnerConfigValue",
+    "ListOrderChannels200Response",
+    "ListOrderChannels200ResponseDataInner",
+    "ListOrderChannels200ResponseDataInnerSettings",
+    "ListOrderChannels200ResponseDataInnerSettingsShippingMethodMappingsInner",
     "ListOrders200Response",
     "ListOrders200ResponseDataInner",
     "ListOrders200ResponseDataInnerOrderChannel",
@@ -165,6 +176,7 @@ __all__ = [
     "ListShippingRules200ResponseDataInnerLabelPrinter",
     "ListShippingRules200ResponseDataInnerReturnShippingRule",
     "RevokeApiToken200Response",
+    "RevokeOrderChannelWebhookSecret200Response",
     "SendShipment422Response",
     "SendShipment422ResponseErrorsInner",
     "SplitShipment201Response",
@@ -178,6 +190,8 @@ __all__ = [
     "UpdateAddressRequest",
     "UpdateApiTokenRequest",
     "UpdateCarrierRequest",
+    "UpdateOrderChannelRequest",
+    "UpdateOrderChannelRequestSettings",
     "UpdateOrderRequest",
     "UpdateOrg200Response",
     "UpdateOrgBrandRequest",
@@ -198,6 +212,7 @@ from zippendo.api.billing_api import BillingApi as BillingApi
 from zippendo.api.brands_api import BrandsApi as BrandsApi
 from zippendo.api.carrier_catalog_api import CarrierCatalogApi as CarrierCatalogApi
 from zippendo.api.carriers_api import CarriersApi as CarriersApi
+from zippendo.api.order_channels_api import OrderChannelsApi as OrderChannelsApi
 from zippendo.api.orders_api import OrdersApi as OrdersApi
 from zippendo.api.orgs_api import OrgsApi as OrgsApi
 from zippendo.api.quotes_api import QuotesApi as QuotesApi
@@ -235,6 +250,10 @@ from zippendo.models.create_api_token_request import CreateApiTokenRequest as Cr
 from zippendo.models.create_order201_response import CreateOrder201Response as CreateOrder201Response
 from zippendo.models.create_order201_response_order_lines_inner import CreateOrder201ResponseOrderLinesInner as CreateOrder201ResponseOrderLinesInner
 from zippendo.models.create_order201_response_shipping_address import CreateOrder201ResponseShippingAddress as CreateOrder201ResponseShippingAddress
+from zippendo.models.create_order_channel_request import CreateOrderChannelRequest as CreateOrderChannelRequest
+from zippendo.models.create_order_channel_request_settings import CreateOrderChannelRequestSettings as CreateOrderChannelRequestSettings
+from zippendo.models.create_order_channel_request_settings_shipping_method_mappings_inner import CreateOrderChannelRequestSettingsShippingMethodMappingsInner as CreateOrderChannelRequestSettingsShippingMethodMappingsInner
+from zippendo.models.create_order_channel_webhook_secret201_response import CreateOrderChannelWebhookSecret201Response as CreateOrderChannelWebhookSecret201Response
 from zippendo.models.create_order_request import CreateOrderRequest as CreateOrderRequest
 from zippendo.models.create_order_request_order_lines_inner import CreateOrderRequestOrderLinesInner as CreateOrderRequestOrderLinesInner
 from zippendo.models.create_order_request_shipping_address import CreateOrderRequestShippingAddress as CreateOrderRequestShippingAddress
@@ -292,6 +311,8 @@ from zippendo.models.get_billing_usage200_response_zippy_messages import GetBill
 from zippendo.models.get_order200_response import GetOrder200Response as GetOrder200Response
 from zippendo.models.get_order200_response_shipments_inner import GetOrder200ResponseShipmentsInner as GetOrder200ResponseShipmentsInner
 from zippendo.models.get_order200_response_shipping_rule import GetOrder200ResponseShippingRule as GetOrder200ResponseShippingRule
+from zippendo.models.get_order_channel_webhook_status200_response import GetOrderChannelWebhookStatus200Response as GetOrderChannelWebhookStatus200Response
+from zippendo.models.get_order_channel_webhook_status200_response_webhooks_inner import GetOrderChannelWebhookStatus200ResponseWebhooksInner as GetOrderChannelWebhookStatus200ResponseWebhooksInner
 from zippendo.models.get_org200_response import GetOrg200Response as GetOrg200Response
 from zippendo.models.get_org200_response_count import GetOrg200ResponseCount as GetOrg200ResponseCount
 from zippendo.models.get_org_branding200_response import GetOrgBranding200Response as GetOrgBranding200Response
@@ -315,6 +336,10 @@ from zippendo.models.list_carrier_products200_response_inner_weight_limits impor
 from zippendo.models.list_carriers200_response import ListCarriers200Response as ListCarriers200Response
 from zippendo.models.list_carriers200_response_data_inner import ListCarriers200ResponseDataInner as ListCarriers200ResponseDataInner
 from zippendo.models.list_carriers200_response_data_inner_config_value import ListCarriers200ResponseDataInnerConfigValue as ListCarriers200ResponseDataInnerConfigValue
+from zippendo.models.list_order_channels200_response import ListOrderChannels200Response as ListOrderChannels200Response
+from zippendo.models.list_order_channels200_response_data_inner import ListOrderChannels200ResponseDataInner as ListOrderChannels200ResponseDataInner
+from zippendo.models.list_order_channels200_response_data_inner_settings import ListOrderChannels200ResponseDataInnerSettings as ListOrderChannels200ResponseDataInnerSettings
+from zippendo.models.list_order_channels200_response_data_inner_settings_shipping_method_mappings_inner import ListOrderChannels200ResponseDataInnerSettingsShippingMethodMappingsInner as ListOrderChannels200ResponseDataInnerSettingsShippingMethodMappingsInner
 from zippendo.models.list_orders200_response import ListOrders200Response as ListOrders200Response
 from zippendo.models.list_orders200_response_data_inner import ListOrders200ResponseDataInner as ListOrders200ResponseDataInner
 from zippendo.models.list_orders200_response_data_inner_order_channel import ListOrders200ResponseDataInnerOrderChannel as ListOrders200ResponseDataInnerOrderChannel
@@ -343,6 +368,7 @@ from zippendo.models.list_shipping_rules200_response_data_inner_conditions_inner
 from zippendo.models.list_shipping_rules200_response_data_inner_label_printer import ListShippingRules200ResponseDataInnerLabelPrinter as ListShippingRules200ResponseDataInnerLabelPrinter
 from zippendo.models.list_shipping_rules200_response_data_inner_return_shipping_rule import ListShippingRules200ResponseDataInnerReturnShippingRule as ListShippingRules200ResponseDataInnerReturnShippingRule
 from zippendo.models.revoke_api_token200_response import RevokeApiToken200Response as RevokeApiToken200Response
+from zippendo.models.revoke_order_channel_webhook_secret200_response import RevokeOrderChannelWebhookSecret200Response as RevokeOrderChannelWebhookSecret200Response
 from zippendo.models.send_shipment422_response import SendShipment422Response as SendShipment422Response
 from zippendo.models.send_shipment422_response_errors_inner import SendShipment422ResponseErrorsInner as SendShipment422ResponseErrorsInner
 from zippendo.models.split_shipment201_response import SplitShipment201Response as SplitShipment201Response
@@ -356,6 +382,8 @@ from zippendo.models.track_shipment200_response_events_inner import TrackShipmen
 from zippendo.models.update_address_request import UpdateAddressRequest as UpdateAddressRequest
 from zippendo.models.update_api_token_request import UpdateApiTokenRequest as UpdateApiTokenRequest
 from zippendo.models.update_carrier_request import UpdateCarrierRequest as UpdateCarrierRequest
+from zippendo.models.update_order_channel_request import UpdateOrderChannelRequest as UpdateOrderChannelRequest
+from zippendo.models.update_order_channel_request_settings import UpdateOrderChannelRequestSettings as UpdateOrderChannelRequestSettings
 from zippendo.models.update_order_request import UpdateOrderRequest as UpdateOrderRequest
 from zippendo.models.update_org200_response import UpdateOrg200Response as UpdateOrg200Response
 from zippendo.models.update_org_brand_request import UpdateOrgBrandRequest as UpdateOrgBrandRequest

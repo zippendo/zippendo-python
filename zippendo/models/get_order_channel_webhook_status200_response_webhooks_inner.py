@@ -18,27 +18,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
+class GetOrderChannelWebhookStatus200ResponseWebhooksInner(BaseModel):
     """
-    Summary of the order's source channel.
+    GetOrderChannelWebhookStatus200ResponseWebhooksInner
     """ # noqa: E501
-    id: StrictStr = Field(description="Order channel ID.", json_schema_extra={"examples": ["clz9k2f0a0001abcd1234efgh"]})
-    name: StrictStr = Field(description="Order channel name.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
-    type: StrictStr = Field(description="Type of the order channel (sales platform).", json_schema_extra={"examples": ["shopify"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "type"]
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['shopify', 'woocommerce', 'manual', 'custom']):
-            raise ValueError("must be one of enum values ('shopify', 'woocommerce', 'manual', 'custom')")
-        return value
+    id: Union[StrictFloat, StrictInt] = Field(description="Platform webhook ID.", json_schema_extra={"examples": [1234567890]})
+    topic: StrictStr = Field(description="Webhook event topic.", json_schema_extra={"examples": ["ORDERS_CREATE"]})
+    address: StrictStr = Field(description="Registered callback address.", json_schema_extra={"examples": ["https://api.zippendo.dk/webhooks/order-channels/clz9k2f0a0001abcd1234efgh"]})
+    created_at: StrictStr = Field(description="Webhook creation timestamp.", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
+    delivery_url: Optional[StrictStr] = Field(default=None, description="WooCommerce delivery URL (same as `address`; present for WooCommerce channels).", alias="deliveryUrl", json_schema_extra={"examples": ["https://api.zippendo.dk/webhooks/order-channels/clz9k2f0a0001abcd1234efgh"]})
+    status: Optional[StrictStr] = Field(default=None, description="WooCommerce webhook status. A value other than `active` means WooCommerce disabled the webhook (e.g. after repeated delivery failures).", json_schema_extra={"examples": ["active"]})
+    __properties: ClassVar[List[str]] = ["id", "topic", "address", "createdAt", "deliveryUrl", "status"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -58,7 +54,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a JSON string"""
+        """Create an instance of GetOrderChannelWebhookStatus200ResponseWebhooksInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,7 +79,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a dict"""
+        """Create an instance of GetOrderChannelWebhookStatus200ResponseWebhooksInner from a dict"""
         if obj is None:
             return None
 
@@ -92,8 +88,11 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "name": obj.get("name"),
-            "type": obj.get("type")
+            "topic": obj.get("topic"),
+            "address": obj.get("address"),
+            "createdAt": obj.get("createdAt"),
+            "deliveryUrl": obj.get("deliveryUrl"),
+            "status": obj.get("status")
         })
         return _obj
 

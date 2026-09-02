@@ -18,27 +18,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from zippendo.models.update_order_channel_request_settings import UpdateOrderChannelRequestSettings
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
+class UpdateOrderChannelRequest(BaseModel):
     """
-    Summary of the order's source channel.
+    UpdateOrderChannelRequest
     """ # noqa: E501
-    id: StrictStr = Field(description="Order channel ID.", json_schema_extra={"examples": ["clz9k2f0a0001abcd1234efgh"]})
-    name: StrictStr = Field(description="Order channel name.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
-    type: StrictStr = Field(description="Type of the order channel (sales platform).", json_schema_extra={"examples": ["shopify"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "type"]
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['shopify', 'woocommerce', 'manual', 'custom']):
-            raise ValueError("must be one of enum values ('shopify', 'woocommerce', 'manual', 'custom')")
-        return value
+    brand_id: Optional[StrictStr] = Field(default=None, description="Brand this channel belongs to; null for organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
+    name: Optional[Annotated[str, Field(min_length=1, strict=True, max_length=100)]] = Field(default=None, description="Display name for the channel.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
+    enabled: Optional[StrictBool] = Field(default=None, description="Whether the channel is active.", json_schema_extra={"examples": [True]})
+    credentials: Optional[Dict[str, Any]] = Field(default=None, description="Type-specific platform credentials.")
+    settings: Optional[UpdateOrderChannelRequestSettings] = None
+    shipping_rule_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of shipping rules linked to this channel.", alias="shippingRuleIds", json_schema_extra={"examples": [["clz9k2f0a0002abcd5678ijkl"]]})
+    __properties: ClassVar[List[str]] = ["brandId", "name", "enabled", "credentials", "settings", "shippingRuleIds"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -58,7 +56,7 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a JSON string"""
+        """Create an instance of UpdateOrderChannelRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,11 +77,24 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of settings
+        if self.settings:
+            _dict['settings'] = self.settings.to_dict()
+        # set to None if brand_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.brand_id is None and "brand_id" in self.model_fields_set:
+            _dict['brandId'] = None
+
+        # set to None if credentials (nullable) is None
+        # and model_fields_set contains the field
+        if self.credentials is None and "credentials" in self.model_fields_set:
+            _dict['credentials'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseDataInnerOrderChannel from a dict"""
+        """Create an instance of UpdateOrderChannelRequest from a dict"""
         if obj is None:
             return None
 
@@ -91,9 +102,12 @@ class ListOrders200ResponseDataInnerOrderChannel(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
+            "brandId": obj.get("brandId"),
             "name": obj.get("name"),
-            "type": obj.get("type")
+            "enabled": obj.get("enabled"),
+            "credentials": obj.get("credentials"),
+            "settings": UpdateOrderChannelRequestSettings.from_dict(obj["settings"]) if obj.get("settings") is not None else None,
+            "shippingRuleIds": obj.get("shippingRuleIds")
         })
         return _obj
 
