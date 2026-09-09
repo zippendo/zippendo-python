@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
@@ -34,7 +34,6 @@ class UpdateOrgRequest(BaseModel):
     description: Optional[StrictStr] = Field(default=None, description="Organization description", json_schema_extra={"examples": ["Parcel and freight logistics across the Nordics"]})
     currency: Optional[StrictStr] = Field(default=None, description="Billing currency (ISO 4217 code)", json_schema_extra={"examples": ["DKK"]})
     vat_number: Optional[StrictStr] = Field(default=None, description="Company VAT/tax ID for invoices", alias="vatNumber", json_schema_extra={"examples": ["DK12345678"]})
-    overage_enabled: Optional[StrictBool] = Field(default=None, description="Allow shipments beyond plan limit (overage charges apply)", alias="overageEnabled", json_schema_extra={"examples": [False]})
     phone: Optional[Annotated[str, Field(strict=True, max_length=32)]] = Field(default=None, description="Billing/contact phone number", json_schema_extra={"examples": ["+45 50 47 02 20"]})
     billing_email: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Billing email for invoices", alias="billingEmail", json_schema_extra={"examples": ["billing@nordic-logistics.dk"]})
     company_name: Optional[StrictStr] = Field(default=None, description="Legal company name", alias="companyName", json_schema_extra={"examples": ["Nordic Logistics ApS"]})
@@ -44,7 +43,7 @@ class UpdateOrgRequest(BaseModel):
     postal_code: Optional[StrictStr] = Field(default=None, description="Postal code", alias="postalCode", json_schema_extra={"examples": ["1058"]})
     country: Optional[StrictStr] = Field(default=None, description="Country (ISO 3166-1 alpha-2 code)", json_schema_extra={"examples": ["DK"]})
     customs: Optional[Dict[str, StrictStr]] = Field(default=None, description="Organization-wide customs identifiers (EORI, IOSS, VOEC, etc.); null clears all")
-    __properties: ClassVar[List[str]] = ["name", "slug", "description", "currency", "vatNumber", "overageEnabled", "phone", "billingEmail", "companyName", "addressLine1", "addressLine2", "city", "postalCode", "country", "customs"]
+    __properties: ClassVar[List[str]] = ["name", "slug", "description", "currency", "vatNumber", "phone", "billingEmail", "companyName", "addressLine1", "addressLine2", "city", "postalCode", "country", "customs"]
 
     @field_validator('slug', mode="before")
     def slug_validate_regular_expression(cls, value):
@@ -192,7 +191,6 @@ class UpdateOrgRequest(BaseModel):
             "description": obj.get("description"),
             "currency": obj.get("currency"),
             "vatNumber": obj.get("vatNumber"),
-            "overageEnabled": obj.get("overageEnabled"),
             "phone": obj.get("phone"),
             "billingEmail": obj.get("billingEmail"),
             "companyName": obj.get("companyName"),

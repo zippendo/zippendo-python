@@ -41,7 +41,6 @@ class TestUpdateOrgRequest(unittest.TestCase):
                 description = 'Parcel and freight logistics across the Nordics',
                 currency = 'DKK',
                 vat_number = 'DK12345678',
-                overage_enabled = False,
                 phone = '+45 50 47 02 20',
                 billing_email = 'billing@nordic-logistics.dk',
                 company_name = 'Nordic Logistics ApS',
