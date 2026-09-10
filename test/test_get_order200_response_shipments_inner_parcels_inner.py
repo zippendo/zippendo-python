@@ -15,10 +15,10 @@
 
 import unittest
 
-from zippendo.models.update_order_request import UpdateOrderRequest
+from zippendo.models.get_order200_response_shipments_inner_parcels_inner import GetOrder200ResponseShipmentsInnerParcelsInner
 
-class TestUpdateOrderRequest(unittest.TestCase):
-    """UpdateOrderRequest unit test stubs"""
+class TestGetOrder200ResponseShipmentsInnerParcelsInner(unittest.TestCase):
+    """GetOrder200ResponseShipmentsInnerParcelsInner unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,70 +26,52 @@ class TestUpdateOrderRequest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> UpdateOrderRequest:
-        """Test UpdateOrderRequest
+    def make_instance(self, include_optional) -> GetOrder200ResponseShipmentsInnerParcelsInner:
+        """Test GetOrder200ResponseShipmentsInnerParcelsInner
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `UpdateOrderRequest`
+        # uncomment below to create an instance of `GetOrder200ResponseShipmentsInnerParcelsInner`
         """
-        model = UpdateOrderRequest()
+        model = GetOrder200ResponseShipmentsInnerParcelsInner()
         if include_optional:
-            return UpdateOrderRequest(
-                order_number = '#1042',
-                customer_name = 'Anna Jensen',
-                customer_email = 'anna@example.dk',
-                shipping_address = zippendo.models.create_order_request_shipping_address.createOrder_request_shippingAddress(
-                    name = 'Anna Jensen', 
-                    attention = 'c/o Reception', 
-                    company = 'Jensen Design ApS', 
-                    address1 = 'Nørregade 12', 
-                    address2 = '2. sal', 
-                    city = 'København', 
-                    province = 'Hovedstaden', 
-                    province_code = 'DK-84', 
-                    postal_code = '1165', 
-                    country = 'Denmark', 
-                    country_code = 'DK', 
-                    phone = '+45 12 34 56 78', 
-                    email = 'anna@example.dk', ),
+            return GetOrder200ResponseShipmentsInnerParcelsInner(
+                id = 'prc_5a6b7c8d',
+                weight = 2.5,
+                weight_unit = 'kg',
+                dimensions = zippendo.models.create_shipment_201_response_parcels_inner_dimensions.createShipment_201_response_parcels_inner_dimensions(
+                    length = 30, 
+                    width = 20, 
+                    height = 15, ),
                 order_lines = [
-                    zippendo.models.create_order_request_order_lines_inner.createOrder_request_orderLines_inner(
+                    zippendo.models.get_order_200_response_shipments_inner_parcels_inner_order_lines_inner.getOrder_200_response_shipments_inner_parcels_inner_orderLines_inner(
+                        id = 'ol_9c1d2e3f', 
                         sku = 'SKU-1042-BLK', 
-                        name = 'Wool Sweater', 
                         quantity = 2, 
-                        unit_price = 499, 
-                        total_price = 998, 
-                        currency = 'DKK', 
-                        weight = 0.5, 
-                        weight_unit = 'kg', 
-                        variant_id = '44218900291', 
-                        product_id = '8123456789', 
-                        image_url = 'https://cdn.example.dk/products/sweater.jpg', 
-                        hs_code = '611020', 
-                        country_of_origin = 'DK', 
-                        province_of_origin = 'DK-84', 
-                        barcode = '5712345678901', 
-                        requires_shipping = True, 
-                        taxable = True, 
-                        gift_card = False, 
-                        vendor = 'Norse Knits', )
-                    ],
-                subtotal_amount = 998,
-                total_amount = 1047,
-                currency = 'DKK',
-                notes = 'Leave at front desk',
-                status = 'processing',
-                shipping_rule_id = 'clz9k2f0a0002abcd5678ijkl',
-                service_point_id = 'SP-1234'
+                        description = 'Wool Sweater', )
+                    ]
             )
         else:
-            return UpdateOrderRequest(
+            return GetOrder200ResponseShipmentsInnerParcelsInner(
+                id = 'prc_5a6b7c8d',
+                weight = 2.5,
+                weight_unit = 'kg',
+                dimensions = zippendo.models.create_shipment_201_response_parcels_inner_dimensions.createShipment_201_response_parcels_inner_dimensions(
+                    length = 30, 
+                    width = 20, 
+                    height = 15, ),
+                order_lines = [
+                    zippendo.models.get_order_200_response_shipments_inner_parcels_inner_order_lines_inner.getOrder_200_response_shipments_inner_parcels_inner_orderLines_inner(
+                        id = 'ol_9c1d2e3f', 
+                        sku = 'SKU-1042-BLK', 
+                        quantity = 2, 
+                        description = 'Wool Sweater', )
+                    ],
         )
         """
 
-    def testUpdateOrderRequest(self):
-        """Test UpdateOrderRequest"""
+    def testGetOrder200ResponseShipmentsInnerParcelsInner(self):
+        """Test GetOrder200ResponseShipmentsInnerParcelsInner"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

@@ -42,7 +42,8 @@ class UpdateOrderRequest(BaseModel):
     notes: Optional[StrictStr] = Field(default=None, description="Free-form internal notes.", json_schema_extra={"examples": ["Leave at front desk"]})
     status: Optional[StrictStr] = Field(default=None, description="Order fulfilment status derived from its shipments.", json_schema_extra={"examples": ["processing"]})
     shipping_rule_id: Optional[StrictStr] = Field(default=None, description="ID of the shipping rule to apply.", alias="shippingRuleId", json_schema_extra={"examples": ["clz9k2f0a0002abcd5678ijkl"]})
-    __properties: ClassVar[List[str]] = ["orderNumber", "customerName", "customerEmail", "shippingAddress", "orderLines", "subtotalAmount", "totalAmount", "currency", "notes", "status", "shippingRuleId"]
+    service_point_id: Optional[StrictStr] = Field(default=None, description="Service point (parcel shop) ID to apply to unsent outbound shipments.", alias="servicePointId", json_schema_extra={"examples": ["SP-1234"]})
+    __properties: ClassVar[List[str]] = ["orderNumber", "customerName", "customerEmail", "shippingAddress", "orderLines", "subtotalAmount", "totalAmount", "currency", "notes", "status", "shippingRuleId", "servicePointId"]
 
     @field_validator('customer_email', mode="before")
     def customer_email_validate_regular_expression(cls, value):
@@ -153,6 +154,11 @@ class UpdateOrderRequest(BaseModel):
         if self.shipping_rule_id is None and "shipping_rule_id" in self.model_fields_set:
             _dict['shippingRuleId'] = None
 
+        # set to None if service_point_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.service_point_id is None and "service_point_id" in self.model_fields_set:
+            _dict['servicePointId'] = None
+
         return _dict
 
     @classmethod
@@ -175,7 +181,8 @@ class UpdateOrderRequest(BaseModel):
             "currency": obj.get("currency"),
             "notes": obj.get("notes"),
             "status": obj.get("status"),
-            "shippingRuleId": obj.get("shippingRuleId")
+            "shippingRuleId": obj.get("shippingRuleId"),
+            "servicePointId": obj.get("servicePointId")
         })
         return _obj
 

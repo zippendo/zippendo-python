@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from zippendo.models.create_order201_response_order_lines_inner import CreateOrder201ResponseOrderLinesInner
 from zippendo.models.create_order201_response_shipping_address import CreateOrder201ResponseShippingAddress
+from zippendo.models.get_order200_response_order_lines_inner import GetOrder200ResponseOrderLinesInner
 from zippendo.models.get_order200_response_shipments_inner import GetOrder200ResponseShipmentsInner
 from zippendo.models.get_order200_response_shipping_rule import GetOrder200ResponseShippingRule
 from zippendo.models.list_orders200_response_data_inner_order_channel import ListOrders200ResponseDataInnerOrderChannel
@@ -39,7 +39,7 @@ class GetOrder200Response(BaseModel):
     customer_name: Optional[StrictStr] = Field(default=None, description="Customer full name.", alias="customerName", json_schema_extra={"examples": ["Anna Jensen"]})
     customer_email: Optional[StrictStr] = Field(default=None, description="Customer email address.", alias="customerEmail", json_schema_extra={"examples": ["anna@example.dk"]})
     shipping_address: Optional[CreateOrder201ResponseShippingAddress] = Field(default=None, alias="shippingAddress")
-    order_lines: List[CreateOrder201ResponseOrderLinesInner] = Field(description="Line items in the order.", alias="orderLines")
+    order_lines: List[GetOrder200ResponseOrderLinesInner] = Field(description="Sold line items with quantity already allocated to outbound shipments.", alias="orderLines")
     subtotal_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Order subtotal before shipping and tax.", alias="subtotalAmount", json_schema_extra={"examples": [998]})
     total_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Order grand total.", alias="totalAmount", json_schema_extra={"examples": [1047]})
     currency: Optional[StrictStr] = Field(default=None, description="ISO 4217 currency code.", json_schema_extra={"examples": ["DKK"]})
@@ -198,7 +198,7 @@ class GetOrder200Response(BaseModel):
             "customerName": obj.get("customerName"),
             "customerEmail": obj.get("customerEmail"),
             "shippingAddress": CreateOrder201ResponseShippingAddress.from_dict(obj["shippingAddress"]) if obj.get("shippingAddress") is not None else None,
-            "orderLines": [CreateOrder201ResponseOrderLinesInner.from_dict(_item) for _item in obj["orderLines"]] if obj.get("orderLines") is not None else None,
+            "orderLines": [GetOrder200ResponseOrderLinesInner.from_dict(_item) for _item in obj["orderLines"]] if obj.get("orderLines") is not None else None,
             "subtotalAmount": obj.get("subtotalAmount"),
             "totalAmount": obj.get("totalAmount"),
             "currency": obj.get("currency"),

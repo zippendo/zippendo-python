@@ -25,9 +25,9 @@ from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class CreateOrder201ResponseOrderLinesInner(BaseModel):
+class GetOrder200ResponseOrderLinesInner(BaseModel):
     """
-    CreateOrder201ResponseOrderLinesInner
+    GetOrder200ResponseOrderLinesInner
     """ # noqa: E501
     sku: Optional[StrictStr] = Field(default=None, description="Stock keeping unit identifier.", json_schema_extra={"examples": ["SKU-1042-BLK"]})
     name: StrictStr = Field(description="Product name.", json_schema_extra={"examples": ["Wool Sweater"]})
@@ -48,7 +48,8 @@ class CreateOrder201ResponseOrderLinesInner(BaseModel):
     taxable: Optional[StrictBool] = Field(default=None, description="Whether the item is taxable.", json_schema_extra={"examples": [True]})
     gift_card: Optional[StrictBool] = Field(default=None, description="Whether the item is a gift card.", alias="giftCard", json_schema_extra={"examples": [False]})
     vendor: Optional[StrictStr] = Field(default=None, description="Vendor or brand name.", json_schema_extra={"examples": ["Norse Knits"]})
-    __properties: ClassVar[List[str]] = ["sku", "name", "quantity", "unitPrice", "totalPrice", "currency", "weight", "weightUnit", "variantId", "productId", "imageUrl", "hsCode", "countryOfOrigin", "provinceOfOrigin", "barcode", "requiresShipping", "taxable", "giftCard", "vendor"]
+    packed_quantity: Annotated[int, Field(le=9007199254740991, strict=True, ge=0)] = Field(description="Quantity already allocated to outbound shipments.", alias="packedQuantity", json_schema_extra={"examples": [1]})
+    __properties: ClassVar[List[str]] = ["sku", "name", "quantity", "unitPrice", "totalPrice", "currency", "weight", "weightUnit", "variantId", "productId", "imageUrl", "hsCode", "countryOfOrigin", "provinceOfOrigin", "barcode", "requiresShipping", "taxable", "giftCard", "vendor", "packedQuantity"]
 
     @field_validator('weight_unit')
     def weight_unit_validate_enum(cls, value):
@@ -78,7 +79,7 @@ class CreateOrder201ResponseOrderLinesInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateOrder201ResponseOrderLinesInner from a JSON string"""
+        """Create an instance of GetOrder200ResponseOrderLinesInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -188,7 +189,7 @@ class CreateOrder201ResponseOrderLinesInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateOrder201ResponseOrderLinesInner from a dict"""
+        """Create an instance of GetOrder200ResponseOrderLinesInner from a dict"""
         if obj is None:
             return None
 
@@ -214,7 +215,8 @@ class CreateOrder201ResponseOrderLinesInner(BaseModel):
             "requiresShipping": obj.get("requiresShipping"),
             "taxable": obj.get("taxable"),
             "giftCard": obj.get("giftCard"),
-            "vendor": obj.get("vendor")
+            "vendor": obj.get("vendor"),
+            "packedQuantity": obj.get("packedQuantity")
         })
         return _obj
 

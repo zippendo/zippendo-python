@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **updated_at** | **str** | Timestamp when the shipment was last updated. | 
 **shipping_rule_id** | **str** | ID of the shipping rule used for this shipment. | [optional] 
 **documents** | [**List[CreateShipment201ResponseDocumentsInner]**](CreateShipment201ResponseDocumentsInner.md) | Documents (labels, customs forms) for this shipment. | [optional] 
+**parcels** | [**List[GetOrder200ResponseShipmentsInnerParcelsInner]**](GetOrder200ResponseShipmentsInnerParcelsInner.md) | Compact parcels for the order fulfillment workspace (no QR/label payloads). | [default to []]
 
 ## Example
 

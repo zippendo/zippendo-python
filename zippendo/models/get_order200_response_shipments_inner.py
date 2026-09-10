@@ -22,6 +22,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from zippendo.models.create_shipment201_response_documents_inner import CreateShipment201ResponseDocumentsInner
 from zippendo.models.create_shipment201_response_tracking import CreateShipment201ResponseTracking
+from zippendo.models.get_order200_response_shipments_inner_parcels_inner import GetOrder200ResponseShipmentsInnerParcelsInner
 from zippendo.models.list_shipments200_response_data_inner_carrier_settings import ListShipments200ResponseDataInnerCarrierSettings
 from typing import Optional, Set
 from typing_extensions import Self
@@ -42,7 +43,8 @@ class GetOrder200ResponseShipmentsInner(BaseModel):
     updated_at: StrictStr = Field(description="Timestamp when the shipment was last updated.", alias="updatedAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     shipping_rule_id: Optional[StrictStr] = Field(default=None, description="ID of the shipping rule used for this shipment.", alias="shippingRuleId", json_schema_extra={"examples": ["clz9k2f0a0002abcd5678ijkl"]})
     documents: Optional[List[CreateShipment201ResponseDocumentsInner]] = Field(default=None, description="Documents (labels, customs forms) for this shipment.")
-    __properties: ClassVar[List[str]] = ["id", "reference", "status", "type", "tracking", "carrierSettings", "servicePointId", "createdAt", "updatedAt", "shippingRuleId", "documents"]
+    parcels: List[GetOrder200ResponseShipmentsInnerParcelsInner] = Field(description="Compact parcels for the order fulfillment workspace (no QR/label payloads).")
+    __properties: ClassVar[List[str]] = ["id", "reference", "status", "type", "tracking", "carrierSettings", "servicePointId", "createdAt", "updatedAt", "shippingRuleId", "documents", "parcels"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -110,6 +112,13 @@ class GetOrder200ResponseShipmentsInner(BaseModel):
                 if _item_documents:
                     _items.append(_item_documents.to_dict())
             _dict['documents'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in parcels (list)
+        _items = []
+        if self.parcels:
+            for _item_parcels in self.parcels:
+                if _item_parcels:
+                    _items.append(_item_parcels.to_dict())
+            _dict['parcels'] = _items
         # set to None if tracking (nullable) is None
         # and model_fields_set contains the field
         if self.tracking is None and "tracking" in self.model_fields_set:
@@ -147,7 +156,8 @@ class GetOrder200ResponseShipmentsInner(BaseModel):
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),
             "shippingRuleId": obj.get("shippingRuleId"),
-            "documents": [CreateShipment201ResponseDocumentsInner.from_dict(_item) for _item in obj["documents"]] if obj.get("documents") is not None else None
+            "documents": [CreateShipment201ResponseDocumentsInner.from_dict(_item) for _item in obj["documents"]] if obj.get("documents") is not None else None,
+            "parcels": [GetOrder200ResponseShipmentsInnerParcelsInner.from_dict(_item) for _item in obj["parcels"]] if obj.get("parcels") is not None else None
         })
         return _obj
 

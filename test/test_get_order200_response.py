@@ -56,7 +56,7 @@ class TestGetOrder200Response(unittest.TestCase):
                     phone = '+45 12 34 56 78', 
                     email = 'anna@example.dk', ),
                 order_lines = [
-                    zippendo.models.create_order_201_response_order_lines_inner.createOrder_201_response_orderLines_inner(
+                    zippendo.models.get_order_200_response_order_lines_inner.getOrder_200_response_orderLines_inner(
                         sku = 'SKU-1042-BLK', 
                         name = 'Wool Sweater', 
                         quantity = 2, 
@@ -75,7 +75,8 @@ class TestGetOrder200Response(unittest.TestCase):
                         requires_shipping = True, 
                         taxable = True, 
                         gift_card = False, 
-                        vendor = 'Norse Knits', )
+                        vendor = 'Norse Knits', 
+                        packed_quantity = 1, )
                     ],
                 subtotal_amount = 998,
                 total_amount = 1047,
@@ -139,6 +140,23 @@ class TestGetOrder200Response(unittest.TestCase):
                                 size = 'A4', 
                                 created_at = '2026-06-22T14:30:00.000Z', 
                                 updated_at = '2026-06-22T14:30:00.000Z', )
+                            ], 
+                        parcels = [
+                            zippendo.models.get_order_200_response_shipments_inner_parcels_inner.getOrder_200_response_shipments_inner_parcels_inner(
+                                id = 'prc_5a6b7c8d', 
+                                weight = 2.5, 
+                                weight_unit = 'kg', 
+                                dimensions = zippendo.models.create_shipment_201_response_parcels_inner_dimensions.createShipment_201_response_parcels_inner_dimensions(
+                                    length = 30, 
+                                    width = 20, 
+                                    height = 15, ), 
+                                order_lines = [
+                                    zippendo.models.get_order_200_response_shipments_inner_parcels_inner_order_lines_inner.getOrder_200_response_shipments_inner_parcels_inner_orderLines_inner(
+                                        id = 'ol_9c1d2e3f', 
+                                        sku = 'SKU-1042-BLK', 
+                                        quantity = 2, 
+                                        description = 'Wool Sweater', )
+                                    ], )
                             ], )
                     ]
             )
@@ -147,7 +165,7 @@ class TestGetOrder200Response(unittest.TestCase):
                 id = 'clz9k2f0a0003abcd9012mnop',
                 order_number = '#1042',
                 order_lines = [
-                    zippendo.models.create_order_201_response_order_lines_inner.createOrder_201_response_orderLines_inner(
+                    zippendo.models.get_order_200_response_order_lines_inner.getOrder_200_response_orderLines_inner(
                         sku = 'SKU-1042-BLK', 
                         name = 'Wool Sweater', 
                         quantity = 2, 
@@ -166,7 +184,8 @@ class TestGetOrder200Response(unittest.TestCase):
                         requires_shipping = True, 
                         taxable = True, 
                         gift_card = False, 
-                        vendor = 'Norse Knits', )
+                        vendor = 'Norse Knits', 
+                        packed_quantity = 1, )
                     ],
                 status = 'processing',
                 order_channel_id = 'clz9k2f0a0001abcd1234efgh',
@@ -209,6 +228,23 @@ class TestGetOrder200Response(unittest.TestCase):
                                 size = 'A4', 
                                 created_at = '2026-06-22T14:30:00.000Z', 
                                 updated_at = '2026-06-22T14:30:00.000Z', )
+                            ], 
+                        parcels = [
+                            zippendo.models.get_order_200_response_shipments_inner_parcels_inner.getOrder_200_response_shipments_inner_parcels_inner(
+                                id = 'prc_5a6b7c8d', 
+                                weight = 2.5, 
+                                weight_unit = 'kg', 
+                                dimensions = zippendo.models.create_shipment_201_response_parcels_inner_dimensions.createShipment_201_response_parcels_inner_dimensions(
+                                    length = 30, 
+                                    width = 20, 
+                                    height = 15, ), 
+                                order_lines = [
+                                    zippendo.models.get_order_200_response_shipments_inner_parcels_inner_order_lines_inner.getOrder_200_response_shipments_inner_parcels_inner_orderLines_inner(
+                                        id = 'ol_9c1d2e3f', 
+                                        sku = 'SKU-1042-BLK', 
+                                        quantity = 2, 
+                                        description = 'Wool Sweater', )
+                                    ], )
                             ], )
                     ],
         )

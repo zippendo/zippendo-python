@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **notes** | **str** | Free-form internal notes. | [optional] 
 **status** | **str** | Order fulfilment status derived from its shipments. | [optional] 
 **shipping_rule_id** | **str** | ID of the shipping rule to apply. | [optional] 
+**service_point_id** | **str** | Service point (parcel shop) ID to apply to unsent outbound shipments. | [optional] 
 
 ## Example
 

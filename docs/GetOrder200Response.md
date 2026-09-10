@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **customer_name** | **str** | Customer full name. | [optional] 
 **customer_email** | **str** | Customer email address. | [optional] 
 **shipping_address** | [**CreateOrder201ResponseShippingAddress**](CreateOrder201ResponseShippingAddress.md) |  | [optional] 
-**order_lines** | [**List[CreateOrder201ResponseOrderLinesInner]**](CreateOrder201ResponseOrderLinesInner.md) | Line items in the order. | 
+**order_lines** | [**List[GetOrder200ResponseOrderLinesInner]**](GetOrder200ResponseOrderLinesInner.md) | Sold line items with quantity already allocated to outbound shipments. | 
 **subtotal_amount** | **float** | Order subtotal before shipping and tax. | [optional] 
 **total_amount** | **float** | Order grand total. | [optional] 
 **currency** | **str** | ISO 4217 currency code. | [optional] 

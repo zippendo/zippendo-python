@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.2.6"
+__version__ = "1.2.7"
 
 # Define package exports
 __all__ = [
@@ -117,7 +117,10 @@ __all__ = [
     "GetBillingUsage200ResponseShipments",
     "GetBillingUsage200ResponseZippyMessages",
     "GetOrder200Response",
+    "GetOrder200ResponseOrderLinesInner",
     "GetOrder200ResponseShipmentsInner",
+    "GetOrder200ResponseShipmentsInnerParcelsInner",
+    "GetOrder200ResponseShipmentsInnerParcelsInnerOrderLinesInner",
     "GetOrder200ResponseShippingRule",
     "GetOrderChannelWebhookStatus200Response",
     "GetOrderChannelWebhookStatus200ResponseWebhooksInner",
@@ -309,7 +312,10 @@ from zippendo.models.get_billing_usage200_response_limits_team_members import Ge
 from zippendo.models.get_billing_usage200_response_shipments import GetBillingUsage200ResponseShipments as GetBillingUsage200ResponseShipments
 from zippendo.models.get_billing_usage200_response_zippy_messages import GetBillingUsage200ResponseZippyMessages as GetBillingUsage200ResponseZippyMessages
 from zippendo.models.get_order200_response import GetOrder200Response as GetOrder200Response
+from zippendo.models.get_order200_response_order_lines_inner import GetOrder200ResponseOrderLinesInner as GetOrder200ResponseOrderLinesInner
 from zippendo.models.get_order200_response_shipments_inner import GetOrder200ResponseShipmentsInner as GetOrder200ResponseShipmentsInner
+from zippendo.models.get_order200_response_shipments_inner_parcels_inner import GetOrder200ResponseShipmentsInnerParcelsInner as GetOrder200ResponseShipmentsInnerParcelsInner
+from zippendo.models.get_order200_response_shipments_inner_parcels_inner_order_lines_inner import GetOrder200ResponseShipmentsInnerParcelsInnerOrderLinesInner as GetOrder200ResponseShipmentsInnerParcelsInnerOrderLinesInner
 from zippendo.models.get_order200_response_shipping_rule import GetOrder200ResponseShippingRule as GetOrder200ResponseShippingRule
 from zippendo.models.get_order_channel_webhook_status200_response import GetOrderChannelWebhookStatus200Response as GetOrderChannelWebhookStatus200Response
 from zippendo.models.get_order_channel_webhook_status200_response_webhooks_inner import GetOrderChannelWebhookStatus200ResponseWebhooksInner as GetOrderChannelWebhookStatus200ResponseWebhooksInner

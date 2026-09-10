@@ -29,17 +29,17 @@ class CreateOrder201ResponseShippingAddress(BaseModel):
     """
     Destination shipping address.
     """ # noqa: E501
-    name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Recipient full name.", json_schema_extra={"examples": ["Anna Jensen"]})
+    name: StrictStr = Field(description="Recipient full name.", json_schema_extra={"examples": ["Anna Jensen"]})
     attention: Optional[StrictStr] = Field(default=None, description="Attention / care-of line.", json_schema_extra={"examples": ["c/o Reception"]})
     company: Optional[StrictStr] = Field(default=None, description="Company name.", json_schema_extra={"examples": ["Jensen Design ApS"]})
-    address1: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Street address line 1.", json_schema_extra={"examples": ["Nørregade 12"]})
+    address1: StrictStr = Field(description="Street address line 1.", json_schema_extra={"examples": ["Nørregade 12"]})
     address2: Optional[StrictStr] = Field(default=None, description="Street address line 2.", json_schema_extra={"examples": ["2. sal"]})
-    city: Annotated[str, Field(min_length=1, strict=True)] = Field(description="City name.", json_schema_extra={"examples": ["København"]})
+    city: StrictStr = Field(description="City name.", json_schema_extra={"examples": ["København"]})
     province: Optional[StrictStr] = Field(default=None, description="Province or region name.", json_schema_extra={"examples": ["Hovedstaden"]})
     province_code: Optional[StrictStr] = Field(default=None, description="Province or region code.", alias="provinceCode", json_schema_extra={"examples": ["DK-84"]})
-    postal_code: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Postal code.", alias="postalCode", json_schema_extra={"examples": ["1165"]})
+    postal_code: StrictStr = Field(description="Postal code.", alias="postalCode", json_schema_extra={"examples": ["1165"]})
     country: Optional[StrictStr] = Field(default=None, description="Country name.", json_schema_extra={"examples": ["Denmark"]})
-    country_code: Annotated[str, Field(min_length=2, strict=True, max_length=2)] = Field(description="ISO 3166-1 alpha-2 country code.", alias="countryCode", json_schema_extra={"examples": ["DK"]})
+    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code.", alias="countryCode", json_schema_extra={"examples": ["DK"]})
     phone: Optional[StrictStr] = Field(default=None, description="Recipient phone number.", json_schema_extra={"examples": ["+45 12 34 56 78"]})
     email: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Recipient email address.", json_schema_extra={"examples": ["anna@example.dk"]})
     __properties: ClassVar[List[str]] = ["name", "attention", "company", "address1", "address2", "city", "province", "provinceCode", "postalCode", "country", "countryCode", "phone", "email"]
