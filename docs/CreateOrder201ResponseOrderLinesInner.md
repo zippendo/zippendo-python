@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **taxable** | **bool** | Whether the item is taxable. | [optional] 
 **gift_card** | **bool** | Whether the item is a gift card. | [optional] 
 **vendor** | **str** | Vendor or brand name. | [optional] 
+**id** | **str** | Order line ID. Present once the line is a row. Absent for jsonb-only lines during the dual-write window — do not synthesise one, or an edit would re-point packed lines. | [optional] 
 
 ## Example
 

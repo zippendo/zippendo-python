@@ -48,7 +48,8 @@ class CreateOrderRequestOrderLinesInner(BaseModel):
     taxable: Optional[StrictBool] = Field(default=None, description="Whether the item is taxable.", json_schema_extra={"examples": [True]})
     gift_card: Optional[StrictBool] = Field(default=None, description="Whether the item is a gift card.", alias="giftCard", json_schema_extra={"examples": [False]})
     vendor: Optional[StrictStr] = Field(default=None, description="Vendor or brand name.", json_schema_extra={"examples": ["Norse Knits"]})
-    __properties: ClassVar[List[str]] = ["sku", "name", "quantity", "unitPrice", "totalPrice", "currency", "weight", "weightUnit", "variantId", "productId", "imageUrl", "hsCode", "countryOfOrigin", "provinceOfOrigin", "barcode", "requiresShipping", "taxable", "giftCard", "vendor"]
+    id: Optional[StrictStr] = Field(default=None, description="ID of the existing order line this entry edits. Omit to add a new line.", json_schema_extra={"examples": ["clz9k2f0a0004abcd3456qrst"]})
+    __properties: ClassVar[List[str]] = ["sku", "name", "quantity", "unitPrice", "totalPrice", "currency", "weight", "weightUnit", "variantId", "productId", "imageUrl", "hsCode", "countryOfOrigin", "provinceOfOrigin", "barcode", "requiresShipping", "taxable", "giftCard", "vendor", "id"]
 
     @field_validator('weight_unit')
     def weight_unit_validate_enum(cls, value):
@@ -214,7 +215,8 @@ class CreateOrderRequestOrderLinesInner(BaseModel):
             "requiresShipping": obj.get("requiresShipping"),
             "taxable": obj.get("taxable"),
             "giftCard": obj.get("giftCard"),
-            "vendor": obj.get("vendor")
+            "vendor": obj.get("vendor"),
+            "id": obj.get("id")
         })
         return _obj
 

@@ -54,7 +54,8 @@ class TestCreateOrderRequestOrderLinesInner(unittest.TestCase):
                 requires_shipping = True,
                 taxable = True,
                 gift_card = False,
-                vendor = 'Norse Knits'
+                vendor = 'Norse Knits',
+                id = 'clz9k2f0a0004abcd3456qrst'
             )
         else:
             return CreateOrderRequestOrderLinesInner(

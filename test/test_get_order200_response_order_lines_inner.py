@@ -55,6 +55,7 @@ class TestGetOrder200ResponseOrderLinesInner(unittest.TestCase):
                 taxable = True,
                 gift_card = False,
                 vendor = 'Norse Knits',
+                id = 'clz9k2f0a0004abcd3456qrst',
                 packed_quantity = 1
             )
         else:

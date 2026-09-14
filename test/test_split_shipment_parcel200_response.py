@@ -77,6 +77,7 @@ class TestSplitShipmentParcel200Response(unittest.TestCase):
                             order_lines = [
                                 zippendo.models.create_shipment_201_response_parcels_inner_order_lines_inner.createShipment_201_response_parcels_inner_orderLines_inner(
                                     id = 'ol_9c1d2e3f', 
+                                    order_line_id = 'clz9k2f0a0004abcd3456qrst', 
                                     sku = 'SKU-1024', 
                                     quantity = 2, 
                                     description = 'Wool sweater, navy', 
@@ -85,6 +86,7 @@ class TestSplitShipmentParcel200Response(unittest.TestCase):
                                     vat_percent = 25, 
                                     location = 'A-12-3', 
                                     country_of_origin = 'DK', 
+                                    hs_code = '61101100', 
                                     tarrif_number = '61101100', )
                                 ], 
                             tracking_number = '00370724710000012345', 
@@ -210,6 +212,7 @@ class TestSplitShipmentParcel200Response(unittest.TestCase):
                             order_lines = [
                                 zippendo.models.create_shipment_201_response_parcels_inner_order_lines_inner.createShipment_201_response_parcels_inner_orderLines_inner(
                                     id = 'ol_9c1d2e3f', 
+                                    order_line_id = 'clz9k2f0a0004abcd3456qrst', 
                                     sku = 'SKU-1024', 
                                     quantity = 2, 
                                     description = 'Wool sweater, navy', 
@@ -218,6 +221,7 @@ class TestSplitShipmentParcel200Response(unittest.TestCase):
                                     vat_percent = 25, 
                                     location = 'A-12-3', 
                                     country_of_origin = 'DK', 
+                                    hs_code = '61101100', 
                                     tarrif_number = '61101100', )
                                 ], 
                             tracking_number = '00370724710000012345', 

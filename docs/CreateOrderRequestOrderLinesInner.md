@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **taxable** | **bool** | Whether the item is taxable. | [optional] 
 **gift_card** | **bool** | Whether the item is a gift card. | [optional] 
 **vendor** | **str** | Vendor or brand name. | [optional] 
+**id** | **str** | ID of the existing order line this entry edits. Omit to add a new line. | [optional] 
 
 ## Example
 

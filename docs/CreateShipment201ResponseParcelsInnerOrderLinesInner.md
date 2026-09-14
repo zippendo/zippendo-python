@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | Unique order line identifier. | [optional] 
+**order_line_id** | **str** | ID of the order line this packed line came from. Null when the item did not originate from an order line, such as a free gift or a replacement part. | [optional] 
 **sku** | **str** | Stock keeping unit of the product. Optional — not every webshop assigns SKUs. | [optional] 
 **quantity** | **int** | Number of units in this order line. | 
 **description** | **str** | Human-readable product description. | [optional] 
@@ -14,7 +15,8 @@ Name | Type | Description | Notes
 **vat_percent** | **float** | VAT percentage applied to the unit price. | [optional] 
 **location** | **str** | Warehouse picking location. | [optional] 
 **country_of_origin** | **str** | ISO 3166-1 alpha-2 country of origin. | [optional] 
-**tarrif_number** | **str** | Customs tariff (HS) code. | [optional] 
+**hs_code** | **str** | Harmonized System customs code. | [optional] 
+**tarrif_number** | **str** | Deprecated misspelling of &#x60;hsCode&#x60;, kept for backwards compatibility. | [optional] 
 
 ## Example
 

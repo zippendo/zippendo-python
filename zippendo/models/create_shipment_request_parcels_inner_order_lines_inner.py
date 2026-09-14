@@ -30,6 +30,7 @@ class CreateShipmentRequestParcelsInnerOrderLinesInner(BaseModel):
     CreateShipmentRequestParcelsInnerOrderLinesInner
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="Unique order line identifier.", json_schema_extra={"examples": ["ol_9c1d2e3f"]})
+    order_line_id: Optional[StrictStr] = Field(default=None, description="ID of the order line this packed line came from. Null when the item did not originate from an order line, such as a free gift or a replacement part.", alias="orderLineId", json_schema_extra={"examples": ["clz9k2f0a0004abcd3456qrst"]})
     sku: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Stock keeping unit of the product. Optional — not every webshop assigns SKUs.", json_schema_extra={"examples": ["SKU-1024"]})
     quantity: Annotated[int, Field(le=9007199254740991, strict=True, ge=1)] = Field(description="Number of units in this order line.", json_schema_extra={"examples": [2]})
     description: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Human-readable product description.", json_schema_extra={"examples": ["Wool sweater, navy"]})
@@ -38,8 +39,9 @@ class CreateShipmentRequestParcelsInnerOrderLinesInner(BaseModel):
     vat_percent: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="VAT percentage applied to the unit price.", alias="vatPercent", json_schema_extra={"examples": [25]})
     location: Optional[StrictStr] = Field(default=None, description="Warehouse picking location.", json_schema_extra={"examples": ["A-12-3"]})
     country_of_origin: Optional[Annotated[str, Field(min_length=2, strict=True, max_length=2)]] = Field(default=None, description="ISO 3166-1 alpha-2 country of origin.", alias="countryOfOrigin", json_schema_extra={"examples": ["DK"]})
-    tarrif_number: Optional[StrictStr] = Field(default=None, description="Customs tariff (HS) code.", alias="tarrifNumber", json_schema_extra={"examples": ["61101100"]})
-    __properties: ClassVar[List[str]] = ["id", "sku", "quantity", "description", "unitPrice", "currency", "vatPercent", "location", "countryOfOrigin", "tarrifNumber"]
+    hs_code: Optional[StrictStr] = Field(default=None, description="Harmonized System customs code.", alias="hsCode", json_schema_extra={"examples": ["61101100"]})
+    tarrif_number: Optional[StrictStr] = Field(default=None, description="Deprecated misspelling of `hsCode`, kept for backwards compatibility.", alias="tarrifNumber", json_schema_extra={"examples": ["61101100"]})
+    __properties: ClassVar[List[str]] = ["id", "orderLineId", "sku", "quantity", "description", "unitPrice", "currency", "vatPercent", "location", "countryOfOrigin", "hsCode", "tarrifNumber"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -80,6 +82,11 @@ class CreateShipmentRequestParcelsInnerOrderLinesInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if order_line_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.order_line_id is None and "order_line_id" in self.model_fields_set:
+            _dict['orderLineId'] = None
+
         # set to None if sku (nullable) is None
         # and model_fields_set contains the field
         if self.sku is None and "sku" in self.model_fields_set:
@@ -110,6 +117,11 @@ class CreateShipmentRequestParcelsInnerOrderLinesInner(BaseModel):
         if self.location is None and "location" in self.model_fields_set:
             _dict['location'] = None
 
+        # set to None if hs_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.hs_code is None and "hs_code" in self.model_fields_set:
+            _dict['hsCode'] = None
+
         # set to None if tarrif_number (nullable) is None
         # and model_fields_set contains the field
         if self.tarrif_number is None and "tarrif_number" in self.model_fields_set:
@@ -128,6 +140,7 @@ class CreateShipmentRequestParcelsInnerOrderLinesInner(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
+            "orderLineId": obj.get("orderLineId"),
             "sku": obj.get("sku"),
             "quantity": obj.get("quantity"),
             "description": obj.get("description"),
@@ -136,6 +149,7 @@ class CreateShipmentRequestParcelsInnerOrderLinesInner(BaseModel):
             "vatPercent": obj.get("vatPercent"),
             "location": obj.get("location"),
             "countryOfOrigin": obj.get("countryOfOrigin"),
+            "hsCode": obj.get("hsCode"),
             "tarrifNumber": obj.get("tarrifNumber")
         })
         return _obj

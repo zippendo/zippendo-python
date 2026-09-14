@@ -37,6 +37,7 @@ class TestCreateShipment201ResponseParcelsInnerOrderLinesInner(unittest.TestCase
         if include_optional:
             return CreateShipment201ResponseParcelsInnerOrderLinesInner(
                 id = 'ol_9c1d2e3f',
+                order_line_id = 'clz9k2f0a0004abcd3456qrst',
                 sku = 'SKU-1024',
                 quantity = 2,
                 description = 'Wool sweater, navy',
@@ -45,6 +46,7 @@ class TestCreateShipment201ResponseParcelsInnerOrderLinesInner(unittest.TestCase
                 vat_percent = 25,
                 location = 'A-12-3',
                 country_of_origin = 'DK',
+                hs_code = '61101100',
                 tarrif_number = '61101100'
             )
         else:
