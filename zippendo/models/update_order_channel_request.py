@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from zippendo.models.update_order_channel_request_settings import UpdateOrderChannelRequestSettings
@@ -33,10 +33,21 @@ class UpdateOrderChannelRequest(BaseModel):
     brand_id: Optional[StrictStr] = Field(default=None, description="Brand this channel belongs to; null for organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     name: Optional[Annotated[str, Field(min_length=1, strict=True, max_length=100)]] = Field(default=None, description="Display name for the channel.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
     enabled: Optional[StrictBool] = Field(default=None, description="Whether the channel is active.", json_schema_extra={"examples": [True]})
+    role: Optional[StrictStr] = Field(default=None, description="What Zippendo is used for on this channel. `orders_and_rates` (default) imports orders and serves checkout rates. `rates_only` serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfilment or tracking is pushed back to the platform.", json_schema_extra={"examples": ["orders_and_rates"]})
     credentials: Optional[Dict[str, Any]] = Field(default=None, description="Type-specific platform credentials.")
     settings: Optional[UpdateOrderChannelRequestSettings] = None
     shipping_rule_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of shipping rules linked to this channel.", alias="shippingRuleIds", json_schema_extra={"examples": [["clz9k2f0a0002abcd5678ijkl"]]})
-    __properties: ClassVar[List[str]] = ["brandId", "name", "enabled", "credentials", "settings", "shippingRuleIds"]
+    __properties: ClassVar[List[str]] = ["brandId", "name", "enabled", "role", "credentials", "settings", "shippingRuleIds"]
+
+    @field_validator('role')
+    def role_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['orders_and_rates', 'rates_only']):
+            raise ValueError("must be one of enum values ('orders_and_rates', 'rates_only')")
+        return value
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -105,6 +116,7 @@ class UpdateOrderChannelRequest(BaseModel):
             "brandId": obj.get("brandId"),
             "name": obj.get("name"),
             "enabled": obj.get("enabled"),
+            "role": obj.get("role"),
             "credentials": obj.get("credentials"),
             "settings": UpdateOrderChannelRequestSettings.from_dict(obj["settings"]) if obj.get("settings") is not None else None,
             "shippingRuleIds": obj.get("shippingRuleIds")

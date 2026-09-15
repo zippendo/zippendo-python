@@ -39,6 +39,7 @@ class TestUpdateOrderChannelRequest(unittest.TestCase):
                 brand_id = 'brnd_8f3kd92ld0',
                 name = 'Anna's Shopify Store',
                 enabled = True,
+                role = 'orders_and_rates',
                 credentials = {
                     'key' : null
                     },

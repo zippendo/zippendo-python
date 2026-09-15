@@ -34,14 +34,25 @@ class CreateOrderChannelRequest(BaseModel):
     type: StrictStr = Field(description="Type of the order channel. Platform channels (Shopify, WooCommerce) are created via their connect flows.", json_schema_extra={"examples": ["custom"]})
     brand_id: Optional[StrictStr] = Field(default=None, description="Brand this channel belongs to; null for organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     enabled: Optional[StrictBool] = Field(default=True, description="Whether the channel is active.", json_schema_extra={"examples": [True]})
+    role: Optional[StrictStr] = Field(default='orders_and_rates', description="What Zippendo is used for on this channel. `orders_and_rates` (default) imports orders and serves checkout rates. `rates_only` serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfilment or tracking is pushed back to the platform.", json_schema_extra={"examples": ["orders_and_rates"]})
     settings: Optional[CreateOrderChannelRequestSettings] = None
-    __properties: ClassVar[List[str]] = ["name", "type", "brandId", "enabled", "settings"]
+    __properties: ClassVar[List[str]] = ["name", "type", "brandId", "enabled", "role", "settings"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['manual', 'custom']):
             raise ValueError("must be one of enum values ('manual', 'custom')")
+        return value
+
+    @field_validator('role')
+    def role_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['orders_and_rates', 'rates_only']):
+            raise ValueError("must be one of enum values ('orders_and_rates', 'rates_only')")
         return value
 
     model_config = ConfigDict(
@@ -107,6 +118,7 @@ class CreateOrderChannelRequest(BaseModel):
             "type": obj.get("type"),
             "brandId": obj.get("brandId"),
             "enabled": obj.get("enabled") if obj.get("enabled") is not None else True,
+            "role": obj.get("role") if obj.get("role") is not None else 'orders_and_rates',
             "settings": CreateOrderChannelRequestSettings.from_dict(obj["settings"]) if obj.get("settings") is not None else None
         })
         return _obj

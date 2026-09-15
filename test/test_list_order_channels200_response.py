@@ -42,6 +42,7 @@ class TestListOrderChannels200Response(unittest.TestCase):
                         name = 'Anna's Shopify Store', 
                         type = 'shopify', 
                         enabled = True, 
+                        role = 'orders_and_rates', 
                         brand_id = 'brnd_8f3kd92ld0', 
                         has_credentials = True, 
                         settings = zippendo.models.list_order_channels_200_response_data_inner_settings.listOrderChannels_200_response_data_inner_settings(
@@ -83,6 +84,7 @@ class TestListOrderChannels200Response(unittest.TestCase):
                         name = 'Anna's Shopify Store', 
                         type = 'shopify', 
                         enabled = True, 
+                        role = 'orders_and_rates', 
                         brand_id = 'brnd_8f3kd92ld0', 
                         has_credentials = True, 
                         settings = zippendo.models.list_order_channels_200_response_data_inner_settings.listOrderChannels_200_response_data_inner_settings(

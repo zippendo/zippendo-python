@@ -40,6 +40,7 @@ class TestCreateOrderChannelRequest(unittest.TestCase):
                 type = 'custom',
                 brand_id = 'brnd_8f3kd92ld0',
                 enabled = True,
+                role = 'orders_and_rates',
                 settings = zippendo.models.create_order_channel_request_settings.createOrderChannel_request_settings(
                     use_webhooks = True, 
                     site_url = 'https://butik.dk', 

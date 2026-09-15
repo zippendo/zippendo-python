@@ -34,6 +34,7 @@ class ListOrderChannels200ResponseDataInner(BaseModel):
     name: StrictStr = Field(description="Display name of the channel.", json_schema_extra={"examples": ["Anna's Shopify Store"]})
     type: StrictStr = Field(description="Type of the order channel (sales platform).", json_schema_extra={"examples": ["shopify"]})
     enabled: StrictBool = Field(description="Whether the channel is active.", json_schema_extra={"examples": [True]})
+    role: StrictStr = Field(description="What Zippendo is used for on this channel. `orders_and_rates` (default) imports orders and serves checkout rates. `rates_only` serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfilment or tracking is pushed back to the platform.", json_schema_extra={"examples": ["orders_and_rates"]})
     brand_id: Optional[StrictStr] = Field(description="Brand this channel belongs to, or null for organization-wide. Orders synced from this channel inherit it, and so do the shipments and documents made from them.", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     has_credentials: StrictBool = Field(description="Whether credentials are configured (values are never exposed).", alias="hasCredentials", json_schema_extra={"examples": [True]})
     settings: ListOrderChannels200ResponseDataInnerSettings
@@ -44,13 +45,20 @@ class ListOrderChannels200ResponseDataInner(BaseModel):
     org_id: StrictStr = Field(description="Owning organization ID.", alias="orgId", json_schema_extra={"examples": ["clz9k2f0a0000abcd0000zzzz"]})
     created_at: StrictStr = Field(description="Creation timestamp (ISO 8601).", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     updated_at: StrictStr = Field(description="Last update timestamp (ISO 8601).", alias="updatedAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "type", "enabled", "brandId", "hasCredentials", "settings", "webhooksEnabled", "lastSyncAt", "lastSyncError", "shippingRuleIds", "orgId", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["id", "name", "type", "enabled", "role", "brandId", "hasCredentials", "settings", "webhooksEnabled", "lastSyncAt", "lastSyncError", "shippingRuleIds", "orgId", "createdAt", "updatedAt"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['shopify', 'woocommerce', 'manual', 'custom']):
             raise ValueError("must be one of enum values ('shopify', 'woocommerce', 'manual', 'custom')")
+        return value
+
+    @field_validator('role')
+    def role_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['orders_and_rates', 'rates_only']):
+            raise ValueError("must be one of enum values ('orders_and_rates', 'rates_only')")
         return value
 
     @field_validator('last_sync_at', mode="before")
@@ -136,6 +144,7 @@ class ListOrderChannels200ResponseDataInner(BaseModel):
             "name": obj.get("name"),
             "type": obj.get("type"),
             "enabled": obj.get("enabled"),
+            "role": obj.get("role"),
             "brandId": obj.get("brandId"),
             "hasCredentials": obj.get("hasCredentials"),
             "settings": ListOrderChannels200ResponseDataInnerSettings.from_dict(obj["settings"]) if obj.get("settings") is not None else None,
