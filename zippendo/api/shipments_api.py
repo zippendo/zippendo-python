@@ -2139,6 +2139,7 @@ class ShipmentsApi:
         status: Annotated[Optional[StrictStr], Field(description="Filter by shipment status.")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by direction.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by shipment reference or parcel tracking number.")] = None,
+        filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2154,7 +2155,7 @@ class ShipmentsApi:
     ) -> ListShipments200Response:
         """List shipments
 
-        List all shipments for an organization, paginated and ordered by newest first.
+        List all shipments for an organization, paginated and ordered by newest first. Accepts an advanced filter definition.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -2172,6 +2173,8 @@ class ShipmentsApi:
         :type type: str
         :param search: Search by shipment reference or parcel tracking number.
         :type search: str
+        :param filter: Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.
+        :type filter: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2203,6 +2206,7 @@ class ShipmentsApi:
             status=status,
             type=type,
             search=search,
+            filter=filter,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2236,6 +2240,7 @@ class ShipmentsApi:
         status: Annotated[Optional[StrictStr], Field(description="Filter by shipment status.")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by direction.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by shipment reference or parcel tracking number.")] = None,
+        filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2251,7 +2256,7 @@ class ShipmentsApi:
     ) -> ApiResponse[ListShipments200Response]:
         """List shipments
 
-        List all shipments for an organization, paginated and ordered by newest first.
+        List all shipments for an organization, paginated and ordered by newest first. Accepts an advanced filter definition.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -2269,6 +2274,8 @@ class ShipmentsApi:
         :type type: str
         :param search: Search by shipment reference or parcel tracking number.
         :type search: str
+        :param filter: Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.
+        :type filter: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2300,6 +2307,7 @@ class ShipmentsApi:
             status=status,
             type=type,
             search=search,
+            filter=filter,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2333,6 +2341,7 @@ class ShipmentsApi:
         status: Annotated[Optional[StrictStr], Field(description="Filter by shipment status.")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by direction.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by shipment reference or parcel tracking number.")] = None,
+        filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2348,7 +2357,7 @@ class ShipmentsApi:
     ) -> RESTResponseType:
         """List shipments
 
-        List all shipments for an organization, paginated and ordered by newest first.
+        List all shipments for an organization, paginated and ordered by newest first. Accepts an advanced filter definition.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -2366,6 +2375,8 @@ class ShipmentsApi:
         :type type: str
         :param search: Search by shipment reference or parcel tracking number.
         :type search: str
+        :param filter: Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.
+        :type filter: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2397,6 +2408,7 @@ class ShipmentsApi:
             status=status,
             type=type,
             search=search,
+            filter=filter,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2425,6 +2437,7 @@ class ShipmentsApi:
         status,
         type,
         search,
+        filter,
         _request_auth,
         _content_type,
         _headers,
@@ -2476,6 +2489,10 @@ class ShipmentsApi:
         if search is not None:
             
             _query_params.append(('search', search))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
             
         # process the header parameters
         # process the form parameters

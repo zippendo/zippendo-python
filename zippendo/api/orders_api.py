@@ -923,6 +923,7 @@ class OrdersApi:
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
+        filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -938,7 +939,7 @@ class OrdersApi:
     ) -> ListOrders200Response:
         """List orders
 
-        Returns a paginated list of orders for an organization, filterable by status, channel, and search term.
+        Returns a paginated list of orders for an organization, filterable by status, channel, search term and an advanced filter definition.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -956,6 +957,8 @@ class OrdersApi:
         :type order_channel_id: str
         :param search: Search by order number or customer name/email.
         :type search: str
+        :param filter: Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.
+        :type filter: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -987,6 +990,7 @@ class OrdersApi:
             status=status,
             order_channel_id=order_channel_id,
             search=search,
+            filter=filter,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1020,6 +1024,7 @@ class OrdersApi:
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
+        filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1035,7 +1040,7 @@ class OrdersApi:
     ) -> ApiResponse[ListOrders200Response]:
         """List orders
 
-        Returns a paginated list of orders for an organization, filterable by status, channel, and search term.
+        Returns a paginated list of orders for an organization, filterable by status, channel, search term and an advanced filter definition.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -1053,6 +1058,8 @@ class OrdersApi:
         :type order_channel_id: str
         :param search: Search by order number or customer name/email.
         :type search: str
+        :param filter: Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.
+        :type filter: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1084,6 +1091,7 @@ class OrdersApi:
             status=status,
             order_channel_id=order_channel_id,
             search=search,
+            filter=filter,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1117,6 +1125,7 @@ class OrdersApi:
         status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
+        filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1132,7 +1141,7 @@ class OrdersApi:
     ) -> RESTResponseType:
         """List orders
 
-        Returns a paginated list of orders for an organization, filterable by status, channel, and search term.
+        Returns a paginated list of orders for an organization, filterable by status, channel, search term and an advanced filter definition.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -1150,6 +1159,8 @@ class OrdersApi:
         :type order_channel_id: str
         :param search: Search by order number or customer name/email.
         :type search: str
+        :param filter: Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.
+        :type filter: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1181,6 +1192,7 @@ class OrdersApi:
             status=status,
             order_channel_id=order_channel_id,
             search=search,
+            filter=filter,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1209,6 +1221,7 @@ class OrdersApi:
         status,
         order_channel_id,
         search,
+        filter,
         _request_auth,
         _content_type,
         _headers,
@@ -1260,6 +1273,10 @@ class OrdersApi:
         if search is not None:
             
             _query_params.append(('search', search))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
             
         # process the header parameters
         # process the form parameters

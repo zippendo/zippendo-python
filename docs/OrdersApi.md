@@ -262,11 +262,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_orders**
-> ListOrders200Response list_orders(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope, status=status, order_channel_id=order_channel_id, search=search)
+> ListOrders200Response list_orders(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope, status=status, order_channel_id=order_channel_id, search=search, filter=filter)
 
 List orders
 
-Returns a paginated list of orders for an organization, filterable by status, channel, and search term.
+Returns a paginated list of orders for an organization, filterable by status, channel, search term and an advanced filter definition.
 
 ### Example
 
@@ -306,10 +306,11 @@ with zippendo.ApiClient(configuration) as api_client:
     status = 'processing' # str | Order fulfilment status derived from its shipments. (optional)
     order_channel_id = 'clz9k2f0a0001abcd1234efgh' # str | Filter by order channel ID. (optional)
     search = 'Anna' # str | Search by order number or customer name/email. (optional)
+    filter = '{\"conjunction\":\"and\",\"conditions\":[{\"id\":\"c_1\",\"field\":\"status\",\"operator\":\"in\",\"value\":[\"pending\",\"processing\"]}]}' # str | Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`. (optional)
 
     try:
         # List orders
-        api_response = api_instance.list_orders(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope, status=status, order_channel_id=order_channel_id, search=search)
+        api_response = api_instance.list_orders(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope, status=status, order_channel_id=order_channel_id, search=search, filter=filter)
         print("The response of OrdersApi->list_orders:\n")
         pprint(api_response)
     except Exception as e:
@@ -331,6 +332,7 @@ Name | Type | Description  | Notes
  **status** | **str**| Order fulfilment status derived from its shipments. | [optional] 
  **order_channel_id** | **str**| Filter by order channel ID. | [optional] 
  **search** | **str**| Search by order number or customer name/email. | [optional] 
+ **filter** | **str**| Advanced filter as a JSON-encoded definition: a &#x60;conjunction&#x60; (&#x60;and&#x60;/&#x60;or&#x60;) over &#x60;conditions&#x60;, each &#x60;{ id, field, operator, value }&#x60; or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 &#x60;FILTER_INVALID&#x60;. | [optional] 
 
 ### Return type
 

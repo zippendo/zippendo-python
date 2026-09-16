@@ -604,11 +604,11 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_shipments**
-> ListShipments200Response list_shipments(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope, status=status, type=type, search=search)
+> ListShipments200Response list_shipments(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope, status=status, type=type, search=search, filter=filter)
 
 List shipments
 
-List all shipments for an organization, paginated and ordered by newest first.
+List all shipments for an organization, paginated and ordered by newest first. Accepts an advanced filter definition.
 
 ### Example
 
@@ -648,10 +648,11 @@ with zippendo.ApiClient(configuration) as api_client:
     status = 'dispatched' # str | Filter by shipment status. (optional)
     type = 'outbound' # str | Filter by direction. (optional)
     search = 'SHIP-1042' # str | Search by shipment reference or parcel tracking number. (optional)
+    filter = '{\"conjunction\":\"and\",\"conditions\":[{\"id\":\"c_1\",\"field\":\"status\",\"operator\":\"in\",\"value\":[\"pending\",\"processing\"]}]}' # str | Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`. (optional)
 
     try:
         # List shipments
-        api_response = api_instance.list_shipments(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope, status=status, type=type, search=search)
+        api_response = api_instance.list_shipments(org_id, page=page, limit=limit, brand_id=brand_id, brand_scope=brand_scope, status=status, type=type, search=search, filter=filter)
         print("The response of ShipmentsApi->list_shipments:\n")
         pprint(api_response)
     except Exception as e:
@@ -673,6 +674,7 @@ Name | Type | Description  | Notes
  **status** | **str**| Filter by shipment status. | [optional] 
  **type** | **str**| Filter by direction. | [optional] 
  **search** | **str**| Search by shipment reference or parcel tracking number. | [optional] 
+ **filter** | **str**| Advanced filter as a JSON-encoded definition: a &#x60;conjunction&#x60; (&#x60;and&#x60;/&#x60;or&#x60;) over &#x60;conditions&#x60;, each &#x60;{ id, field, operator, value }&#x60; or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 &#x60;FILTER_INVALID&#x60;. | [optional] 
 
 ### Return type
 
