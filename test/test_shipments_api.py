@@ -62,6 +62,13 @@ class TestShipmentsApi(unittest.TestCase):
         """
         pass
 
+    def test_fetch_shipment_label(self) -> None:
+        """Test case for fetch_shipment_label
+
+        Fetch missing label
+        """
+        pass
+
     def test_get_shipment(self) -> None:
         """Test case for get_shipment
 

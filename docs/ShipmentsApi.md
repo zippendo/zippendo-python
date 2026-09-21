@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**create_return_shipment**](ShipmentsApi.md#create_return_shipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/create-return | Create return shipment
 [**create_shipment**](ShipmentsApi.md#create_shipment) | **POST** /orgs/{orgId}/shipments | Create shipment
 [**delete_shipment**](ShipmentsApi.md#delete_shipment) | **DELETE** /orgs/{orgId}/shipments/{shipmentId} | Delete shipment
+[**fetch_shipment_label**](ShipmentsApi.md#fetch_shipment_label) | **POST** /orgs/{orgId}/shipments/{shipmentId}/fetch-label | Fetch missing label
 [**get_shipment**](ShipmentsApi.md#get_shipment) | **GET** /orgs/{orgId}/shipments/{shipmentId} | Get shipment
 [**get_shipment_document_content**](ShipmentsApi.md#get_shipment_document_content) | **GET** /orgs/{orgId}/shipments/{shipmentId}/documents/{documentId}/content | Download shipment document
 [**list_shipments**](ShipmentsApi.md#list_shipments) | **GET** /orgs/{orgId}/shipments | List shipments
@@ -193,7 +194,7 @@ Name | Type | Description  | Notes
 
 Create return shipment
 
-Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule.
+Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with its booking outcome: `dispatched`, or `error` with the carrier's reasons in `errors`.
 
 ### Example
 
@@ -435,6 +436,90 @@ Name | Type | Description  | Notes
 **400** | Default Response |  -  |
 **403** | Default Response |  -  |
 **404** | Default Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **fetch_shipment_label**
+> CreateShipment201Response fetch_shipment_label(org_id, shipment_id)
+
+Fetch missing label
+
+Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+
+### Example
+
+* Bearer (JWT) Authentication (bearerAuth):
+
+```python
+import zippendo
+from zippendo.models.create_shipment201_response import CreateShipment201Response
+from zippendo.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.zippendo.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = zippendo.Configuration(
+    host = "https://api.zippendo.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): bearerAuth
+configuration = zippendo.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with zippendo.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = zippendo.ShipmentsApi(api_client)
+    org_id = 'org_1a2b3c4d' # str | Organization identifier.
+    shipment_id = 'shp_4d9e7a2f' # str | Shipment identifier.
+
+    try:
+        # Fetch missing label
+        api_response = api_instance.fetch_shipment_label(org_id, shipment_id)
+        print("The response of ShipmentsApi->fetch_shipment_label:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ShipmentsApi->fetch_shipment_label: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**| Organization identifier. | 
+ **shipment_id** | **str**| Shipment identifier. | 
+
+### Return type
+
+[**CreateShipment201Response**](CreateShipment201Response.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Default Response |  -  |
+**403** | Default Response |  -  |
+**404** | Default Response |  -  |
+**409** | Default Response |  -  |
+**422** | Default Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
