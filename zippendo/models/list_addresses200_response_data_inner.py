@@ -30,8 +30,9 @@ class ListAddresses200ResponseDataInner(BaseModel):
     ListAddresses200ResponseDataInner
     """ # noqa: E501
     id: StrictStr = Field(description="Unique address identifier", json_schema_extra={"examples": ["addr_01HZX9K2QF"]})
-    name: StrictStr = Field(description="Name of the address", json_schema_extra={"examples": ["Hovedlager"]})
-    att_contact: StrictStr = Field(description="Attention contact person", alias="attContact", json_schema_extra={"examples": ["Mette Hansen"]})
+    name: StrictStr = Field(description="Company or person the parcel is sent from, printed on labels", json_schema_extra={"examples": ["Zippendo ApS"]})
+    description: Optional[StrictStr] = Field(description="Internal label for this address; never printed or sent to a carrier", json_schema_extra={"examples": ["Main warehouse, Copenhagen"]})
+    att_contact: Optional[StrictStr] = Field(description="Contact person at this address, printed as the att. line", alias="attContact", json_schema_extra={"examples": ["Mette Hansen"]})
     address1: StrictStr = Field(description="Address line 1", json_schema_extra={"examples": ["Vesterbrogade 1"]})
     address2: Optional[StrictStr] = Field(description="Address line 2", json_schema_extra={"examples": ["2. sal"]})
     zipcode: StrictStr = Field(description="Postal/ZIP code", json_schema_extra={"examples": ["1620"]})
@@ -46,7 +47,7 @@ class ListAddresses200ResponseDataInner(BaseModel):
     brand_id: Optional[StrictStr] = Field(description="Brand this record belongs to, or null when it is organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     created_at: StrictStr = Field(description="Creation timestamp (ISO 8601)", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T09:00:00.000Z"]})
     updated_at: StrictStr = Field(description="Last update timestamp (ISO 8601)", alias="updatedAt", json_schema_extra={"examples": ["2026-06-22T09:00:00.000Z"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "attContact", "address1", "address2", "zipcode", "city", "phone", "countryCode", "state", "email", "customs", "addressTypes", "orgId", "brandId", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "attContact", "address1", "address2", "zipcode", "city", "phone", "countryCode", "state", "email", "customs", "addressTypes", "orgId", "brandId", "createdAt", "updatedAt"]
 
     @field_validator('email', mode="before")
     def email_validate_regular_expression(cls, value):
@@ -102,6 +103,16 @@ class ListAddresses200ResponseDataInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict['description'] = None
+
+        # set to None if att_contact (nullable) is None
+        # and model_fields_set contains the field
+        if self.att_contact is None and "att_contact" in self.model_fields_set:
+            _dict['attContact'] = None
+
         # set to None if address2 (nullable) is None
         # and model_fields_set contains the field
         if self.address2 is None and "address2" in self.model_fields_set:
@@ -136,6 +147,7 @@ class ListAddresses200ResponseDataInner(BaseModel):
         _obj = cls.model_validate({
             "id": obj.get("id"),
             "name": obj.get("name"),
+            "description": obj.get("description"),
             "attContact": obj.get("attContact"),
             "address1": obj.get("address1"),
             "address2": obj.get("address2"),

@@ -48,7 +48,8 @@ class TestListShipments200ResponseDataInner(unittest.TestCase):
                 brand_id = 'brnd_8f3kd92ld0',
                 address = zippendo.models.list_shipments_200_response_data_inner_address.listShipments_200_response_data_inner_address(
                     id = 'addr_01HZX9K2QF', 
-                    name = 'Hovedlager', 
+                    name = 'Zippendo ApS', 
+                    description = 'Main warehouse, Copenhagen', 
                     att_contact = 'Mette Hansen', 
                     address1 = 'Vesterbrogade 1', 
                     address2 = '2. sal', 

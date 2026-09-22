@@ -77,7 +77,8 @@ class TestListShippingRules200ResponseDataInner(unittest.TestCase):
                     updated_at = '2026-06-22T09:00:00.000Z', ),
                 address = zippendo.models.list_addresses_200_response_data_inner.listAddresses_200_response_data_inner(
                     id = 'addr_01HZX9K2QF', 
-                    name = 'Hovedlager', 
+                    name = 'Zippendo ApS', 
+                    description = 'Main warehouse, Copenhagen', 
                     att_contact = 'Mette Hansen', 
                     address1 = 'Vesterbrogade 1', 
                     address2 = '2. sal', 
@@ -146,7 +147,8 @@ class TestListShippingRules200ResponseDataInner(unittest.TestCase):
                     updated_at = '2026-06-22T09:00:00.000Z', ),
                 address = zippendo.models.list_addresses_200_response_data_inner.listAddresses_200_response_data_inner(
                     id = 'addr_01HZX9K2QF', 
-                    name = 'Hovedlager', 
+                    name = 'Zippendo ApS', 
+                    description = 'Main warehouse, Copenhagen', 
                     att_contact = 'Mette Hansen', 
                     address1 = 'Vesterbrogade 1', 
                     address2 = '2. sal', 

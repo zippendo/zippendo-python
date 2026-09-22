@@ -29,20 +29,21 @@ class CreateAddressRequest(BaseModel):
     """
     CreateAddressRequest
     """ # noqa: E501
-    name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Name of the address", json_schema_extra={"examples": ["Hovedlager"]})
-    att_contact: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Attention contact person", alias="attContact", json_schema_extra={"examples": ["Mette Hansen"]})
+    name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Company or person the parcel is sent from, printed on labels", json_schema_extra={"examples": ["Zippendo ApS"]})
+    description: Optional[StrictStr] = Field(default=None, description="Internal label for this address; never printed or sent to a carrier", json_schema_extra={"examples": ["Main warehouse, Copenhagen"]})
+    att_contact: Optional[StrictStr] = Field(default=None, description="Contact person at this address, printed as the att. line", alias="attContact", json_schema_extra={"examples": ["Mette Hansen"]})
     address1: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Address line 1", json_schema_extra={"examples": ["Vesterbrogade 1"]})
     address2: Optional[StrictStr] = Field(default=None, description="Address line 2", json_schema_extra={"examples": ["2. sal"]})
     zipcode: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Postal/ZIP code", json_schema_extra={"examples": ["1620"]})
     city: Annotated[str, Field(min_length=1, strict=True)] = Field(description="City", json_schema_extra={"examples": ["København"]})
     phone: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Phone number", json_schema_extra={"examples": ["+4533123456"]})
     country_code: Annotated[str, Field(min_length=2, strict=True, max_length=3)] = Field(description="Country code (ISO 2 or 3 letter)", alias="countryCode", json_schema_extra={"examples": ["DK"]})
-    state: Optional[StrictStr] = Field(default=None, description="State/Province", json_schema_extra={"examples": [""]})
+    state: Optional[StrictStr] = Field(default=None, description="State/Province", json_schema_extra={"examples": ["Hovedstaden"]})
     email: Annotated[str, Field(strict=True)] = Field(description="Email address", json_schema_extra={"examples": ["lager@example.dk"]})
     customs: Optional[Dict[str, StrictStr]] = Field(default=None, description="Customs identifiers (voec, eori, sprn, ioss, fda, duns)", json_schema_extra={"examples": [{"eori": "DK12345678"}]})
     address_types: Optional[Annotated[List[StrictStr], Field(min_length=1)]] = Field(default=None, description="Address types (sender, pickup, return)", alias="addressTypes", json_schema_extra={"examples": [["sender"]]})
     brand_id: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
-    __properties: ClassVar[List[str]] = ["name", "attContact", "address1", "address2", "zipcode", "city", "phone", "countryCode", "state", "email", "customs", "addressTypes", "brandId"]
+    __properties: ClassVar[List[str]] = ["name", "description", "attContact", "address1", "address2", "zipcode", "city", "phone", "countryCode", "state", "email", "customs", "addressTypes", "brandId"]
 
     @field_validator('email', mode="before")
     def email_validate_regular_expression(cls, value):
@@ -101,6 +102,26 @@ class CreateAddressRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict['description'] = None
+
+        # set to None if att_contact (nullable) is None
+        # and model_fields_set contains the field
+        if self.att_contact is None and "att_contact" in self.model_fields_set:
+            _dict['attContact'] = None
+
+        # set to None if address2 (nullable) is None
+        # and model_fields_set contains the field
+        if self.address2 is None and "address2" in self.model_fields_set:
+            _dict['address2'] = None
+
+        # set to None if state (nullable) is None
+        # and model_fields_set contains the field
+        if self.state is None and "state" in self.model_fields_set:
+            _dict['state'] = None
+
         # set to None if brand_id (nullable) is None
         # and model_fields_set contains the field
         if self.brand_id is None and "brand_id" in self.model_fields_set:
@@ -119,6 +140,7 @@ class CreateAddressRequest(BaseModel):
 
         _obj = cls.model_validate({
             "name": obj.get("name"),
+            "description": obj.get("description"),
             "attContact": obj.get("attContact"),
             "address1": obj.get("address1"),
             "address2": obj.get("address2"),

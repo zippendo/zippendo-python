@@ -5,15 +5,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Name of the address | [optional] 
-**att_contact** | **str** | Attention contact person | [optional] 
+**name** | **str** | Company or person the parcel is sent from, printed on labels | [optional] 
+**description** | **str** | Internal label for this address; send null or an empty string to clear it | [optional] 
+**att_contact** | **str** | Contact person at this address; send null or an empty string to clear it | [optional] 
 **address1** | **str** | Address line 1 | [optional] 
-**address2** | **str** | Address line 2 | [optional] 
+**address2** | **str** | Address line 2; send null or an empty string to clear it | [optional] 
 **zipcode** | **str** | Postal/ZIP code | [optional] 
 **city** | **str** | City | [optional] 
 **phone** | **str** | Phone number | [optional] 
 **country_code** | **str** | ISO country code | [optional] 
-**state** | **str** | State/Province | [optional] 
+**state** | **str** | State/Province; send null or an empty string to clear it | [optional] 
 **email** | **str** | Email address | [optional] 
 **customs** | **Dict[str, str]** | Customs identifiers | [optional] 
 **address_types** | **List[str]** | Address types (sender, pickup, return) | [optional] 

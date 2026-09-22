@@ -300,7 +300,7 @@ with zippendo.ApiClient(configuration) as api_client:
     limit = 20 # int | Items per page (max 100) (optional) (default to 20)
     type = 'sender' # str | Filter by address type (sender, pickup, return) (optional)
     country_code = 'DK' # str | Filter by ISO 3166-1 alpha-2 country code. (optional)
-    search = 'Copenhagen' # str | Search by address name, contact or city. (optional)
+    search = 'Copenhagen' # str | Search by company name, description, contact or city. (optional)
     brand_id = 'brnd_8f3kd92ld0' # str | Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand. (optional)
     brand_scope = 'own' # str | How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context. (optional)
 
@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
  **limit** | **int**| Items per page (max 100) | [optional] [default to 20]
  **type** | **str**| Filter by address type (sender, pickup, return) | [optional] 
  **country_code** | **str**| Filter by ISO 3166-1 alpha-2 country code. | [optional] 
- **search** | **str**| Search by address name, contact or city. | [optional] 
+ **search** | **str**| Search by company name, description, contact or city. | [optional] 
  **brand_id** | **str**| Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand. | [optional] 
  **brand_scope** | **str**| How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context. | [optional] 
 

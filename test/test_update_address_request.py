@@ -36,7 +36,8 @@ class TestUpdateAddressRequest(unittest.TestCase):
         model = UpdateAddressRequest()
         if include_optional:
             return UpdateAddressRequest(
-                name = 'Hovedlager',
+                name = 'Zippendo ApS',
+                description = 'Main warehouse, Copenhagen',
                 att_contact = 'Mette Hansen',
                 address1 = 'Vesterbrogade 1',
                 address2 = '2. sal',

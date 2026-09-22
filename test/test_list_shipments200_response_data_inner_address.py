@@ -37,7 +37,8 @@ class TestListShipments200ResponseDataInnerAddress(unittest.TestCase):
         if include_optional:
             return ListShipments200ResponseDataInnerAddress(
                 id = 'addr_01HZX9K2QF',
-                name = 'Hovedlager',
+                name = 'Zippendo ApS',
+                description = 'Main warehouse, Copenhagen',
                 att_contact = 'Mette Hansen',
                 address1 = 'Vesterbrogade 1',
                 address2 = '2. sal',
@@ -57,7 +58,8 @@ class TestListShipments200ResponseDataInnerAddress(unittest.TestCase):
         else:
             return ListShipments200ResponseDataInnerAddress(
                 id = 'addr_01HZX9K2QF',
-                name = 'Hovedlager',
+                name = 'Zippendo ApS',
+                description = 'Main warehouse, Copenhagen',
                 att_contact = 'Mette Hansen',
                 address1 = 'Vesterbrogade 1',
                 address2 = '2. sal',

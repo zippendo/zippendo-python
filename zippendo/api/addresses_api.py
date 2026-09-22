@@ -912,7 +912,7 @@ class AddressesApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by address type (sender, pickup, return)")] = None,
         country_code: Annotated[Optional[Annotated[str, Field(min_length=2, strict=True, max_length=2)]], Field(description="Filter by ISO 3166-1 alpha-2 country code.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search by address name, contact or city.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search by company name, description, contact or city.")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
         _request_timeout: Union[
@@ -942,7 +942,7 @@ class AddressesApi:
         :type type: str
         :param country_code: Filter by ISO 3166-1 alpha-2 country code.
         :type country_code: str
-        :param search: Search by address name, contact or city.
+        :param search: Search by company name, description, contact or city.
         :type search: str
         :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
         :type brand_id: str
@@ -1008,7 +1008,7 @@ class AddressesApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by address type (sender, pickup, return)")] = None,
         country_code: Annotated[Optional[Annotated[str, Field(min_length=2, strict=True, max_length=2)]], Field(description="Filter by ISO 3166-1 alpha-2 country code.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search by address name, contact or city.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search by company name, description, contact or city.")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
         _request_timeout: Union[
@@ -1038,7 +1038,7 @@ class AddressesApi:
         :type type: str
         :param country_code: Filter by ISO 3166-1 alpha-2 country code.
         :type country_code: str
-        :param search: Search by address name, contact or city.
+        :param search: Search by company name, description, contact or city.
         :type search: str
         :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
         :type brand_id: str
@@ -1104,7 +1104,7 @@ class AddressesApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by address type (sender, pickup, return)")] = None,
         country_code: Annotated[Optional[Annotated[str, Field(min_length=2, strict=True, max_length=2)]], Field(description="Filter by ISO 3166-1 alpha-2 country code.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search by address name, contact or city.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search by company name, description, contact or city.")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
         _request_timeout: Union[
@@ -1134,7 +1134,7 @@ class AddressesApi:
         :type type: str
         :param country_code: Filter by ISO 3166-1 alpha-2 country code.
         :type country_code: str
-        :param search: Search by address name, contact or city.
+        :param search: Search by company name, description, contact or city.
         :type search: str
         :param brand_id: Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
         :type brand_id: str

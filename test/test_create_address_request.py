@@ -36,7 +36,8 @@ class TestCreateAddressRequest(unittest.TestCase):
         model = CreateAddressRequest()
         if include_optional:
             return CreateAddressRequest(
-                name = 'Hovedlager',
+                name = 'Zippendo ApS',
+                description = 'Main warehouse, Copenhagen',
                 att_contact = 'Mette Hansen',
                 address1 = 'Vesterbrogade 1',
                 address2 = '2. sal',
@@ -44,7 +45,7 @@ class TestCreateAddressRequest(unittest.TestCase):
                 city = 'København',
                 phone = '+4533123456',
                 country_code = 'DK',
-                state = '',
+                state = 'Hovedstaden',
                 email = 'lager@example.dk',
                 customs = {"eori":"DK12345678"},
                 address_types = ["sender"],
@@ -52,8 +53,7 @@ class TestCreateAddressRequest(unittest.TestCase):
             )
         else:
             return CreateAddressRequest(
-                name = 'Hovedlager',
-                att_contact = 'Mette Hansen',
+                name = 'Zippendo ApS',
                 address1 = 'Vesterbrogade 1',
                 zipcode = '1620',
                 city = 'København',

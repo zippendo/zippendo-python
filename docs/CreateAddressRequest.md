@@ -5,8 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Name of the address | 
-**att_contact** | **str** | Attention contact person | 
+**name** | **str** | Company or person the parcel is sent from, printed on labels | 
+**description** | **str** | Internal label for this address; never printed or sent to a carrier | [optional] 
+**att_contact** | **str** | Contact person at this address, printed as the att. line | [optional] 
 **address1** | **str** | Address line 1 | 
 **address2** | **str** | Address line 2 | [optional] 
 **zipcode** | **str** | Postal/ZIP code | 
