@@ -24,7 +24,7 @@ from zippendo.models.get_billing_usage200_response_add_ons_inner import GetBilli
 from zippendo.models.get_billing_usage200_response_current_period import GetBillingUsage200ResponseCurrentPeriod
 from zippendo.models.get_billing_usage200_response_limits import GetBillingUsage200ResponseLimits
 from zippendo.models.get_billing_usage200_response_shipments import GetBillingUsage200ResponseShipments
-from zippendo.models.get_billing_usage200_response_zippy_messages import GetBillingUsage200ResponseZippyMessages
+from zippendo.models.get_billing_usage200_response_zippy_credits import GetBillingUsage200ResponseZippyCredits
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -37,8 +37,8 @@ class GetBillingUsage200Response(BaseModel):
     shipments: GetBillingUsage200ResponseShipments
     limits: GetBillingUsage200ResponseLimits
     add_ons: List[GetBillingUsage200ResponseAddOnsInner] = Field(description="Active add-ons on the subscription", alias="addOns", json_schema_extra={"examples": [[]]})
-    zippy_messages: Optional[GetBillingUsage200ResponseZippyMessages] = Field(default=None, alias="zippyMessages")
-    __properties: ClassVar[List[str]] = ["currentPeriod", "shipments", "limits", "addOns", "zippyMessages"]
+    zippy_credits: Optional[GetBillingUsage200ResponseZippyCredits] = Field(default=None, alias="zippyCredits")
+    __properties: ClassVar[List[str]] = ["currentPeriod", "shipments", "limits", "addOns", "zippyCredits"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -95,9 +95,9 @@ class GetBillingUsage200Response(BaseModel):
                 if _item_add_ons:
                     _items.append(_item_add_ons.to_dict())
             _dict['addOns'] = _items
-        # override the default output from pydantic by calling `to_dict()` of zippy_messages
-        if self.zippy_messages:
-            _dict['zippyMessages'] = self.zippy_messages.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of zippy_credits
+        if self.zippy_credits:
+            _dict['zippyCredits'] = self.zippy_credits.to_dict()
         return _dict
 
     @classmethod
@@ -114,7 +114,7 @@ class GetBillingUsage200Response(BaseModel):
             "shipments": GetBillingUsage200ResponseShipments.from_dict(obj["shipments"]) if obj.get("shipments") is not None else None,
             "limits": GetBillingUsage200ResponseLimits.from_dict(obj["limits"]) if obj.get("limits") is not None else None,
             "addOns": [GetBillingUsage200ResponseAddOnsInner.from_dict(_item) for _item in obj["addOns"]] if obj.get("addOns") is not None else None,
-            "zippyMessages": GetBillingUsage200ResponseZippyMessages.from_dict(obj["zippyMessages"]) if obj.get("zippyMessages") is not None else None
+            "zippyCredits": GetBillingUsage200ResponseZippyCredits.from_dict(obj["zippyCredits"]) if obj.get("zippyCredits") is not None else None
         })
         return _obj
 

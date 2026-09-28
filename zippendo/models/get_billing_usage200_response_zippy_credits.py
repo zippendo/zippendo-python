@@ -24,14 +24,16 @@ from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class GetBillingUsage200ResponseZippyMessages(BaseModel):
+class GetBillingUsage200ResponseZippyCredits(BaseModel):
     """
-    Zippy AI message usage this period (present when Zippy access is enabled)
+    Zippy AI credit usage this period (present when the Zippy add-on is enabled)
     """ # noqa: E501
-    used: Union[StrictFloat, StrictInt] = Field(description="Zippy messages used this period", json_schema_extra={"examples": [42]})
-    charges: Union[StrictFloat, StrictInt] = Field(description="Zippy message charges so far, in øre", json_schema_extra={"examples": [4158]})
-    limit: Union[StrictFloat, StrictInt] = Field(description="Maximum Zippy messages per month (-1 for unlimited)", json_schema_extra={"examples": [-1]})
-    __properties: ClassVar[List[str]] = ["used", "charges", "limit"]
+    used: Union[StrictFloat, StrictInt] = Field(description="Zippy credits used this period, included bundle and metered alike", json_schema_extra={"examples": [2640]})
+    included: Union[StrictFloat, StrictInt] = Field(description="Credits included in the add-on bundle this period", json_schema_extra={"examples": [2500]})
+    billed: Union[StrictFloat, StrictInt] = Field(description="Credits beyond the bundle, metered this period", json_schema_extra={"examples": [140]})
+    charges: Union[StrictFloat, StrictInt] = Field(description="Metered credit charges so far, in øre (whole packs)", json_schema_extra={"examples": [1000]})
+    limit: Union[StrictFloat, StrictInt] = Field(description="Maximum Zippy credits per month (-1 for unlimited)", json_schema_extra={"examples": [-1]})
+    __properties: ClassVar[List[str]] = ["used", "included", "billed", "charges", "limit"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -51,7 +53,7 @@ class GetBillingUsage200ResponseZippyMessages(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetBillingUsage200ResponseZippyMessages from a JSON string"""
+        """Create an instance of GetBillingUsage200ResponseZippyCredits from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,7 +78,7 @@ class GetBillingUsage200ResponseZippyMessages(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetBillingUsage200ResponseZippyMessages from a dict"""
+        """Create an instance of GetBillingUsage200ResponseZippyCredits from a dict"""
         if obj is None:
             return None
 
@@ -85,6 +87,8 @@ class GetBillingUsage200ResponseZippyMessages(BaseModel):
 
         _obj = cls.model_validate({
             "used": obj.get("used"),
+            "included": obj.get("included"),
+            "billed": obj.get("billed"),
             "charges": obj.get("charges"),
             "limit": obj.get("limit")
         })

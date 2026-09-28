@@ -57,7 +57,7 @@ class TestGetBillingUsage200Response(unittest.TestCase):
                     api_tokens = , 
                     automations = , ),
                 add_ons = [],
-                zippy_messages = {"used":42,"charges":4158,"limit":-1}
+                zippy_credits = {"used":2640,"included":2500,"billed":140,"charges":1000,"limit":-1}
             )
         else:
             return GetBillingUsage200Response(

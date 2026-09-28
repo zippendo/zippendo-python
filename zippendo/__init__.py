@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.3.4"
+__version__ = "1.3.5"
 
 # Define package exports
 __all__ = [
@@ -115,7 +115,7 @@ __all__ = [
     "GetBillingUsage200ResponseLimits",
     "GetBillingUsage200ResponseLimitsTeamMembers",
     "GetBillingUsage200ResponseShipments",
-    "GetBillingUsage200ResponseZippyMessages",
+    "GetBillingUsage200ResponseZippyCredits",
     "GetOrder200Response",
     "GetOrder200ResponseOrderLinesInner",
     "GetOrder200ResponseShipmentsInner",
@@ -310,7 +310,7 @@ from zippendo.models.get_billing_usage200_response_current_period import GetBill
 from zippendo.models.get_billing_usage200_response_limits import GetBillingUsage200ResponseLimits as GetBillingUsage200ResponseLimits
 from zippendo.models.get_billing_usage200_response_limits_team_members import GetBillingUsage200ResponseLimitsTeamMembers as GetBillingUsage200ResponseLimitsTeamMembers
 from zippendo.models.get_billing_usage200_response_shipments import GetBillingUsage200ResponseShipments as GetBillingUsage200ResponseShipments
-from zippendo.models.get_billing_usage200_response_zippy_messages import GetBillingUsage200ResponseZippyMessages as GetBillingUsage200ResponseZippyMessages
+from zippendo.models.get_billing_usage200_response_zippy_credits import GetBillingUsage200ResponseZippyCredits as GetBillingUsage200ResponseZippyCredits
 from zippendo.models.get_order200_response import GetOrder200Response as GetOrder200Response
 from zippendo.models.get_order200_response_order_lines_inner import GetOrder200ResponseOrderLinesInner as GetOrder200ResponseOrderLinesInner
 from zippendo.models.get_order200_response_shipments_inner import GetOrder200ResponseShipmentsInner as GetOrder200ResponseShipmentsInner

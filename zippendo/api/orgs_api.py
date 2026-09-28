@@ -1160,6 +1160,7 @@ class OrgsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateOrg200Response",
+            '400': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
@@ -1232,6 +1233,7 @@ class OrgsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateOrg200Response",
+            '400': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
@@ -1304,6 +1306,7 @@ class OrgsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UpdateOrg200Response",
+            '400': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(

@@ -15,10 +15,10 @@
 
 import unittest
 
-from zippendo.models.get_billing_usage200_response_zippy_messages import GetBillingUsage200ResponseZippyMessages
+from zippendo.models.get_billing_usage200_response_zippy_credits import GetBillingUsage200ResponseZippyCredits
 
-class TestGetBillingUsage200ResponseZippyMessages(unittest.TestCase):
-    """GetBillingUsage200ResponseZippyMessages unit test stubs"""
+class TestGetBillingUsage200ResponseZippyCredits(unittest.TestCase):
+    """GetBillingUsage200ResponseZippyCredits unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,30 +26,34 @@ class TestGetBillingUsage200ResponseZippyMessages(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> GetBillingUsage200ResponseZippyMessages:
-        """Test GetBillingUsage200ResponseZippyMessages
+    def make_instance(self, include_optional) -> GetBillingUsage200ResponseZippyCredits:
+        """Test GetBillingUsage200ResponseZippyCredits
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `GetBillingUsage200ResponseZippyMessages`
+        # uncomment below to create an instance of `GetBillingUsage200ResponseZippyCredits`
         """
-        model = GetBillingUsage200ResponseZippyMessages()
+        model = GetBillingUsage200ResponseZippyCredits()
         if include_optional:
-            return GetBillingUsage200ResponseZippyMessages(
-                used = 42,
-                charges = 4158,
+            return GetBillingUsage200ResponseZippyCredits(
+                used = 2640,
+                included = 2500,
+                billed = 140,
+                charges = 1000,
                 limit = -1
             )
         else:
-            return GetBillingUsage200ResponseZippyMessages(
-                used = 42,
-                charges = 4158,
+            return GetBillingUsage200ResponseZippyCredits(
+                used = 2640,
+                included = 2500,
+                billed = 140,
+                charges = 1000,
                 limit = -1,
         )
         """
 
-    def testGetBillingUsage200ResponseZippyMessages(self):
-        """Test GetBillingUsage200ResponseZippyMessages"""
+    def testGetBillingUsage200ResponseZippyCredits(self):
+        """Test GetBillingUsage200ResponseZippyCredits"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
