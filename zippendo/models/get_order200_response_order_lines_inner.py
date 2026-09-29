@@ -48,7 +48,7 @@ class GetOrder200ResponseOrderLinesInner(BaseModel):
     taxable: Optional[StrictBool] = Field(default=None, description="Whether the item is taxable.", json_schema_extra={"examples": [True]})
     gift_card: Optional[StrictBool] = Field(default=None, description="Whether the item is a gift card.", alias="giftCard", json_schema_extra={"examples": [False]})
     vendor: Optional[StrictStr] = Field(default=None, description="Vendor or brand name.", json_schema_extra={"examples": ["Norse Knits"]})
-    id: Optional[StrictStr] = Field(default=None, description="Order line ID. Present once the line is a row. Absent for jsonb-only lines during the dual-write window — do not synthesise one, or an edit would re-point packed lines.", json_schema_extra={"examples": ["clz9k2f0a0004abcd3456qrst"]})
+    id: Optional[StrictStr] = Field(default=None, description="Order line ID. Send it back as `orderLines[].id` when updating the order to edit this line in place.", json_schema_extra={"examples": ["clz9k2f0a0004abcd3456qrst"]})
     packed_quantity: Annotated[int, Field(le=9007199254740991, strict=True, ge=0)] = Field(description="Quantity already allocated to outbound shipments.", alias="packedQuantity", json_schema_extra={"examples": [1]})
     __properties: ClassVar[List[str]] = ["sku", "name", "quantity", "unitPrice", "totalPrice", "currency", "weight", "weightUnit", "variantId", "productId", "imageUrl", "hsCode", "countryOfOrigin", "provinceOfOrigin", "barcode", "requiresShipping", "taxable", "giftCard", "vendor", "id", "packedQuantity"]
 
