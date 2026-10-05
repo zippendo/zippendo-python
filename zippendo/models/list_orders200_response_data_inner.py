@@ -34,7 +34,7 @@ class ListOrders200ResponseDataInner(BaseModel):
     order_number: StrictStr = Field(description="Human-readable order number.", alias="orderNumber", json_schema_extra={"examples": ["#1042"]})
     customer_name: Optional[StrictStr] = Field(default=None, description="Customer full name.", alias="customerName", json_schema_extra={"examples": ["Anna Jensen"]})
     customer_email: Optional[StrictStr] = Field(default=None, description="Customer email address.", alias="customerEmail", json_schema_extra={"examples": ["anna@example.dk"]})
-    status: StrictStr = Field(description="Order fulfilment status derived from its shipments.", json_schema_extra={"examples": ["processing"]})
+    status: StrictStr = Field(description="Order fulfillment status derived from its shipments.", json_schema_extra={"examples": ["processing"]})
     brand_id: Optional[StrictStr] = Field(description="Brand this record belongs to, or null when it is organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     subtotal_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Order subtotal before shipping and tax.", alias="subtotalAmount", json_schema_extra={"examples": [998]})
     total_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Order grand total.", alias="totalAmount", json_schema_extra={"examples": [1047]})

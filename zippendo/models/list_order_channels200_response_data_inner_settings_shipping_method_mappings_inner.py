@@ -31,7 +31,7 @@ class ListOrderChannels200ResponseDataInnerSettingsShippingMethodMappingsInner(B
     """ # noqa: E501
     match: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Shipping-method title to match against imported orders (trimmed, case-insensitive, exact).", json_schema_extra={"examples": ["GLS Hjemmelevering"]})
     shipping_rule_id: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Shipping rule applied to orders whose shipping-method title matches.", alias="shippingRuleId", json_schema_extra={"examples": ["clz9k2f0a0007abcd2468qrst"]})
-    service_point_selection: Optional[StrictStr] = Field(default=None, description="For rules whose product delivers to a service point: 'nearest' auto-selects the closest point to the recipient address; 'manual' keeps the shipment in draft for manual selection.", alias="servicePointSelection", json_schema_extra={"examples": ["nearest"]})
+    service_point_selection: Optional[StrictStr] = Field(default=None, description="For rules whose product delivers to a service point: 'nearest' auto-selects the closest point to the receiver's address; 'manual' keeps the shipment in draft for manual selection.", alias="servicePointSelection", json_schema_extra={"examples": ["nearest"]})
     __properties: ClassVar[List[str]] = ["match", "shippingRuleId", "servicePointSelection"]
 
     @field_validator('service_point_selection')

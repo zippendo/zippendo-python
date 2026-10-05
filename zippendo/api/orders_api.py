@@ -920,7 +920,7 @@ class OrdersApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
-        status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Order fulfillment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
         filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
@@ -951,7 +951,7 @@ class OrdersApi:
         :type brand_id: str
         :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
         :type brand_scope: str
-        :param status: Order fulfilment status derived from its shipments.
+        :param status: Order fulfillment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
         :type order_channel_id: str
@@ -1021,7 +1021,7 @@ class OrdersApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
-        status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Order fulfillment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
         filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
@@ -1052,7 +1052,7 @@ class OrdersApi:
         :type brand_id: str
         :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
         :type brand_scope: str
-        :param status: Order fulfilment status derived from its shipments.
+        :param status: Order fulfillment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
         :type order_channel_id: str
@@ -1122,7 +1122,7 @@ class OrdersApi:
         limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Items per page (max 100)")] = None,
         brand_id: Annotated[Optional[StrictStr], Field(description="Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.")] = None,
         brand_scope: Annotated[Optional[StrictStr], Field(description="How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.")] = None,
-        status: Annotated[Optional[StrictStr], Field(description="Order fulfilment status derived from its shipments.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Order fulfillment status derived from its shipments.")] = None,
         order_channel_id: Annotated[Optional[StrictStr], Field(description="Filter by order channel ID.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search by order number or customer name/email.")] = None,
         filter: Annotated[Optional[Annotated[str, Field(strict=True, max_length=8000)]], Field(description="Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.")] = None,
@@ -1153,7 +1153,7 @@ class OrdersApi:
         :type brand_id: str
         :param brand_scope: How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
         :type brand_scope: str
-        :param status: Order fulfilment status derived from its shipments.
+        :param status: Order fulfillment status derived from its shipments.
         :type status: str
         :param order_channel_id: Filter by order channel ID.
         :type order_channel_id: str

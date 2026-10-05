@@ -34,7 +34,7 @@ class CreateOrderChannelRequest(BaseModel):
     type: StrictStr = Field(description="Type of the order channel. Platform channels (Shopify, WooCommerce) are created via their connect flows.", json_schema_extra={"examples": ["custom"]})
     brand_id: Optional[StrictStr] = Field(default=None, description="Brand this channel belongs to; null for organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
     enabled: Optional[StrictBool] = Field(default=True, description="Whether the channel is active.", json_schema_extra={"examples": [True]})
-    role: Optional[StrictStr] = Field(default='orders_and_rates', description="What Zippendo is used for on this channel. `orders_and_rates` (default) imports orders and serves checkout rates. `rates_only` serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfilment or tracking is pushed back to the platform.", json_schema_extra={"examples": ["orders_and_rates"]})
+    role: Optional[StrictStr] = Field(default='orders_and_rates', description="What Zippendo is used for on this channel. `orders_and_rates` (default) imports orders and serves checkout rates. `rates_only` serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfillment or tracking is pushed back to the platform.", json_schema_extra={"examples": ["orders_and_rates"]})
     settings: Optional[CreateOrderChannelRequestSettings] = None
     __properties: ClassVar[List[str]] = ["name", "type", "brandId", "enabled", "role", "settings"]
 

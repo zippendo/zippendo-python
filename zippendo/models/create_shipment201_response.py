@@ -41,7 +41,7 @@ class CreateShipment201Response(BaseModel):
     id: StrictStr = Field(description="Unique shipment identifier.", json_schema_extra={"examples": ["shp_4d9e7a2f"]})
     reference: StrictStr = Field(description="Customer-facing shipment reference.", json_schema_extra={"examples": ["ORDER-1042"]})
     address_id: Optional[StrictStr] = Field(default=None, description="Sender address identifier.", alias="addressId", json_schema_extra={"examples": ["addr_7e8f9a0b"]})
-    service_point_id: Optional[StrictStr] = Field(default=None, description="Selected carrier service point identifier.", alias="servicePointId", json_schema_extra={"examples": ["sp_pn_4521"]})
+    service_point_id: Optional[StrictStr] = Field(default=None, description="Selected service point ID.", alias="servicePointId", json_schema_extra={"examples": ["sp_pn_4521"]})
     parties: List[CreateShipment201ResponsePartiesInner] = Field(description="Parties involved in the shipment (sender, receiver, etc.).")
     type: StrictStr = Field(description="Direction of the shipment relative to the organization.", json_schema_extra={"examples": ["outbound"]})
     carrier_settings: ListShipments200ResponseDataInnerCarrierSettings = Field(alias="carrierSettings")

@@ -29,7 +29,7 @@ class BatchSendShipmentsRequest(BaseModel):
     """
     BatchSendShipmentsRequest
     """ # noqa: E501
-    shipment_ids: Annotated[List[Annotated[str, Field(min_length=1, strict=True)]], Field(min_length=1, max_length=100)] = Field(description="IDs of the shipments to book. Each must be in `pending` or `error` status; duplicates are ignored. Max 100 per request.", alias="shipmentIds", json_schema_extra={"examples": [["shp_01H8XABC123", "shp_01H8XDEF456"]]})
+    shipment_ids: Annotated[List[Annotated[str, Field(min_length=1, strict=True)]], Field(min_length=1, max_length=100)] = Field(description="IDs of the shipments to send. Each must be in `pending` or `error` status; duplicates are ignored. Max 100 per request.", alias="shipmentIds", json_schema_extra={"examples": [["shp_01H8XABC123", "shp_01H8XDEF456"]]})
     __properties: ClassVar[List[str]] = ["shipmentIds"]
 
     model_config = ConfigDict(

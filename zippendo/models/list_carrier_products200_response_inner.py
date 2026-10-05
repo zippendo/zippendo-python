@@ -31,13 +31,13 @@ class ListCarrierProducts200ResponseInner(BaseModel):
     """
     ListCarrierProducts200ResponseInner
     """ # noqa: E501
-    name: StrictStr = Field(description="Display name of the shipping product", json_schema_extra={"examples": ["PostNord MyPack Home"]})
+    name: StrictStr = Field(description="Display name of the carrier product", json_schema_extra={"examples": ["PostNord MyPack Home"]})
     product_id: StrictStr = Field(description="Unique carrier product identifier", alias="productId", json_schema_extra={"examples": ["PNL13"]})
     type: StrictStr = Field(description="Direction of the shipment for this product", json_schema_extra={"examples": ["outbound"]})
-    description: Optional[StrictStr] = Field(default=None, description="Description of the shipping product", json_schema_extra={"examples": ["Home delivery within Denmark"]})
-    available_countries: List[StrictStr] = Field(description="Recipient countries supported by this product", alias="availableCountries")
+    description: Optional[StrictStr] = Field(default=None, description="Description of the carrier product", json_schema_extra={"examples": ["Home delivery within Denmark"]})
+    available_countries: List[StrictStr] = Field(description="Receiver countries this product delivers to", alias="availableCountries")
     available_sender_countries: List[StrictStr] = Field(description="Sender countries supported by this product", alias="availableSenderCountries")
-    is_service_point: StrictBool = Field(description="Whether delivery is to a service point/pickup location", alias="isServicePoint", json_schema_extra={"examples": [False]})
+    is_service_point: StrictBool = Field(description="Whether this product delivers to a service point", alias="isServicePoint", json_schema_extra={"examples": [False]})
     is_pickup_available: StrictBool = Field(description="Whether carrier pickup is available for this product", alias="isPickupAvailable", json_schema_extra={"examples": [True]})
     services: Optional[List[ListCarrierProducts200ResponseInnerServicesInner]] = Field(default=None, description="Additional services available for this product")
     additional_parameters: Optional[List[ListCarrierProducts200ResponseInnerAdditionalParametersInner]] = Field(default=None, description="Extra parameters that can or must be supplied for this product", alias="additionalParameters")

@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class GetBillingUsage200ResponseZippyCredits(BaseModel):
     """
-    Zippy AI credit usage this period (present when the Zippy add-on is enabled)
+    Zippy credit usage this period (present when the Zippy add-on is enabled)
     """ # noqa: E501
     used: Union[StrictFloat, StrictInt] = Field(description="Zippy credits used this period, included bundle and metered alike", json_schema_extra={"examples": [2640]})
     included: Union[StrictFloat, StrictInt] = Field(description="Credits included in the add-on bundle this period", json_schema_extra={"examples": [2500]})

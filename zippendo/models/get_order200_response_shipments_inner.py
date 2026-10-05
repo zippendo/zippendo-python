@@ -38,12 +38,12 @@ class GetOrder200ResponseShipmentsInner(BaseModel):
     type: StrictStr = Field(description="Direction of the shipment relative to the organization.", json_schema_extra={"examples": ["outbound"]})
     tracking: Optional[CreateShipment201ResponseTracking] = None
     carrier_settings: ListShipments200ResponseDataInnerCarrierSettings = Field(alias="carrierSettings")
-    service_point_id: Optional[StrictStr] = Field(default=None, description="Selected carrier service point identifier.", alias="servicePointId", json_schema_extra={"examples": ["sp_pn_4521"]})
+    service_point_id: Optional[StrictStr] = Field(default=None, description="Selected service point ID.", alias="servicePointId", json_schema_extra={"examples": ["sp_pn_4521"]})
     created_at: StrictStr = Field(description="Timestamp when the shipment was created.", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     updated_at: StrictStr = Field(description="Timestamp when the shipment was last updated.", alias="updatedAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     shipping_rule_id: Optional[StrictStr] = Field(default=None, description="ID of the shipping rule used for this shipment.", alias="shippingRuleId", json_schema_extra={"examples": ["clz9k2f0a0002abcd5678ijkl"]})
     documents: Optional[List[CreateShipment201ResponseDocumentsInner]] = Field(default=None, description="Documents (labels, customs forms) for this shipment.")
-    parcels: List[GetOrder200ResponseShipmentsInnerParcelsInner] = Field(description="Compact parcels for the order fulfillment workspace (no QR/label payloads).")
+    parcels: List[GetOrder200ResponseShipmentsInnerParcelsInner] = Field(description="Compact parcels for the order's fulfillment view (no QR/label payloads).")
     __properties: ClassVar[List[str]] = ["id", "reference", "status", "type", "tracking", "carrierSettings", "servicePointId", "createdAt", "updatedAt", "shippingRuleId", "documents", "parcels"]
 
     @field_validator('status')

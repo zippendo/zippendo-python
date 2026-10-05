@@ -30,7 +30,7 @@ class BatchSendShipments200ResponseSummary(BaseModel):
     Aggregate counts for the batch.
     """ # noqa: E501
     total: Annotated[int, Field(le=9007199254740991, strict=True, ge=-9007199254740991)] = Field(description="Number of unique shipments requested.", json_schema_extra={"examples": [3]})
-    sent: Annotated[int, Field(le=9007199254740991, strict=True, ge=-9007199254740991)] = Field(description="How many were successfully booked.", json_schema_extra={"examples": [2]})
+    sent: Annotated[int, Field(le=9007199254740991, strict=True, ge=-9007199254740991)] = Field(description="How many were sent successfully.", json_schema_extra={"examples": [2]})
     failed: Annotated[int, Field(le=9007199254740991, strict=True, ge=-9007199254740991)] = Field(description="How many the carrier or Zippendo rejected.", json_schema_extra={"examples": [1]})
     skipped: Annotated[int, Field(le=9007199254740991, strict=True, ge=-9007199254740991)] = Field(description="How many the batch ran out of time to attempt. Submit these again.", json_schema_extra={"examples": [0]})
     __properties: ClassVar[List[str]] = ["total", "sent", "failed", "skipped"]

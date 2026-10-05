@@ -5,13 +5,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Display name of the shipping product | 
+**name** | **str** | Display name of the carrier product | 
 **product_id** | **str** | Unique carrier product identifier | 
 **type** | **str** | Direction of the shipment for this product | 
-**description** | **str** | Description of the shipping product | [optional] 
-**available_countries** | **List[str]** | Recipient countries supported by this product | 
+**description** | **str** | Description of the carrier product | [optional] 
+**available_countries** | **List[str]** | Receiver countries this product delivers to | 
 **available_sender_countries** | **List[str]** | Sender countries supported by this product | 
-**is_service_point** | **bool** | Whether delivery is to a service point/pickup location | [default to False]
+**is_service_point** | **bool** | Whether this product delivers to a service point | [default to False]
 **is_pickup_available** | **bool** | Whether carrier pickup is available for this product | [default to False]
 **services** | [**List[ListCarrierProducts200ResponseInnerServicesInner]**](ListCarrierProducts200ResponseInnerServicesInner.md) | Additional services available for this product | [optional] 
 **additional_parameters** | [**List[ListCarrierProducts200ResponseInnerAdditionalParametersInner]**](ListCarrierProducts200ResponseInnerAdditionalParametersInner.md) | Extra parameters that can or must be supplied for this product | [optional] 

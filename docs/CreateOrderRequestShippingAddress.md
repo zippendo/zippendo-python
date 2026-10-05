@@ -6,7 +6,7 @@ Destination shipping address.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Recipient full name. | 
+**name** | **str** | Receiver full name. | 
 **attention** | **str** | Attention / care-of line. | [optional] 
 **company** | **str** | Company name. | [optional] 
 **address1** | **str** | Street address line 1. | 
@@ -17,8 +17,8 @@ Name | Type | Description | Notes
 **postal_code** | **str** | Postal code. | 
 **country** | **str** | Country name. | [optional] 
 **country_code** | **str** | ISO 3166-1 alpha-2 country code. | 
-**phone** | **str** | Recipient phone number. | [optional] 
-**email** | **str** | Recipient email address. | [optional] 
+**phone** | **str** | Receiver phone number. | [optional] 
+**email** | **str** | Receiver email address. | [optional] 
 
 ## Example
 

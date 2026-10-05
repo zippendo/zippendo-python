@@ -13,8 +13,8 @@ Name | Type | Description | Notes
 **city** | **str** | City | [optional] 
 **postal_code** | **str** | Postal code | [optional] 
 **country** | **str** | Country (ISO 3166-1 alpha-2) | [optional] 
-**primary_color** | **str** | Primary brand colour — document title and table headers | [optional] 
-**secondary_color** | **str** | Secondary brand colour — subtitle, section headings, totals accent | [optional] 
+**primary_color** | **str** | Primary brand color — document title and table headers | [optional] 
+**secondary_color** | **str** | Secondary brand color — subtitle, section headings, totals accent | [optional] 
 **id** | **str** | Unique brand identifier | 
 **org_id** | **str** | Owning organization | 
 **name** | **str** | Brand display name | 

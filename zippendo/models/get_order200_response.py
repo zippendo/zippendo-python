@@ -43,7 +43,7 @@ class GetOrder200Response(BaseModel):
     subtotal_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Order subtotal before shipping and tax.", alias="subtotalAmount", json_schema_extra={"examples": [998]})
     total_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Order grand total.", alias="totalAmount", json_schema_extra={"examples": [1047]})
     currency: Optional[StrictStr] = Field(default=None, description="ISO 4217 currency code.", json_schema_extra={"examples": ["DKK"]})
-    status: StrictStr = Field(description="Order fulfilment status derived from its shipments.", json_schema_extra={"examples": ["processing"]})
+    status: StrictStr = Field(description="Order fulfillment status derived from its shipments.", json_schema_extra={"examples": ["processing"]})
     shipping_rule_id: Optional[StrictStr] = Field(default=None, description="ID of the applied shipping rule.", alias="shippingRuleId", json_schema_extra={"examples": ["clz9k2f0a0002abcd5678ijkl"]})
     notes: Optional[StrictStr] = Field(default=None, description="Free-form internal notes.", json_schema_extra={"examples": ["Leave at front desk"]})
     external_data: Optional[Dict[str, Any]] = Field(default=None, description="Raw platform-specific payload for reference.", alias="externalData")

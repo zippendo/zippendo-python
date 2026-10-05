@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class UpdateShipmentRequestDroppoint(BaseModel):
     """
-    Display details of the selected service point, stored alongside `servicePointId`. Used when applying a service-point shipping rule (whose parameters otherwise replace the stored droppoint).
+    Display details of the selected service point, stored alongside `servicePointId`. Used when applying a service-point shipping rule (whose parameters otherwise replace it).
     """ # noqa: E501
     id: StrictStr = Field(description="Identifier of the selected service point.", json_schema_extra={"examples": ["sp_pn_4521"]})
     name: StrictStr = Field(description="Display name of the service point.", json_schema_extra={"examples": ["Føtex Nørrebro"]})

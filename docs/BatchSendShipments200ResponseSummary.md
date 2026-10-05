@@ -7,7 +7,7 @@ Aggregate counts for the batch.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total** | **int** | Number of unique shipments requested. | 
-**sent** | **int** | How many were successfully booked. | 
+**sent** | **int** | How many were sent successfully. | 
 **failed** | **int** | How many the carrier or Zippendo rejected. | 
 **skipped** | **int** | How many the batch ran out of time to attempt. Submit these again. | 
 

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **reference** | **str** | Customer-facing shipment reference. | [optional] 
 **address_id** | **str** | Sender address identifier. | [optional] 
-**service_point_id** | **str** | Selected carrier service point identifier. | [optional] 
+**service_point_id** | **str** | Selected service point ID. | [optional] 
 **parties** | [**List[CreateShipmentRequestPartiesInner]**](CreateShipmentRequestPartiesInner.md) | Parties involved in the shipment. Optional when orderId is provided. | [optional] 
 **type** | **str** | Direction of the shipment relative to the organization. | [optional] 
 **carrier_settings** | [**UpdateShipmentRequestCarrierSettings**](UpdateShipmentRequestCarrierSettings.md) |  | [optional] 

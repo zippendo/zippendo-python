@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **subtotal_amount** | **float** | Order subtotal before shipping and tax. | [optional] 
 **total_amount** | **float** | Order grand total. | [optional] 
 **currency** | **str** | ISO 4217 currency code. | [optional] 
-**status** | **str** | Order fulfilment status derived from its shipments. | 
+**status** | **str** | Order fulfillment status derived from its shipments. | 
 **shipping_rule_id** | **str** | ID of the applied shipping rule. | [optional] 
 **notes** | **str** | Free-form internal notes. | [optional] 
 **external_data** | **Dict[str, object]** | Raw platform-specific payload for reference. | [optional] 

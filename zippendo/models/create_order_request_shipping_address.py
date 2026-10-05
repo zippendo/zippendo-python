@@ -29,7 +29,7 @@ class CreateOrderRequestShippingAddress(BaseModel):
     """
     Destination shipping address.
     """ # noqa: E501
-    name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Recipient full name.", json_schema_extra={"examples": ["Anna Jensen"]})
+    name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Receiver full name.", json_schema_extra={"examples": ["Anna Jensen"]})
     attention: Optional[StrictStr] = Field(default=None, description="Attention / care-of line.", json_schema_extra={"examples": ["c/o Reception"]})
     company: Optional[StrictStr] = Field(default=None, description="Company name.", json_schema_extra={"examples": ["Jensen Design ApS"]})
     address1: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Street address line 1.", json_schema_extra={"examples": ["Nørregade 12"]})
@@ -40,8 +40,8 @@ class CreateOrderRequestShippingAddress(BaseModel):
     postal_code: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Postal code.", alias="postalCode", json_schema_extra={"examples": ["1165"]})
     country: Optional[StrictStr] = Field(default=None, description="Country name.", json_schema_extra={"examples": ["Denmark"]})
     country_code: Annotated[str, Field(min_length=2, strict=True, max_length=2)] = Field(description="ISO 3166-1 alpha-2 country code.", alias="countryCode", json_schema_extra={"examples": ["DK"]})
-    phone: Optional[StrictStr] = Field(default=None, description="Recipient phone number.", json_schema_extra={"examples": ["+45 12 34 56 78"]})
-    email: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Recipient email address.", json_schema_extra={"examples": ["anna@example.dk"]})
+    phone: Optional[StrictStr] = Field(default=None, description="Receiver phone number.", json_schema_extra={"examples": ["+45 12 34 56 78"]})
+    email: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Receiver email address.", json_schema_extra={"examples": ["anna@example.dk"]})
     __properties: ClassVar[List[str]] = ["name", "attention", "company", "address1", "address2", "city", "province", "provinceCode", "postalCode", "country", "countryCode", "phone", "email"]
 
     @field_validator('email', mode="before")

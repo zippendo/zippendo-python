@@ -1,6 +1,6 @@
 # GetBillingUsage200ResponseZippyCredits
 
-Zippy AI credit usage this period (present when the Zippy add-on is enabled)
+Zippy credit usage this period (present when the Zippy add-on is enabled)
 
 ## Properties
 

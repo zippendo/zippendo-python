@@ -684,7 +684,7 @@ Name | Type | Description  | Notes
 
 Update brand
 
-Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colours. Null clears an override so the organization's value applies again.
+Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colors. Null clears an override so the organization's value applies again.
 
 ### Example
 

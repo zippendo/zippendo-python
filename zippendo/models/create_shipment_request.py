@@ -36,7 +36,7 @@ class CreateShipmentRequest(BaseModel):
     """ # noqa: E501
     reference: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Customer-facing shipment reference.", json_schema_extra={"examples": ["ORDER-1042"]})
     address_id: Optional[StrictStr] = Field(default=None, description="Sender address identifier.", alias="addressId", json_schema_extra={"examples": ["addr_7e8f9a0b"]})
-    service_point_id: Optional[StrictStr] = Field(default=None, description="Selected carrier service point identifier.", alias="servicePointId", json_schema_extra={"examples": ["sp_pn_4521"]})
+    service_point_id: Optional[StrictStr] = Field(default=None, description="Selected service point ID.", alias="servicePointId", json_schema_extra={"examples": ["sp_pn_4521"]})
     parties: Optional[Annotated[List[CreateShipmentRequestPartiesInner], Field(min_length=1)]] = Field(default=None, description="Parties involved in the shipment. Optional when orderId is provided.")
     type: StrictStr = Field(description="Direction of the shipment relative to the organization.", json_schema_extra={"examples": ["outbound"]})
     carrier_settings: Optional[CreateShipmentRequestCarrierSettings] = Field(default=None, alias="carrierSettings")

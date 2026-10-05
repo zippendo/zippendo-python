@@ -40,9 +40,9 @@ class UpdateOrderRequest(BaseModel):
     total_amount: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Order grand total.", alias="totalAmount", json_schema_extra={"examples": [1047]})
     currency: Optional[Annotated[str, Field(min_length=3, strict=True, max_length=3)]] = Field(default=None, description="ISO 4217 currency code.", json_schema_extra={"examples": ["DKK"]})
     notes: Optional[StrictStr] = Field(default=None, description="Free-form internal notes.", json_schema_extra={"examples": ["Leave at front desk"]})
-    status: Optional[StrictStr] = Field(default=None, description="Order fulfilment status derived from its shipments.", json_schema_extra={"examples": ["processing"]})
+    status: Optional[StrictStr] = Field(default=None, description="Order fulfillment status derived from its shipments.", json_schema_extra={"examples": ["processing"]})
     shipping_rule_id: Optional[StrictStr] = Field(default=None, description="ID of the shipping rule to apply.", alias="shippingRuleId", json_schema_extra={"examples": ["clz9k2f0a0002abcd5678ijkl"]})
-    service_point_id: Optional[StrictStr] = Field(default=None, description="Service point (parcel shop) ID to apply to unsent outbound shipments.", alias="servicePointId", json_schema_extra={"examples": ["SP-1234"]})
+    service_point_id: Optional[StrictStr] = Field(default=None, description="Service point ID to apply to unsent outbound shipments.", alias="servicePointId", json_schema_extra={"examples": ["SP-1234"]})
     __properties: ClassVar[List[str]] = ["orderNumber", "customerName", "customerEmail", "shippingAddress", "orderLines", "subtotalAmount", "totalAmount", "currency", "notes", "status", "shippingRuleId", "servicePointId"]
 
     @field_validator('customer_email', mode="before")

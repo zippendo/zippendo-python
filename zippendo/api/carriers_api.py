@@ -1252,7 +1252,7 @@ class CarriersApi:
     ) -> List[ListCarrierProducts200ResponseInner]:
         """List carrier products
 
-        Returns the shipping products available for a connected carrier.
+        Returns the carrier products available for a connected carrier.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -1325,7 +1325,7 @@ class CarriersApi:
     ) -> ApiResponse[List[ListCarrierProducts200ResponseInner]]:
         """List carrier products
 
-        Returns the shipping products available for a connected carrier.
+        Returns the carrier products available for a connected carrier.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -1398,7 +1398,7 @@ class CarriersApi:
     ) -> RESTResponseType:
         """List carrier products
 
-        Returns the shipping products available for a connected carrier.
+        Returns the carrier products available for a connected carrier.
 
         :param org_id: Organization ID (required)
         :type org_id: str

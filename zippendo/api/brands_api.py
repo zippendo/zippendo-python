@@ -2358,7 +2358,7 @@ class BrandsApi:
     ) -> ListOrgBrands200ResponseDataInner:
         """Update brand
 
-        Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colours. Null clears an override so the organization's value applies again.
+        Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colors. Null clears an override so the organization's value applies again.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -2437,7 +2437,7 @@ class BrandsApi:
     ) -> ApiResponse[ListOrgBrands200ResponseDataInner]:
         """Update brand
 
-        Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colours. Null clears an override so the organization's value applies again.
+        Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colors. Null clears an override so the organization's value applies again.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -2516,7 +2516,7 @@ class BrandsApi:
     ) -> RESTResponseType:
         """Update brand
 
-        Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colours. Null clears an override so the organization's value applies again.
+        Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colors. Null clears an override so the organization's value applies again.
 
         :param org_id: Organization ID (required)
         :type org_id: str
