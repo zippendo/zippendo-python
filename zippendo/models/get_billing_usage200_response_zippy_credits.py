@@ -31,7 +31,7 @@ class GetBillingUsage200ResponseZippyCredits(BaseModel):
     used: Union[StrictFloat, StrictInt] = Field(description="Zippy credits used this period, included bundle and metered alike", json_schema_extra={"examples": [2640]})
     included: Union[StrictFloat, StrictInt] = Field(description="Credits included in the add-on bundle this period", json_schema_extra={"examples": [2500]})
     billed: Union[StrictFloat, StrictInt] = Field(description="Credits beyond the bundle, metered this period", json_schema_extra={"examples": [140]})
-    charges: Union[StrictFloat, StrictInt] = Field(description="Metered credit charges so far, in øre (whole packs)", json_schema_extra={"examples": [1000]})
+    charges: Union[StrictFloat, StrictInt] = Field(description="Metered credit charges so far, in minor units of the billing currency (whole packs)", json_schema_extra={"examples": [1000]})
     limit: Union[StrictFloat, StrictInt] = Field(description="Maximum Zippy credits per month (-1 for unlimited)", json_schema_extra={"examples": [-1]})
     __properties: ClassVar[List[str]] = ["used", "included", "billed", "charges", "limit"]
 

@@ -31,7 +31,7 @@ class GetBillingUsage200ResponseShipments(BaseModel):
     used: Union[StrictFloat, StrictInt] = Field(description="Shipments created this period", json_schema_extra={"examples": [1240]})
     included: Union[StrictFloat, StrictInt] = Field(description="Shipments included in the plan", json_schema_extra={"examples": [1000]})
     overage: Union[StrictFloat, StrictInt] = Field(description="Shipments above the included allowance", json_schema_extra={"examples": [240]})
-    overage_charges: Union[StrictFloat, StrictInt] = Field(description="Overage charges so far, in øre", alias="overageCharges", json_schema_extra={"examples": [36000]})
+    overage_charges: Union[StrictFloat, StrictInt] = Field(description="Overage charges so far, in minor units of the billing currency", alias="overageCharges", json_schema_extra={"examples": [36000]})
     __properties: ClassVar[List[str]] = ["used", "included", "overage", "overageCharges"]
 
     model_config = ConfigDict(

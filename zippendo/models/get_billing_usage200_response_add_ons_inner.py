@@ -30,8 +30,8 @@ class GetBillingUsage200ResponseAddOnsInner(BaseModel):
     """ # noqa: E501
     type: StrictStr = Field(description="Type of billing add-on", json_schema_extra={"examples": ["extra_carrier"]})
     quantity: Union[StrictFloat, StrictInt] = Field(description="Number of add-on units purchased", json_schema_extra={"examples": [2]})
-    unit_price: Union[StrictFloat, StrictInt] = Field(description="Price per unit per month, in øre", alias="unitPrice", json_schema_extra={"examples": [9900]})
-    total_price: Union[StrictFloat, StrictInt] = Field(description="Total price per month, in øre", alias="totalPrice", json_schema_extra={"examples": [19800]})
+    unit_price: Union[StrictFloat, StrictInt] = Field(description="Price per unit per month, in minor units of the billing currency", alias="unitPrice", json_schema_extra={"examples": [9900]})
+    total_price: Union[StrictFloat, StrictInt] = Field(description="Total price per month, in minor units of the billing currency", alias="totalPrice", json_schema_extra={"examples": [19800]})
     __properties: ClassVar[List[str]] = ["type", "quantity", "unitPrice", "totalPrice"]
 
     @field_validator('type')

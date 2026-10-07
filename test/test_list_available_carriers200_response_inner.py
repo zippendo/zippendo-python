@@ -73,6 +73,7 @@ class TestListAvailableCarriers200ResponseInner(unittest.TestCase):
                     ],
                 deprecated = True,
                 deprecation_message = 'The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.',
+                beta = True,
                 generates_customs_documents = True,
                 generates_commercial_invoice = True
             )

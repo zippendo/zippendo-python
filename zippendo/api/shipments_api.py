@@ -1548,7 +1548,7 @@ class ShipmentsApi:
     ) -> CreateShipment201Response:
         """Fetch missing label
 
-        Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+        Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED or CARRIER_BOOKING_UNCONFIRMED warning). Stores the label, clears the warning and returns the shipment.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
@@ -1623,7 +1623,7 @@ class ShipmentsApi:
     ) -> ApiResponse[CreateShipment201Response]:
         """Fetch missing label
 
-        Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+        Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED or CARRIER_BOOKING_UNCONFIRMED warning). Stores the label, clears the warning and returns the shipment.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
@@ -1698,7 +1698,7 @@ class ShipmentsApi:
     ) -> RESTResponseType:
         """Fetch missing label
 
-        Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+        Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED or CARRIER_BOOKING_UNCONFIRMED warning). Stores the label, clears the warning and returns the shipment.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
