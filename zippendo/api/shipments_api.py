@@ -680,7 +680,7 @@ class ShipmentsApi:
     ) -> CreateShipment201Response:
         """Create return shipment
 
-        Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`.
+        Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`. Returns 409 while a return for the same shipment is already being created.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
@@ -722,6 +722,7 @@ class ShipmentsApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -754,7 +755,7 @@ class ShipmentsApi:
     ) -> ApiResponse[CreateShipment201Response]:
         """Create return shipment
 
-        Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`.
+        Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`. Returns 409 while a return for the same shipment is already being created.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
@@ -796,6 +797,7 @@ class ShipmentsApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -828,7 +830,7 @@ class ShipmentsApi:
     ) -> RESTResponseType:
         """Create return shipment
 
-        Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`.
+        Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`. Returns 409 while a return for the same shipment is already being created.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
@@ -870,6 +872,7 @@ class ShipmentsApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2839,7 +2842,7 @@ class ShipmentsApi:
     ) -> CreateShipment201Response:
         """Send shipment
 
-        Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails.
+        Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails, and 409 while the same shipment is already being sent.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
@@ -2881,6 +2884,7 @@ class ShipmentsApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
             '422': "SendShipment422Response",
         }
         response_data = self.api_client.call_api(
@@ -2914,7 +2918,7 @@ class ShipmentsApi:
     ) -> ApiResponse[CreateShipment201Response]:
         """Send shipment
 
-        Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails.
+        Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails, and 409 while the same shipment is already being sent.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
@@ -2956,6 +2960,7 @@ class ShipmentsApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
             '422': "SendShipment422Response",
         }
         response_data = self.api_client.call_api(
@@ -2989,7 +2994,7 @@ class ShipmentsApi:
     ) -> RESTResponseType:
         """Send shipment
 
-        Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails.
+        Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails, and 409 while the same shipment is already being sent.
 
         :param org_id: Organization identifier. (required)
         :type org_id: str
@@ -3031,6 +3036,7 @@ class ShipmentsApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
             '422': "SendShipment422Response",
         }
         response_data = self.api_client.call_api(
