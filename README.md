@@ -2,7 +2,13 @@
 
 Official Python client for the [Zippendo](https://zippendo.com) shipping & logistics API. Models are
 pydantic v2, so requests and responses are both type-hinted and validated at runtime. Requires
-Python 3.8+.
+Python 3.9+.
+
+Book shipments and print labels with PostNord, GLS, DAO, Bring, DHL, DPD, UPS and more, track
+parcels, and manage orders, shipping rules and webhooks from your own code. New to the API? Start with
+the [SDK guide](https://www.zippendo.com/docs/sdks/overview) or browse the
+[API reference](https://www.zippendo.com/docs/api-reference/overview). To work from an AI assistant
+instead, connect the [Zippendo MCP server](https://www.zippendo.com/docs/mcp/overview).
 
 ## Install
 
