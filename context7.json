@@ -1,0 +1,20 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Zippendo Python SDK",
+  "description": "Official Python SDK for the Zippendo shipping API: book shipments, print labels and track parcels with PostNord, GLS, DAO, Bring, DHL, DPD, UPS and more.",
+  "folders": [
+    "docs"
+  ],
+  "rules": [
+    "Authenticate with an API token created in the Zippendo dashboard under Settings → API tokens. It is a Bearer token prefixed with zipp_; load it from configuration or an environment variable such as ZIPPENDO_API_TOKEN, never hard-code it.",
+    "The base URL defaults to https://api.zippendo.com; set it only to reach another environment.",
+    "Every call takes the organization ID explicitly. One API token can be granted access to several organizations, and that argument selects which one the request acts on.",
+    "The API is split into one client class per resource (shipments, orders, carriers, addresses, rules, webhooks, tokens and more); there is no single client object that covers everything.",
+    "To act inside one brand, set the X-Zippendo-Brand header (the brand's ID or slug) as a default header on the client; it is not a method parameter. Without it a request covers the whole organization.",
+    "List operations are paginated with page (1-based) and limit, and the response carries the total and the page count; fetch every page instead of assuming the first holds all rows.",
+    "Error responses carry the JSON body { code, error, message }. Branch on the machine-readable code, such as SHIPMENT_NOT_FOUND, never on the message text.",
+    "Product concepts such as shipping rules, carrier products and service points are explained in the Zippendo documentation at https://www.zippendo.com/docs."
+  ],
+  "url": "https://context7.com/zippendo/zippendo-python",
+  "public_key": "pk_Tl3mMRFEoyX7MNPYwdtOX"
+}
