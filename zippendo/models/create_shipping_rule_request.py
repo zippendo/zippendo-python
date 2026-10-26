@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from zippendo.models.create_shipping_rule_request_additional_parameters_value import CreateShippingRuleRequestAdditionalParametersValue
 from zippendo.models.create_shipping_rule_request_conditions_inner import CreateShippingRuleRequestConditionsInner
+from zippendo.models.create_shipping_rule_request_translations_value import CreateShippingRuleRequestTranslationsValue
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -33,6 +34,7 @@ class CreateShippingRuleRequest(BaseModel):
     """ # noqa: E501
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Shipping rule name", json_schema_extra={"examples": ["Standard DK"]})
     description: Optional[StrictStr] = Field(default=None, description="Optional description", json_schema_extra={"examples": ["Standard levering i Danmark"]})
+    translations: Optional[Dict[str, CreateShippingRuleRequestTranslationsValue]] = Field(default=None, description="Checkout name and description per language; a blank field falls back to the rule's own text", json_schema_extra={"examples": [{"da": {"name": "Levering til døren", "description": "Leveres inden for 1-2 hverdage"}, "de": {"name": "Lieferung bis zur Haustür"}}]})
     direction: Optional[StrictStr] = Field(default='outbound', description="Whether this rule is for outbound or inbound (return) shipments", json_schema_extra={"examples": ["outbound"]})
     carrier_id: StrictStr = Field(description="Carrier ID", alias="carrierId", json_schema_extra={"examples": ["carr_01HZX9K2QF"]})
     product_id: StrictStr = Field(description="Product ID from carrier", alias="productId", json_schema_extra={"examples": ["PNL13"]})
@@ -57,7 +59,7 @@ class CreateShippingRuleRequest(BaseModel):
     return_shipping_rule_id: Optional[StrictStr] = Field(default=None, description="ID of the return shipping rule", alias="returnShippingRuleId")
     auto_create_return_shipment: Optional[StrictBool] = Field(default=False, description="Automatically create and send a return shipment on dispatch", alias="autoCreateReturnShipment", json_schema_extra={"examples": [False]})
     brand_id: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
-    __properties: ClassVar[List[str]] = ["name", "description", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "brandId"]
+    __properties: ClassVar[List[str]] = ["name", "description", "translations", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "brandId"]
 
     @field_validator('direction')
     def direction_validate_enum(cls, value):
@@ -108,6 +110,13 @@ class CreateShippingRuleRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each value in translations (dict)
+        _field_dict = {}
+        if self.translations:
+            for _key_translations in self.translations:
+                if self.translations[_key_translations]:
+                    _field_dict[_key_translations] = self.translations[_key_translations].to_dict()
+            _dict['translations'] = _field_dict
         # override the default output from pydantic by calling `to_dict()` of each value in additional_parameters (dict)
         _field_dict = {}
         if self.additional_parameters:
@@ -176,6 +185,12 @@ class CreateShippingRuleRequest(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "description": obj.get("description"),
+            "translations": dict(
+                (_k, CreateShippingRuleRequestTranslationsValue.from_dict(_v))
+                for _k, _v in obj["translations"].items()
+            )
+            if obj.get("translations") is not None
+            else None,
             "direction": obj.get("direction") if obj.get("direction") is not None else 'outbound',
             "carrierId": obj.get("carrierId"),
             "productId": obj.get("productId"),

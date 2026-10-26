@@ -27,6 +27,7 @@ from zippendo.models.list_shipping_rules200_response_data_inner_carrier import L
 from zippendo.models.list_shipping_rules200_response_data_inner_conditions_inner import ListShippingRules200ResponseDataInnerConditionsInner
 from zippendo.models.list_shipping_rules200_response_data_inner_label_printer import ListShippingRules200ResponseDataInnerLabelPrinter
 from zippendo.models.list_shipping_rules200_response_data_inner_return_shipping_rule import ListShippingRules200ResponseDataInnerReturnShippingRule
+from zippendo.models.list_shipping_rules200_response_data_inner_translations_value import ListShippingRules200ResponseDataInnerTranslationsValue
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -38,6 +39,7 @@ class ListShippingRules200ResponseDataInner(BaseModel):
     id: StrictStr = Field(description="Unique shipping rule identifier", json_schema_extra={"examples": ["rule_01HZX9K2QF"]})
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Shipping rule name", json_schema_extra={"examples": ["Standard DK"]})
     description: Optional[StrictStr] = Field(description="Optional description", json_schema_extra={"examples": ["Standard levering i Danmark"]})
+    translations: Dict[str, ListShippingRules200ResponseDataInnerTranslationsValue] = Field(description="Checkout name and description per language", json_schema_extra={"examples": [{"da": {"name": "Levering til døren", "description": "Leveres inden for 1-2 hverdage"}, "de": {"name": "Lieferung bis zur Haustür"}}]})
     direction: StrictStr = Field(description="Whether this rule is for outbound or inbound (return) shipments", json_schema_extra={"examples": ["outbound"]})
     carrier_id: StrictStr = Field(description="Carrier ID", alias="carrierId", json_schema_extra={"examples": ["carr_01HZX9K2QF"]})
     product_id: StrictStr = Field(description="Product ID from carrier", alias="productId", json_schema_extra={"examples": ["PNL13"]})
@@ -70,7 +72,7 @@ class ListShippingRules200ResponseDataInner(BaseModel):
     label_printer: Optional[ListShippingRules200ResponseDataInnerLabelPrinter] = Field(default=None, alias="labelPrinter")
     document_printer: Optional[ListShippingRules200ResponseDataInnerLabelPrinter] = Field(default=None, alias="documentPrinter")
     return_shipping_rule: Optional[ListShippingRules200ResponseDataInnerReturnShippingRule] = Field(default=None, alias="returnShippingRule")
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "orgId", "brandId", "createdAt", "updatedAt", "carrier", "address", "labelPrinter", "documentPrinter", "returnShippingRule"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "translations", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "orgId", "brandId", "createdAt", "updatedAt", "carrier", "address", "labelPrinter", "documentPrinter", "returnShippingRule"]
 
     @field_validator('direction')
     def direction_validate_enum(cls, value):
@@ -118,6 +120,13 @@ class ListShippingRules200ResponseDataInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each value in translations (dict)
+        _field_dict = {}
+        if self.translations:
+            for _key_translations in self.translations:
+                if self.translations[_key_translations]:
+                    _field_dict[_key_translations] = self.translations[_key_translations].to_dict()
+            _dict['translations'] = _field_dict
         # override the default output from pydantic by calling `to_dict()` of each value in additional_parameters (dict)
         _field_dict = {}
         if self.additional_parameters:
@@ -222,6 +231,12 @@ class ListShippingRules200ResponseDataInner(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
+            "translations": dict(
+                (_k, ListShippingRules200ResponseDataInnerTranslationsValue.from_dict(_v))
+                for _k, _v in obj["translations"].items()
+            )
+            if obj.get("translations") is not None
+            else None,
             "direction": obj.get("direction") if obj.get("direction") is not None else 'outbound',
             "carrierId": obj.get("carrierId"),
             "productId": obj.get("productId"),

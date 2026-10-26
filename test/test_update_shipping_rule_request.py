@@ -38,6 +38,7 @@ class TestUpdateShippingRuleRequest(unittest.TestCase):
             return UpdateShippingRuleRequest(
                 name = 'Standard DK',
                 description = 'Standard levering i Danmark',
+                translations = {"da":{"name":"Levering til døren","description":"Leveres inden for 1-2 hverdage"},"de":{"name":"Lieferung bis zur Haustür"}},
                 direction = 'outbound',
                 carrier_id = 'carr_01HZX9K2QF',
                 product_id = 'PNL13',

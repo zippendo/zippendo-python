@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.3.16"
+__version__ = "1.3.17"
 
 # Define package exports
 __all__ = [
@@ -107,6 +107,7 @@ __all__ = [
     "CreateShippingRuleRequestConditionsInnerOneOf2",
     "CreateShippingRuleRequestConditionsInnerOneOf3",
     "CreateShippingRuleRequestConditionsInnerOneOf4",
+    "CreateShippingRuleRequestTranslationsValue",
     "DeleteOrgWebhook200Response",
     "DeleteShippingRule200Response",
     "GetBillingUsage200Response",
@@ -178,6 +179,7 @@ __all__ = [
     "ListShippingRules200ResponseDataInnerConditionsInnerOneOf4",
     "ListShippingRules200ResponseDataInnerLabelPrinter",
     "ListShippingRules200ResponseDataInnerReturnShippingRule",
+    "ListShippingRules200ResponseDataInnerTranslationsValue",
     "RevokeApiToken200Response",
     "RevokeOrderChannelWebhookSecret200Response",
     "SendShipment422Response",
@@ -302,6 +304,7 @@ from zippendo.models.create_shipping_rule_request_conditions_inner_one_of1 impor
 from zippendo.models.create_shipping_rule_request_conditions_inner_one_of2 import CreateShippingRuleRequestConditionsInnerOneOf2 as CreateShippingRuleRequestConditionsInnerOneOf2
 from zippendo.models.create_shipping_rule_request_conditions_inner_one_of3 import CreateShippingRuleRequestConditionsInnerOneOf3 as CreateShippingRuleRequestConditionsInnerOneOf3
 from zippendo.models.create_shipping_rule_request_conditions_inner_one_of4 import CreateShippingRuleRequestConditionsInnerOneOf4 as CreateShippingRuleRequestConditionsInnerOneOf4
+from zippendo.models.create_shipping_rule_request_translations_value import CreateShippingRuleRequestTranslationsValue as CreateShippingRuleRequestTranslationsValue
 from zippendo.models.delete_org_webhook200_response import DeleteOrgWebhook200Response as DeleteOrgWebhook200Response
 from zippendo.models.delete_shipping_rule200_response import DeleteShippingRule200Response as DeleteShippingRule200Response
 from zippendo.models.get_billing_usage200_response import GetBillingUsage200Response as GetBillingUsage200Response
@@ -373,6 +376,7 @@ from zippendo.models.list_shipping_rules200_response_data_inner_conditions_inner
 from zippendo.models.list_shipping_rules200_response_data_inner_conditions_inner_one_of4 import ListShippingRules200ResponseDataInnerConditionsInnerOneOf4 as ListShippingRules200ResponseDataInnerConditionsInnerOneOf4
 from zippendo.models.list_shipping_rules200_response_data_inner_label_printer import ListShippingRules200ResponseDataInnerLabelPrinter as ListShippingRules200ResponseDataInnerLabelPrinter
 from zippendo.models.list_shipping_rules200_response_data_inner_return_shipping_rule import ListShippingRules200ResponseDataInnerReturnShippingRule as ListShippingRules200ResponseDataInnerReturnShippingRule
+from zippendo.models.list_shipping_rules200_response_data_inner_translations_value import ListShippingRules200ResponseDataInnerTranslationsValue as ListShippingRules200ResponseDataInnerTranslationsValue
 from zippendo.models.revoke_api_token200_response import RevokeApiToken200Response as RevokeApiToken200Response
 from zippendo.models.revoke_order_channel_webhook_secret200_response import RevokeOrderChannelWebhookSecret200Response as RevokeOrderChannelWebhookSecret200Response
 from zippendo.models.send_shipment422_response import SendShipment422Response as SendShipment422Response

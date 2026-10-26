@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **id** | **str** | Unique shipping rule identifier | 
 **name** | **str** | Shipping rule name | 
 **description** | **str** | Optional description | 
+**translations** | [**Dict[str, ListShippingRules200ResponseDataInnerTranslationsValue]**](ListShippingRules200ResponseDataInnerTranslationsValue.md) | Checkout name and description per language | 
 **direction** | **str** | Whether this rule is for outbound or inbound (return) shipments | [default to 'outbound']
 **carrier_id** | **str** | Carrier ID | 
 **product_id** | **str** | Product ID from carrier | 

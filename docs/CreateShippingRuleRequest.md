@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** | Shipping rule name | 
 **description** | **str** | Optional description | [optional] 
+**translations** | [**Dict[str, CreateShippingRuleRequestTranslationsValue]**](CreateShippingRuleRequestTranslationsValue.md) | Checkout name and description per language; a blank field falls back to the rule&#39;s own text | [optional] 
 **direction** | **str** | Whether this rule is for outbound or inbound (return) shipments | [optional] [default to 'outbound']
 **carrier_id** | **str** | Carrier ID | 
 **product_id** | **str** | Product ID from carrier | 

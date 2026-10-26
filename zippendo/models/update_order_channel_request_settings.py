@@ -31,19 +31,19 @@ class UpdateOrderChannelRequestSettings(BaseModel):
     """
     Partial channel settings to merge into existing settings. Server-managed fields (webhook secret/ids, checkout token) cannot be set here.
     """ # noqa: E501
-    use_webhooks: Optional[StrictBool] = Field(default=True, description="Use webhooks for real-time order sync.", alias="useWebhooks", json_schema_extra={"examples": [True]})
+    use_webhooks: Optional[StrictBool] = Field(default=None, description="Use webhooks for real-time order sync.", alias="useWebhooks", json_schema_extra={"examples": [True]})
     site_url: Optional[StrictStr] = Field(default=None, description="WooCommerce store URL.", alias="siteUrl", json_schema_extra={"examples": ["https://butik.dk"]})
     auto_fulfill: Optional[StrictBool] = Field(default=None, description="Push tracking back to the platform when a shipment is dispatched. Enabled by default (opt-out) — set to false to disable write-back; an unset value still syncs.", alias="autoFulfill", json_schema_extra={"examples": [True]})
-    auto_sync: Optional[StrictBool] = Field(default=False, description="Periodically poll the channel for new orders.", alias="autoSync", json_schema_extra={"examples": [False]})
-    sync_interval_minutes: Optional[Annotated[int, Field(le=1440, strict=True, ge=5)]] = Field(default=15, description="Polling interval in minutes (5-1440).", alias="syncIntervalMinutes", json_schema_extra={"examples": [15]})
-    auto_ship_on_create: Optional[StrictBool] = Field(default=False, description="Create a shipment automatically when an order arrives.", alias="autoShipOnCreate", json_schema_extra={"examples": [False]})
+    auto_sync: Optional[StrictBool] = Field(default=None, description="Periodically poll the channel for new orders.", alias="autoSync", json_schema_extra={"examples": [False]})
+    sync_interval_minutes: Optional[Annotated[int, Field(le=1440, strict=True, ge=5)]] = Field(default=None, description="Polling interval in minutes (5-1440).", alias="syncIntervalMinutes", json_schema_extra={"examples": [15]})
+    auto_ship_on_create: Optional[StrictBool] = Field(default=None, description="Create a shipment automatically when an order arrives.", alias="autoShipOnCreate", json_schema_extra={"examples": [False]})
     default_carrier_id: Optional[StrictStr] = Field(default=None, description="Default carrier ID for auto-shipping.", alias="defaultCarrierId", json_schema_extra={"examples": ["clz9k2f0a0006abcd1357yzab"]})
     default_product_id: Optional[StrictStr] = Field(default=None, description="Default carrier product ID for auto-shipping.", alias="defaultProductId", json_schema_extra={"examples": ["postnord-home-delivery"]})
     default_address_id: Optional[StrictStr] = Field(default=None, description="Default sender address ID for auto-shipping.", alias="defaultAddressId", json_schema_extra={"examples": ["clz9k2f0a0005abcd7890uvwx"]})
     shipping_method_mappings: Optional[List[CreateOrderChannelRequestSettingsShippingMethodMappingsInner]] = Field(default=None, description="Map imported shipping-method titles to shipping rules, for channels without checkout rate integration.", alias="shippingMethodMappings", json_schema_extra={"examples": [[{"match": "GLS Hjemmelevering", "shippingRuleId": "clz9k2f0a0007abcd2468qrst"}]]})
-    sync_only_unfulfilled: Optional[StrictBool] = Field(default=True, description="Only import orders that are not yet fulfilled.", alias="syncOnlyUnfulfilled", json_schema_extra={"examples": [True]})
+    sync_only_unfulfilled: Optional[StrictBool] = Field(default=None, description="Only import orders that are not yet fulfilled.", alias="syncOnlyUnfulfilled", json_schema_extra={"examples": [True]})
     sync_orders_since: Optional[datetime] = Field(default=None, description="Only sync orders placed at or after this timestamp.", alias="syncOrdersSince", json_schema_extra={"examples": ["2026-05-22T00:00:00Z"]})
-    service_point_count: Optional[Annotated[int, Field(le=20, strict=True, ge=1)]] = Field(default=6, description="Number of service points to show at checkout (1-20).", alias="servicePointCount", json_schema_extra={"examples": [6]})
+    service_point_count: Optional[Annotated[int, Field(le=20, strict=True, ge=1)]] = Field(default=None, description="Number of service points to show at checkout (1-20).", alias="servicePointCount", json_schema_extra={"examples": [6]})
     __properties: ClassVar[List[str]] = ["useWebhooks", "siteUrl", "autoFulfill", "autoSync", "syncIntervalMinutes", "autoShipOnCreate", "defaultCarrierId", "defaultProductId", "defaultAddressId", "shippingMethodMappings", "syncOnlyUnfulfilled", "syncOrdersSince", "servicePointCount"]
 
     @field_validator('sync_orders_since', mode="before")
@@ -134,19 +134,19 @@ class UpdateOrderChannelRequestSettings(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "useWebhooks": obj.get("useWebhooks") if obj.get("useWebhooks") is not None else True,
+            "useWebhooks": obj.get("useWebhooks"),
             "siteUrl": obj.get("siteUrl"),
             "autoFulfill": obj.get("autoFulfill"),
-            "autoSync": obj.get("autoSync") if obj.get("autoSync") is not None else False,
-            "syncIntervalMinutes": obj.get("syncIntervalMinutes") if obj.get("syncIntervalMinutes") is not None else 15,
-            "autoShipOnCreate": obj.get("autoShipOnCreate") if obj.get("autoShipOnCreate") is not None else False,
+            "autoSync": obj.get("autoSync"),
+            "syncIntervalMinutes": obj.get("syncIntervalMinutes"),
+            "autoShipOnCreate": obj.get("autoShipOnCreate"),
             "defaultCarrierId": obj.get("defaultCarrierId"),
             "defaultProductId": obj.get("defaultProductId"),
             "defaultAddressId": obj.get("defaultAddressId"),
             "shippingMethodMappings": [CreateOrderChannelRequestSettingsShippingMethodMappingsInner.from_dict(_item) for _item in obj["shippingMethodMappings"]] if obj.get("shippingMethodMappings") is not None else None,
-            "syncOnlyUnfulfilled": obj.get("syncOnlyUnfulfilled") if obj.get("syncOnlyUnfulfilled") is not None else True,
+            "syncOnlyUnfulfilled": obj.get("syncOnlyUnfulfilled"),
             "syncOrdersSince": obj.get("syncOrdersSince"),
-            "servicePointCount": obj.get("servicePointCount") if obj.get("servicePointCount") is not None else 6
+            "servicePointCount": obj.get("servicePointCount")
         })
         return _obj
 

@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from zippendo.models.create_shipping_rule_request_additional_parameters_value import CreateShippingRuleRequestAdditionalParametersValue
 from zippendo.models.create_shipping_rule_request_conditions_inner import CreateShippingRuleRequestConditionsInner
+from zippendo.models.create_shipping_rule_request_translations_value import CreateShippingRuleRequestTranslationsValue
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -33,31 +34,32 @@ class UpdateShippingRuleRequest(BaseModel):
     """ # noqa: E501
     name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Shipping rule name", json_schema_extra={"examples": ["Standard DK"]})
     description: Optional[StrictStr] = Field(default=None, description="Optional description", json_schema_extra={"examples": ["Standard levering i Danmark"]})
-    direction: Optional[StrictStr] = Field(default='outbound', description="Whether this rule is for outbound or inbound (return) shipments", json_schema_extra={"examples": ["outbound"]})
+    translations: Optional[Dict[str, CreateShippingRuleRequestTranslationsValue]] = Field(default=None, description="Checkout name and description per language; a blank field falls back to the rule's own text", json_schema_extra={"examples": [{"da": {"name": "Levering til døren", "description": "Leveres inden for 1-2 hverdage"}, "de": {"name": "Lieferung bis zur Haustür"}}]})
+    direction: Optional[StrictStr] = Field(default=None, description="Whether this rule is for outbound or inbound (return) shipments", json_schema_extra={"examples": ["outbound"]})
     carrier_id: Optional[StrictStr] = Field(default=None, description="Carrier ID", alias="carrierId", json_schema_extra={"examples": ["carr_01HZX9K2QF"]})
     product_id: Optional[StrictStr] = Field(default=None, description="Product ID from carrier", alias="productId", json_schema_extra={"examples": ["PNL13"]})
     services: Optional[List[StrictStr]] = Field(default=None, description="List of selected services", json_schema_extra={"examples": [["EMAIL_NOTIFICATION"]]})
     additional_parameters: Optional[Dict[str, CreateShippingRuleRequestAdditionalParametersValue]] = Field(default=None, description="Carrier-specific extra parameters, keyed by the carrier parameter `key` from the product's `additionalParameters[].key`. Omit to leave the rule's parameters unchanged.", alias="additionalParameters", json_schema_extra={"examples": [{"returnFunctionality": "LABELLESS"}]})
     address_id: Optional[StrictStr] = Field(default=None, description="Sender address ID", alias="addressId", json_schema_extra={"examples": ["addr_01HZX9K2QF"]})
     receiving_countries: Optional[List[StrictStr]] = Field(default=None, description="List of supported country codes", alias="receivingCountries", json_schema_extra={"examples": [["DK", "SE"]]})
-    email_notification: Optional[StrictBool] = Field(default=False, description="Send an email notification to the receiver", alias="emailNotification", json_schema_extra={"examples": [True]})
-    phone_notification: Optional[StrictBool] = Field(default=False, description="Send an SMS notification to the receiver", alias="phoneNotification", json_schema_extra={"examples": [False]})
+    email_notification: Optional[StrictBool] = Field(default=None, description="Send an email notification to the receiver", alias="emailNotification", json_schema_extra={"examples": [True]})
+    phone_notification: Optional[StrictBool] = Field(default=None, description="Send an SMS notification to the receiver", alias="phoneNotification", json_schema_extra={"examples": [False]})
     min_weight: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Minimum required weight in kg", alias="minWeight", json_schema_extra={"examples": [0]})
     max_weight: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Maximum allowed weight in kg", alias="maxWeight", json_schema_extra={"examples": [20]})
     min_order_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Minimum required order value in currency units", alias="minOrderValue", json_schema_extra={"examples": [0]})
     max_order_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Maximum allowed order value in currency units", alias="maxOrderValue", json_schema_extra={"examples": [5000]})
     conditions: Optional[List[CreateShippingRuleRequestConditionsInner]] = Field(default=None, description="Rule conditions (weight/price/quantity)", json_schema_extra={"examples": [[{"type": "flatRate", "shippingPrice": 39, "currency": "DKK"}]]})
-    generate_proforma_invoice: Optional[StrictBool] = Field(default=False, description="Generate proforma invoice for shipments", alias="generateProformaInvoice", json_schema_extra={"examples": [False]})
-    generate_commercial_invoice: Optional[StrictBool] = Field(default=False, description="Generate commercial invoice for international shipments", alias="generateCommercialInvoice", json_schema_extra={"examples": [False]})
-    generate_packing_list: Optional[StrictBool] = Field(default=False, description="Generate a packing slip with parcel and item details", alias="generatePackingList", json_schema_extra={"examples": [False]})
-    auto_print_labels: Optional[StrictBool] = Field(default=False, description="Automatically print labels when shipment is sent", alias="autoPrintLabels", json_schema_extra={"examples": [False]})
-    auto_print_documents: Optional[StrictBool] = Field(default=False, description="Automatically print documents when shipment is sent", alias="autoPrintDocuments", json_schema_extra={"examples": [False]})
+    generate_proforma_invoice: Optional[StrictBool] = Field(default=None, description="Generate proforma invoice for shipments", alias="generateProformaInvoice", json_schema_extra={"examples": [False]})
+    generate_commercial_invoice: Optional[StrictBool] = Field(default=None, description="Generate commercial invoice for international shipments", alias="generateCommercialInvoice", json_schema_extra={"examples": [False]})
+    generate_packing_list: Optional[StrictBool] = Field(default=None, description="Generate a packing slip with parcel and item details", alias="generatePackingList", json_schema_extra={"examples": [False]})
+    auto_print_labels: Optional[StrictBool] = Field(default=None, description="Automatically print labels when shipment is sent", alias="autoPrintLabels", json_schema_extra={"examples": [False]})
+    auto_print_documents: Optional[StrictBool] = Field(default=None, description="Automatically print documents when shipment is sent", alias="autoPrintDocuments", json_schema_extra={"examples": [False]})
     label_printer_id: Optional[StrictStr] = Field(default=None, description="ID of the label printer", alias="labelPrinterId")
     document_printer_id: Optional[StrictStr] = Field(default=None, description="ID of the document printer", alias="documentPrinterId")
     return_shipping_rule_id: Optional[StrictStr] = Field(default=None, description="ID of the return shipping rule", alias="returnShippingRuleId")
-    auto_create_return_shipment: Optional[StrictBool] = Field(default=False, description="Automatically create and send a return shipment on dispatch", alias="autoCreateReturnShipment", json_schema_extra={"examples": [False]})
+    auto_create_return_shipment: Optional[StrictBool] = Field(default=None, description="Automatically create and send a return shipment on dispatch", alias="autoCreateReturnShipment", json_schema_extra={"examples": [False]})
     brand_id: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
-    __properties: ClassVar[List[str]] = ["name", "description", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "brandId"]
+    __properties: ClassVar[List[str]] = ["name", "description", "translations", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "brandId"]
 
     @field_validator('direction')
     def direction_validate_enum(cls, value):
@@ -108,6 +110,13 @@ class UpdateShippingRuleRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each value in translations (dict)
+        _field_dict = {}
+        if self.translations:
+            for _key_translations in self.translations:
+                if self.translations[_key_translations]:
+                    _field_dict[_key_translations] = self.translations[_key_translations].to_dict()
+            _dict['translations'] = _field_dict
         # override the default output from pydantic by calling `to_dict()` of each value in additional_parameters (dict)
         _field_dict = {}
         if self.additional_parameters:
@@ -176,7 +185,13 @@ class UpdateShippingRuleRequest(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "direction": obj.get("direction") if obj.get("direction") is not None else 'outbound',
+            "translations": dict(
+                (_k, CreateShippingRuleRequestTranslationsValue.from_dict(_v))
+                for _k, _v in obj["translations"].items()
+            )
+            if obj.get("translations") is not None
+            else None,
+            "direction": obj.get("direction"),
             "carrierId": obj.get("carrierId"),
             "productId": obj.get("productId"),
             "services": obj.get("services"),
@@ -188,22 +203,22 @@ class UpdateShippingRuleRequest(BaseModel):
             else None,
             "addressId": obj.get("addressId"),
             "receivingCountries": obj.get("receivingCountries"),
-            "emailNotification": obj.get("emailNotification") if obj.get("emailNotification") is not None else False,
-            "phoneNotification": obj.get("phoneNotification") if obj.get("phoneNotification") is not None else False,
+            "emailNotification": obj.get("emailNotification"),
+            "phoneNotification": obj.get("phoneNotification"),
             "minWeight": obj.get("minWeight"),
             "maxWeight": obj.get("maxWeight"),
             "minOrderValue": obj.get("minOrderValue"),
             "maxOrderValue": obj.get("maxOrderValue"),
             "conditions": [CreateShippingRuleRequestConditionsInner.from_dict(_item) for _item in obj["conditions"]] if obj.get("conditions") is not None else None,
-            "generateProformaInvoice": obj.get("generateProformaInvoice") if obj.get("generateProformaInvoice") is not None else False,
-            "generateCommercialInvoice": obj.get("generateCommercialInvoice") if obj.get("generateCommercialInvoice") is not None else False,
-            "generatePackingList": obj.get("generatePackingList") if obj.get("generatePackingList") is not None else False,
-            "autoPrintLabels": obj.get("autoPrintLabels") if obj.get("autoPrintLabels") is not None else False,
-            "autoPrintDocuments": obj.get("autoPrintDocuments") if obj.get("autoPrintDocuments") is not None else False,
+            "generateProformaInvoice": obj.get("generateProformaInvoice"),
+            "generateCommercialInvoice": obj.get("generateCommercialInvoice"),
+            "generatePackingList": obj.get("generatePackingList"),
+            "autoPrintLabels": obj.get("autoPrintLabels"),
+            "autoPrintDocuments": obj.get("autoPrintDocuments"),
             "labelPrinterId": obj.get("labelPrinterId"),
             "documentPrinterId": obj.get("documentPrinterId"),
             "returnShippingRuleId": obj.get("returnShippingRuleId"),
-            "autoCreateReturnShipment": obj.get("autoCreateReturnShipment") if obj.get("autoCreateReturnShipment") is not None else False,
+            "autoCreateReturnShipment": obj.get("autoCreateReturnShipment"),
             "brandId": obj.get("brandId")
         })
         return _obj

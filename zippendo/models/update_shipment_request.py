@@ -42,8 +42,8 @@ class UpdateShipmentRequest(BaseModel):
     carrier_settings: Optional[UpdateShipmentRequestCarrierSettings] = Field(default=None, alias="carrierSettings")
     parcels: Optional[Annotated[List[CreateShipmentRequestParcelsInner], Field(min_length=1)]] = Field(default=None, description="Parcels to include. Optional when orderId is provided.")
     pickup_details: Optional[CreateShipmentRequestPickupDetails] = Field(default=None, alias="pickupDetails")
-    term_of_trade: Optional[StrictStr] = Field(default='DAP', description="Incoterm governing the shipment.", alias="termOfTrade", json_schema_extra={"examples": ["DAP"]})
-    status: Optional[StrictStr] = Field(default='pending', description="Lifecycle status of the shipment.", json_schema_extra={"examples": ["pending"]})
+    term_of_trade: Optional[StrictStr] = Field(default=None, description="Incoterm governing the shipment.", alias="termOfTrade", json_schema_extra={"examples": ["DAP"]})
+    status: Optional[StrictStr] = Field(default=None, description="Lifecycle status of the shipment.", json_schema_extra={"examples": ["pending"]})
     order_id: Optional[StrictStr] = Field(default=None, description="Order to derive parties and parcels from.", alias="orderId", json_schema_extra={"examples": ["ord_5e6f7a8b"]})
     label_printer_id: Optional[StrictStr] = Field(default=None, description="Printer to assign for labels.", alias="labelPrinterId", json_schema_extra={"examples": ["prn_label_01"]})
     document_printer_id: Optional[StrictStr] = Field(default=None, description="Printer to assign for documents.", alias="documentPrinterId", json_schema_extra={"examples": ["prn_doc_01"]})
@@ -188,8 +188,8 @@ class UpdateShipmentRequest(BaseModel):
             "carrierSettings": UpdateShipmentRequestCarrierSettings.from_dict(obj["carrierSettings"]) if obj.get("carrierSettings") is not None else None,
             "parcels": [CreateShipmentRequestParcelsInner.from_dict(_item) for _item in obj["parcels"]] if obj.get("parcels") is not None else None,
             "pickupDetails": CreateShipmentRequestPickupDetails.from_dict(obj["pickupDetails"]) if obj.get("pickupDetails") is not None else None,
-            "termOfTrade": obj.get("termOfTrade") if obj.get("termOfTrade") is not None else 'DAP',
-            "status": obj.get("status") if obj.get("status") is not None else 'pending',
+            "termOfTrade": obj.get("termOfTrade"),
+            "status": obj.get("status"),
             "orderId": obj.get("orderId"),
             "labelPrinterId": obj.get("labelPrinterId"),
             "documentPrinterId": obj.get("documentPrinterId"),
