@@ -36,7 +36,7 @@ class TestListCarrierProducts200ResponseInner(unittest.TestCase):
         model = ListCarrierProducts200ResponseInner()
         if include_optional:
             return ListCarrierProducts200ResponseInner(
-                name = 'PostNord MyPack Home',
+                name = 'PostNord Home',
                 product_id = 'PNL13',
                 type = 'outbound',
                 description = 'Home delivery within Denmark',
@@ -77,7 +77,7 @@ class TestListCarrierProducts200ResponseInner(unittest.TestCase):
             )
         else:
             return ListCarrierProducts200ResponseInner(
-                name = 'PostNord MyPack Home',
+                name = 'PostNord Home',
                 product_id = 'PNL13',
                 type = 'outbound',
                 available_countries = [

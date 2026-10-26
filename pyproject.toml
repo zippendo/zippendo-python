@@ -1,6 +1,6 @@
 [project]
 name = "zippendo"
-version = "1.3.17"
+version = "1.3.18"
 description = "Official Python SDK for the Zippendo shipping API: book shipments, print labels and track parcels with PostNord, GLS, DAO, Bring, DHL, DPD, UPS and more."
 authors = [
   {name = "Zippendo Support",email = "support@zippendo.com"},

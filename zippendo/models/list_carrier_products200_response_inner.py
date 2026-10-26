@@ -31,7 +31,7 @@ class ListCarrierProducts200ResponseInner(BaseModel):
     """
     ListCarrierProducts200ResponseInner
     """ # noqa: E501
-    name: StrictStr = Field(description="Display name of the carrier product", json_schema_extra={"examples": ["PostNord MyPack Home"]})
+    name: StrictStr = Field(description="Display name of the carrier product", json_schema_extra={"examples": ["PostNord Home"]})
     product_id: StrictStr = Field(description="Unique carrier product identifier", alias="productId", json_schema_extra={"examples": ["PNL13"]})
     type: StrictStr = Field(description="Direction of the shipment for this product", json_schema_extra={"examples": ["outbound"]})
     description: Optional[StrictStr] = Field(default=None, description="Description of the carrier product", json_schema_extra={"examples": ["Home delivery within Denmark"]})
