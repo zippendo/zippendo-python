@@ -54,12 +54,13 @@ class CreateShippingRuleRequest(BaseModel):
     generate_packing_list: Optional[StrictBool] = Field(default=False, description="Generate a packing slip with parcel and item details", alias="generatePackingList", json_schema_extra={"examples": [False]})
     auto_print_labels: Optional[StrictBool] = Field(default=False, description="Automatically print labels when shipment is sent", alias="autoPrintLabels", json_schema_extra={"examples": [False]})
     auto_print_documents: Optional[StrictBool] = Field(default=False, description="Automatically print documents when shipment is sent", alias="autoPrintDocuments", json_schema_extra={"examples": [False]})
+    auto_print_trigger: Optional[StrictStr] = Field(default='ON_BOOKING', description="When automatic printing starts: `ON_BOOKING` prints as soon as the shipment is sent, `ON_SCAN` waits until the packing slip is scanned.", alias="autoPrintTrigger", json_schema_extra={"examples": ["ON_BOOKING"]})
     label_printer_id: Optional[StrictStr] = Field(default=None, description="ID of the label printer", alias="labelPrinterId")
     document_printer_id: Optional[StrictStr] = Field(default=None, description="ID of the document printer", alias="documentPrinterId")
     return_shipping_rule_id: Optional[StrictStr] = Field(default=None, description="ID of the return shipping rule", alias="returnShippingRuleId")
     auto_create_return_shipment: Optional[StrictBool] = Field(default=False, description="Automatically create and send a return shipment on dispatch", alias="autoCreateReturnShipment", json_schema_extra={"examples": [False]})
     brand_id: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, description="Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide", alias="brandId", json_schema_extra={"examples": ["brnd_8f3kd92ld0"]})
-    __properties: ClassVar[List[str]] = ["name", "description", "translations", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "brandId"]
+    __properties: ClassVar[List[str]] = ["name", "description", "translations", "direction", "carrierId", "productId", "services", "additionalParameters", "addressId", "receivingCountries", "emailNotification", "phoneNotification", "minWeight", "maxWeight", "minOrderValue", "maxOrderValue", "conditions", "generateProformaInvoice", "generateCommercialInvoice", "generatePackingList", "autoPrintLabels", "autoPrintDocuments", "autoPrintTrigger", "labelPrinterId", "documentPrinterId", "returnShippingRuleId", "autoCreateReturnShipment", "brandId"]
 
     @field_validator('direction')
     def direction_validate_enum(cls, value):
@@ -69,6 +70,16 @@ class CreateShippingRuleRequest(BaseModel):
 
         if value not in set(['outbound', 'inbound']):
             raise ValueError("must be one of enum values ('outbound', 'inbound')")
+        return value
+
+    @field_validator('auto_print_trigger')
+    def auto_print_trigger_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['ON_BOOKING', 'ON_SCAN']):
+            raise ValueError("must be one of enum values ('ON_BOOKING', 'ON_SCAN')")
         return value
 
     model_config = ConfigDict(
@@ -215,6 +226,7 @@ class CreateShippingRuleRequest(BaseModel):
             "generatePackingList": obj.get("generatePackingList") if obj.get("generatePackingList") is not None else False,
             "autoPrintLabels": obj.get("autoPrintLabels") if obj.get("autoPrintLabels") is not None else False,
             "autoPrintDocuments": obj.get("autoPrintDocuments") if obj.get("autoPrintDocuments") is not None else False,
+            "autoPrintTrigger": obj.get("autoPrintTrigger") if obj.get("autoPrintTrigger") is not None else 'ON_BOOKING',
             "labelPrinterId": obj.get("labelPrinterId"),
             "documentPrinterId": obj.get("documentPrinterId"),
             "returnShippingRuleId": obj.get("returnShippingRuleId"),

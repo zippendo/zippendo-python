@@ -51,7 +51,8 @@ class TestUpdateOrgRequest(unittest.TestCase):
                 country = 'DK',
                 customs = {
                     'key' : ''
-                    }
+                    },
+                packing_slip_scan_code = 'QR'
             )
         else:
             return UpdateOrgRequest(

@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **postal_code** | **str** | Postal code | [optional] 
 **country** | **str** | Country (ISO 3166-1 alpha-2 code) | [optional] 
 **customs** | **Dict[str, str]** | Organization-wide customs identifiers (EORI, IOSS, VOEC, etc.); null clears all | [optional] 
+**packing_slip_scan_code** | **str** | Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code. | [optional] 
 
 ## Example
 

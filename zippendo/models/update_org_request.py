@@ -43,7 +43,8 @@ class UpdateOrgRequest(BaseModel):
     postal_code: Optional[StrictStr] = Field(default=None, description="Postal code", alias="postalCode", json_schema_extra={"examples": ["1058"]})
     country: Optional[StrictStr] = Field(default=None, description="Country (ISO 3166-1 alpha-2 code)", json_schema_extra={"examples": ["DK"]})
     customs: Optional[Dict[str, StrictStr]] = Field(default=None, description="Organization-wide customs identifiers (EORI, IOSS, VOEC, etc.); null clears all")
-    __properties: ClassVar[List[str]] = ["name", "slug", "description", "currency", "vatNumber", "phone", "billingEmail", "companyName", "addressLine1", "addressLine2", "city", "postalCode", "country", "customs"]
+    packing_slip_scan_code: Optional[StrictStr] = Field(default=None, description="Code printed on packing slips that a scan turns into a print: `QR`, `BARCODE`, or `NONE` for no code.", alias="packingSlipScanCode", json_schema_extra={"examples": ["QR"]})
+    __properties: ClassVar[List[str]] = ["name", "slug", "description", "currency", "vatNumber", "phone", "billingEmail", "companyName", "addressLine1", "addressLine2", "city", "postalCode", "country", "customs", "packingSlipScanCode"]
 
     @field_validator('slug', mode="before")
     def slug_validate_regular_expression(cls, value):
@@ -83,6 +84,16 @@ class UpdateOrgRequest(BaseModel):
 
         if isinstance(value, str) and not re.match(r"^(?!\.)(?!.*\.\.)([A-Za-z0-9_\'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$", value):
             raise ValueError(r"must validate the regular expression /^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/")
+        return value
+
+    @field_validator('packing_slip_scan_code')
+    def packing_slip_scan_code_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['NONE', 'QR', 'BARCODE']):
+            raise ValueError("must be one of enum values ('NONE', 'QR', 'BARCODE')")
         return value
 
     model_config = ConfigDict(
@@ -199,7 +210,8 @@ class UpdateOrgRequest(BaseModel):
             "city": obj.get("city"),
             "postalCode": obj.get("postalCode"),
             "country": obj.get("country"),
-            "customs": obj.get("customs")
+            "customs": obj.get("customs"),
+            "packingSlipScanCode": obj.get("packingSlipScanCode")
         })
         return _obj
 

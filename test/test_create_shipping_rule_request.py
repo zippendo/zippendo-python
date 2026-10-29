@@ -58,6 +58,7 @@ class TestCreateShippingRuleRequest(unittest.TestCase):
                 generate_packing_list = False,
                 auto_print_labels = False,
                 auto_print_documents = False,
+                auto_print_trigger = 'ON_BOOKING',
                 label_printer_id = '',
                 document_printer_id = '',
                 return_shipping_rule_id = '',

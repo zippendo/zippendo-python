@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **generate_packing_list** | **bool** | Generate a packing slip with parcel and item details | [default to False]
 **auto_print_labels** | **bool** | Automatically print labels when shipment is sent | [default to False]
 **auto_print_documents** | **bool** | Automatically print documents when shipment is sent | [default to False]
+**auto_print_trigger** | **str** | When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned. | 
 **label_printer_id** | **str** | ID of the label printer | 
 **document_printer_id** | **str** | ID of the document printer | 
 **return_shipping_rule_id** | **str** | ID of the return shipping rule | 

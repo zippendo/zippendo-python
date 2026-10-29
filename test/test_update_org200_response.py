@@ -50,6 +50,7 @@ class TestUpdateOrg200Response(unittest.TestCase):
                 postal_code = '1058',
                 country = 'DK',
                 customs = {"eori":"DK12345678"},
+                packing_slip_scan_code = 'QR',
                 created_at = '2026-06-22T14:30:00.000Z',
                 updated_at = '2026-06-22T14:30:00.000Z'
             )
@@ -60,6 +61,7 @@ class TestUpdateOrg200Response(unittest.TestCase):
                 slug = 'nordic-logistics',
                 description = 'Parcel and freight logistics across the Nordics',
                 currency = 'DKK',
+                packing_slip_scan_code = 'QR',
                 created_at = '2026-06-22T14:30:00.000Z',
                 updated_at = '2026-06-22T14:30:00.000Z',
         )

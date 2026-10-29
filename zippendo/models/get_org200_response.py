@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from zippendo.models.get_org200_response_count import GetOrg200ResponseCount
 from typing import Optional, Set
@@ -43,10 +43,18 @@ class GetOrg200Response(BaseModel):
     postal_code: Optional[StrictStr] = Field(default=None, description="Postal code", alias="postalCode", json_schema_extra={"examples": ["1058"]})
     country: Optional[StrictStr] = Field(default=None, description="Country (ISO 3166-1 alpha-2 code)", json_schema_extra={"examples": ["DK"]})
     customs: Optional[Dict[str, StrictStr]] = Field(default=None, description="Customs identifiers keyed by type", json_schema_extra={"examples": [{"eori": "DK12345678"}]})
+    packing_slip_scan_code: StrictStr = Field(description="Code printed on packing slips that a scan turns into a print: `QR`, `BARCODE`, or `NONE` for no code.", alias="packingSlipScanCode", json_schema_extra={"examples": ["QR"]})
     created_at: StrictStr = Field(description="Creation timestamp (ISO 8601)", alias="createdAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     updated_at: StrictStr = Field(description="Last update timestamp (ISO 8601)", alias="updatedAt", json_schema_extra={"examples": ["2026-06-22T14:30:00.000Z"]})
     count: GetOrg200ResponseCount = Field(alias="_count")
-    __properties: ClassVar[List[str]] = ["id", "name", "slug", "description", "currency", "vatNumber", "billingEmail", "companyName", "addressLine1", "addressLine2", "city", "postalCode", "country", "customs", "createdAt", "updatedAt", "_count"]
+    __properties: ClassVar[List[str]] = ["id", "name", "slug", "description", "currency", "vatNumber", "billingEmail", "companyName", "addressLine1", "addressLine2", "city", "postalCode", "country", "customs", "packingSlipScanCode", "createdAt", "updatedAt", "_count"]
+
+    @field_validator('packing_slip_scan_code')
+    def packing_slip_scan_code_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['NONE', 'QR', 'BARCODE']):
+            raise ValueError("must be one of enum values ('NONE', 'QR', 'BARCODE')")
+        return value
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -166,6 +174,7 @@ class GetOrg200Response(BaseModel):
             "postalCode": obj.get("postalCode"),
             "country": obj.get("country"),
             "customs": obj.get("customs"),
+            "packingSlipScanCode": obj.get("packingSlipScanCode"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),
             "_count": GetOrg200ResponseCount.from_dict(obj["_count"]) if obj.get("_count") is not None else None
