@@ -31,10 +31,12 @@ class CreateShipment201ResponseTracking(BaseModel):
     url: Optional[StrictStr] = Field(default=None, description="Public carrier tracking URL.", json_schema_extra={"examples": ["https://tracking.postnord.com/00370724710000012345"]})
     number: Optional[StrictStr] = Field(default=None, description="Carrier tracking number.", json_schema_extra={"examples": ["00370724710000012345"]})
     label_free_code: Optional[StrictStr] = Field(default=None, description="Label-free drop-off code.", alias="labelFreeCode", json_schema_extra={"examples": ["AB12CD34"]})
+    expected_pickup_date: Optional[StrictStr] = Field(default=None, description="The day the carrier plans to collect the parcel, for carriers that choose the pickup day at booking (WebrinQ return pickups).", alias="expectedPickupDate", json_schema_extra={"examples": ["2026-11-04"]})
+    cancellation_requested_at: Optional[StrictStr] = Field(default=None, description="When a cancellation was sent to a carrier that confirms it later. The shipment stays dispatched until the carrier reports it cancelled.", alias="cancellationRequestedAt", json_schema_extra={"examples": ["2026-11-03T10:15:00.000Z"]})
     qr_code_link: Optional[StrictStr] = Field(default=None, description="DEPRECATED — use `qrCodeDataUri` (embeddable data URI) or `qrCodeUrl` (hosted link). Catch-all that carries whichever applies, kept populated for backwards compatibility during the migration and until it is disabled.", alias="qrCodeLink", json_schema_extra={"examples": ["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="]})
     qr_code_data_uri: Optional[StrictStr] = Field(default=None, description="Embeddable `data:` URI of the QR code image for label-free drop-off — base64 image bytes you can drop straight into an <img>/email. Populated whenever the image bytes are available, including for carriers that host the image (it is fetched and inlined); null if the carrier published no QR code or its image could not be retrieved.", alias="qrCodeDataUri", json_schema_extra={"examples": ["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="]})
     qr_code_url: Optional[StrictStr] = Field(default=None, description="Carrier-hosted URL of the QR code image for label-free drop-off, returned by carriers (e.g. Bring) that link to the image rather than embedding it. Independent of `qrCodeDataUri` — both are set when the hosted image was inlined successfully; null for carriers that only return embedded bytes.", alias="qrCodeUrl", json_schema_extra={"examples": ["https://qr.bring.com/label-free/AB12CD34.png"]})
-    __properties: ClassVar[List[str]] = ["url", "number", "labelFreeCode", "qrCodeLink", "qrCodeDataUri", "qrCodeUrl"]
+    __properties: ClassVar[List[str]] = ["url", "number", "labelFreeCode", "expectedPickupDate", "cancellationRequestedAt", "qrCodeLink", "qrCodeDataUri", "qrCodeUrl"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -90,6 +92,16 @@ class CreateShipment201ResponseTracking(BaseModel):
         if self.label_free_code is None and "label_free_code" in self.model_fields_set:
             _dict['labelFreeCode'] = None
 
+        # set to None if expected_pickup_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.expected_pickup_date is None and "expected_pickup_date" in self.model_fields_set:
+            _dict['expectedPickupDate'] = None
+
+        # set to None if cancellation_requested_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.cancellation_requested_at is None and "cancellation_requested_at" in self.model_fields_set:
+            _dict['cancellationRequestedAt'] = None
+
         # set to None if qr_code_link (nullable) is None
         # and model_fields_set contains the field
         if self.qr_code_link is None and "qr_code_link" in self.model_fields_set:
@@ -120,6 +132,8 @@ class CreateShipment201ResponseTracking(BaseModel):
             "url": obj.get("url"),
             "number": obj.get("number"),
             "labelFreeCode": obj.get("labelFreeCode"),
+            "expectedPickupDate": obj.get("expectedPickupDate"),
+            "cancellationRequestedAt": obj.get("cancellationRequestedAt"),
             "qrCodeLink": obj.get("qrCodeLink"),
             "qrCodeDataUri": obj.get("qrCodeDataUri"),
             "qrCodeUrl": obj.get("qrCodeUrl")

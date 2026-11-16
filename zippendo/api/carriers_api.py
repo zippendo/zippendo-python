@@ -65,7 +65,7 @@ class CarriersApi:
     ) -> ListCarriers200ResponseDataInner:
         """Connect carrier
 
-        Connects a new carrier to the organization with its configuration.
+        Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -107,6 +107,7 @@ class CarriersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '422': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -139,7 +140,7 @@ class CarriersApi:
     ) -> ApiResponse[ListCarriers200ResponseDataInner]:
         """Connect carrier
 
-        Connects a new carrier to the organization with its configuration.
+        Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -181,6 +182,7 @@ class CarriersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '422': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -213,7 +215,7 @@ class CarriersApi:
     ) -> RESTResponseType:
         """Connect carrier
 
-        Connects a new carrier to the organization with its configuration.
+        Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -255,6 +257,7 @@ class CarriersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '422': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1901,7 +1904,7 @@ class CarriersApi:
     ) -> ListCarriers200ResponseDataInner:
         """Update carrier
 
-        Updates a connected carrier's configuration or name.
+        Updates a connected carrier's configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -1946,6 +1949,7 @@ class CarriersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '422': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1979,7 +1983,7 @@ class CarriersApi:
     ) -> ApiResponse[ListCarriers200ResponseDataInner]:
         """Update carrier
 
-        Updates a connected carrier's configuration or name.
+        Updates a connected carrier's configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -2024,6 +2028,7 @@ class CarriersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '422': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2057,7 +2062,7 @@ class CarriersApi:
     ) -> RESTResponseType:
         """Update carrier
 
-        Updates a connected carrier's configuration or name.
+        Updates a connected carrier's configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -2102,6 +2107,7 @@ class CarriersApi:
             '400': "ListApiTokens401Response",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '422': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,

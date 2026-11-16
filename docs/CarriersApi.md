@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 Connect carrier
 
-Connects a new carrier to the organization with its configuration.
+Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
 
 ### Example
 
@@ -94,6 +94,7 @@ Name | Type | Description  | Notes
 **400** | Default Response |  -  |
 **403** | Default Response |  -  |
 **404** | Default Response |  -  |
+**422** | Default Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -525,7 +526,7 @@ Name | Type | Description  | Notes
 
 Update carrier
 
-Updates a connected carrier's configuration or name.
+Updates a connected carrier's configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
 
 ### Example
 
@@ -603,6 +604,7 @@ Name | Type | Description  | Notes
 **400** | Default Response |  -  |
 **403** | Default Response |  -  |
 **404** | Default Response |  -  |
+**422** | Default Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

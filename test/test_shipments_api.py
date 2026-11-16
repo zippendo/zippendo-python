@@ -41,6 +41,13 @@ class TestShipmentsApi(unittest.TestCase):
         """
         pass
 
+    def test_cancel_shipment(self) -> None:
+        """Test case for cancel_shipment
+
+        Cancel sent shipment
+        """
+        pass
+
     def test_create_return_shipment(self) -> None:
         """Test case for create_return_shipment
 

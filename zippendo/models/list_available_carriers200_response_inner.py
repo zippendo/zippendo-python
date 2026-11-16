@@ -43,7 +43,10 @@ class ListAvailableCarriers200ResponseInner(BaseModel):
     beta: Optional[StrictBool] = Field(default=None, description="Whether this integration is newly launched and still being verified in production", json_schema_extra={"examples": [True]})
     generates_customs_documents: Optional[StrictBool] = Field(default=None, description="Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label.", alias="generatesCustomsDocuments", json_schema_extra={"examples": [True]})
     generates_commercial_invoice: Optional[StrictBool] = Field(default=None, description="Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents.", alias="generatesCommercialInvoice", json_schema_extra={"examples": [True]})
-    __properties: ClassVar[List[str]] = ["name", "slug", "group", "description", "logo", "brandColor", "learnMoreUrl", "requiredFields", "optionalFields", "deprecated", "deprecationMessage", "beta", "generatesCustomsDocuments", "generatesCommercialInvoice"]
+    cancels_shipments: Optional[StrictBool] = Field(default=None, description="Whether a sent shipment of this carrier can be cancelled from Zippendo.", alias="cancelsShipments", json_schema_extra={"examples": [True]})
+    uncancellable_product_ids: Optional[List[StrictStr]] = Field(default=None, description="Products whose shipments this carrier cannot cancel, although it cancels its other products (for example locker deliveries).", alias="uncancellableProductIds", json_schema_extra={"examples": [["LOCKER_EXPRESS"]]})
+    verifies_credentials: Optional[StrictBool] = Field(default=None, description="Whether Zippendo checks the credentials with the carrier when the carrier is connected or updated.", alias="verifiesCredentials", json_schema_extra={"examples": [True]})
+    __properties: ClassVar[List[str]] = ["name", "slug", "group", "description", "logo", "brandColor", "learnMoreUrl", "requiredFields", "optionalFields", "deprecated", "deprecationMessage", "beta", "generatesCustomsDocuments", "generatesCommercialInvoice", "cancelsShipments", "uncancellableProductIds", "verifiesCredentials"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -123,7 +126,10 @@ class ListAvailableCarriers200ResponseInner(BaseModel):
             "deprecationMessage": obj.get("deprecationMessage"),
             "beta": obj.get("beta"),
             "generatesCustomsDocuments": obj.get("generatesCustomsDocuments"),
-            "generatesCommercialInvoice": obj.get("generatesCommercialInvoice")
+            "generatesCommercialInvoice": obj.get("generatesCommercialInvoice"),
+            "cancelsShipments": obj.get("cancelsShipments"),
+            "uncancellableProductIds": obj.get("uncancellableProductIds"),
+            "verifiesCredentials": obj.get("verifiesCredentials")
         })
         return _obj
 

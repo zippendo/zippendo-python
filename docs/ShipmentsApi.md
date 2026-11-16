@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**batch_send_shipments**](ShipmentsApi.md#batch_send_shipments) | **POST** /orgs/{orgId}/shipments/batch-send | Batch send shipments
 [**batch_split_shipment**](ShipmentsApi.md#batch_split_shipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/batch-split-shipment | Batch split shipment
+[**cancel_shipment**](ShipmentsApi.md#cancel_shipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/cancel | Cancel sent shipment
 [**create_return_shipment**](ShipmentsApi.md#create_return_shipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/create-return | Create return shipment
 [**create_shipment**](ShipmentsApi.md#create_shipment) | **POST** /orgs/{orgId}/shipments | Create shipment
 [**delete_shipment**](ShipmentsApi.md#delete_shipment) | **DELETE** /orgs/{orgId}/shipments/{shipmentId} | Delete shipment
@@ -186,6 +187,92 @@ Name | Type | Description  | Notes
 **400** | Default Response |  -  |
 **403** | Default Response |  -  |
 **404** | Default Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **cancel_shipment**
+> CreateShipment201Response cancel_shipment(org_id, shipment_id)
+
+Cancel sent shipment
+
+Cancel a sent shipment with its carrier. The shipment becomes `cancelled` when the carrier confirms at once; a carrier that confirms later leaves it `dispatched` with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it `dispatched` with each parcel's outcome in its activity. Only carriers whose `cancelsShipments` is true accept it, except products listed in `uncancellableProductIds`; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+
+### Example
+
+* Bearer (JWT) Authentication (bearerAuth):
+
+```python
+import zippendo
+from zippendo.models.create_shipment201_response import CreateShipment201Response
+from zippendo.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.zippendo.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = zippendo.Configuration(
+    host = "https://api.zippendo.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): bearerAuth
+configuration = zippendo.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with zippendo.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = zippendo.ShipmentsApi(api_client)
+    org_id = 'org_1a2b3c4d' # str | Organization identifier.
+    shipment_id = 'shp_4d9e7a2f' # str | Shipment identifier.
+
+    try:
+        # Cancel sent shipment
+        api_response = api_instance.cancel_shipment(org_id, shipment_id)
+        print("The response of ShipmentsApi->cancel_shipment:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ShipmentsApi->cancel_shipment: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**| Organization identifier. | 
+ **shipment_id** | **str**| Shipment identifier. | 
+
+### Return type
+
+[**CreateShipment201Response**](CreateShipment201Response.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Default Response |  -  |
+**400** | Default Response |  -  |
+**403** | Default Response |  -  |
+**404** | Default Response |  -  |
+**409** | Default Response |  -  |
+**422** | Default Response |  -  |
+**503** | Default Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

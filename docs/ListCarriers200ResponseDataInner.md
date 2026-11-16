@@ -20,6 +20,9 @@ Name | Type | Description | Notes
 **beta** | **bool** | Whether this integration is newly launched and still being verified in production | [optional] 
 **generates_customs_documents** | **bool** | Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label. | [optional] 
 **generates_commercial_invoice** | **bool** | Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents. | [optional] 
+**cancels_shipments** | **bool** | Whether a sent shipment of this carrier can be cancelled from Zippendo. | [optional] 
+**uncancellable_product_ids** | **List[str]** | Products whose shipments this carrier cannot cancel, although it cancels its other products (for example locker deliveries). | [optional] 
+**verifies_credentials** | **bool** | Whether Zippendo checks the credentials with the carrier when the carrier is connected or updated. | [optional] 
 
 ## Example
 
