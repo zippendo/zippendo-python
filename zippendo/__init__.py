@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.0"
+__version__ = "1.4.1"
 
 # Define package exports
 __all__ = [
@@ -143,6 +143,8 @@ __all__ = [
     "ListCarrierProducts200ResponseInner",
     "ListCarrierProducts200ResponseInnerAdditionalParametersInner",
     "ListCarrierProducts200ResponseInnerAdditionalParametersInnerOptionsInner",
+    "ListCarrierProducts200ResponseInnerDangerousGoodsInner",
+    "ListCarrierProducts200ResponseInnerDangerousGoodsInnerParameters",
     "ListCarrierProducts200ResponseInnerServicesInner",
     "ListCarrierProducts200ResponseInnerWeightLimits",
     "ListCarriers200Response",
@@ -340,6 +342,8 @@ from zippendo.models.list_carrier_product_service_points_request import ListCarr
 from zippendo.models.list_carrier_products200_response_inner import ListCarrierProducts200ResponseInner as ListCarrierProducts200ResponseInner
 from zippendo.models.list_carrier_products200_response_inner_additional_parameters_inner import ListCarrierProducts200ResponseInnerAdditionalParametersInner as ListCarrierProducts200ResponseInnerAdditionalParametersInner
 from zippendo.models.list_carrier_products200_response_inner_additional_parameters_inner_options_inner import ListCarrierProducts200ResponseInnerAdditionalParametersInnerOptionsInner as ListCarrierProducts200ResponseInnerAdditionalParametersInnerOptionsInner
+from zippendo.models.list_carrier_products200_response_inner_dangerous_goods_inner import ListCarrierProducts200ResponseInnerDangerousGoodsInner as ListCarrierProducts200ResponseInnerDangerousGoodsInner
+from zippendo.models.list_carrier_products200_response_inner_dangerous_goods_inner_parameters import ListCarrierProducts200ResponseInnerDangerousGoodsInnerParameters as ListCarrierProducts200ResponseInnerDangerousGoodsInnerParameters
 from zippendo.models.list_carrier_products200_response_inner_services_inner import ListCarrierProducts200ResponseInnerServicesInner as ListCarrierProducts200ResponseInnerServicesInner
 from zippendo.models.list_carrier_products200_response_inner_weight_limits import ListCarrierProducts200ResponseInnerWeightLimits as ListCarrierProducts200ResponseInnerWeightLimits
 from zippendo.models.list_carriers200_response import ListCarriers200Response as ListCarriers200Response

@@ -36,14 +36,14 @@ class TestGetBillingUsage200ResponseAddOnsInner(unittest.TestCase):
         model = GetBillingUsage200ResponseAddOnsInner()
         if include_optional:
             return GetBillingUsage200ResponseAddOnsInner(
-                type = 'extra_carrier',
+                type = 'zippy',
                 quantity = 2,
                 unit_price = 9900,
                 total_price = 19800
             )
         else:
             return GetBillingUsage200ResponseAddOnsInner(
-                type = 'extra_carrier',
+                type = 'zippy',
                 quantity = 2,
                 unit_price = 9900,
                 total_price = 19800,

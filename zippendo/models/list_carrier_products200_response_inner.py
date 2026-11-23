@@ -21,6 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from zippendo.models.list_carrier_products200_response_inner_additional_parameters_inner import ListCarrierProducts200ResponseInnerAdditionalParametersInner
+from zippendo.models.list_carrier_products200_response_inner_dangerous_goods_inner import ListCarrierProducts200ResponseInnerDangerousGoodsInner
 from zippendo.models.list_carrier_products200_response_inner_services_inner import ListCarrierProducts200ResponseInnerServicesInner
 from zippendo.models.list_carrier_products200_response_inner_weight_limits import ListCarrierProducts200ResponseInnerWeightLimits
 from typing import Optional, Set
@@ -41,8 +42,9 @@ class ListCarrierProducts200ResponseInner(BaseModel):
     is_pickup_available: StrictBool = Field(description="Whether carrier pickup is available for this product", alias="isPickupAvailable", json_schema_extra={"examples": [True]})
     services: Optional[List[ListCarrierProducts200ResponseInnerServicesInner]] = Field(default=None, description="Additional services available for this product")
     additional_parameters: Optional[List[ListCarrierProducts200ResponseInnerAdditionalParametersInner]] = Field(default=None, description="Extra parameters that can or must be supplied for this product", alias="additionalParameters")
+    dangerous_goods: Optional[List[ListCarrierProducts200ResponseInnerDangerousGoodsInner]] = Field(default=None, description="How this product declares dangerous goods: the service to request and the parameters that carry the details. Absent when the product cannot carry them.", alias="dangerousGoods")
     weight_limits: Optional[ListCarrierProducts200ResponseInnerWeightLimits] = Field(default=None, alias="weightLimits")
-    __properties: ClassVar[List[str]] = ["name", "productId", "type", "description", "availableCountries", "availableSenderCountries", "isServicePoint", "isPickupAvailable", "services", "additionalParameters", "weightLimits"]
+    __properties: ClassVar[List[str]] = ["name", "productId", "type", "description", "availableCountries", "availableSenderCountries", "isServicePoint", "isPickupAvailable", "services", "additionalParameters", "dangerousGoods", "weightLimits"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -104,6 +106,13 @@ class ListCarrierProducts200ResponseInner(BaseModel):
                 if _item_additional_parameters:
                     _items.append(_item_additional_parameters.to_dict())
             _dict['additionalParameters'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in dangerous_goods (list)
+        _items = []
+        if self.dangerous_goods:
+            for _item_dangerous_goods in self.dangerous_goods:
+                if _item_dangerous_goods:
+                    _items.append(_item_dangerous_goods.to_dict())
+            _dict['dangerousGoods'] = _items
         # override the default output from pydantic by calling `to_dict()` of weight_limits
         if self.weight_limits:
             _dict['weightLimits'] = self.weight_limits.to_dict()
@@ -129,6 +138,7 @@ class ListCarrierProducts200ResponseInner(BaseModel):
             "isPickupAvailable": obj.get("isPickupAvailable") if obj.get("isPickupAvailable") is not None else False,
             "services": [ListCarrierProducts200ResponseInnerServicesInner.from_dict(_item) for _item in obj["services"]] if obj.get("services") is not None else None,
             "additionalParameters": [ListCarrierProducts200ResponseInnerAdditionalParametersInner.from_dict(_item) for _item in obj["additionalParameters"]] if obj.get("additionalParameters") is not None else None,
+            "dangerousGoods": [ListCarrierProducts200ResponseInnerDangerousGoodsInner.from_dict(_item) for _item in obj["dangerousGoods"]] if obj.get("dangerousGoods") is not None else None,
             "weightLimits": ListCarrierProducts200ResponseInnerWeightLimits.from_dict(obj["weightLimits"]) if obj.get("weightLimits") is not None else None
         })
         return _obj

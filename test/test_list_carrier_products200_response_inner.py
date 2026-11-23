@@ -70,6 +70,21 @@ class TestListCarrierProducts200ResponseInner(unittest.TestCase):
                             'A6'
                             ], )
                     ],
+                dangerous_goods = [
+                    zippendo.models.list_carrier_products_200_response_inner_dangerous_goods_inner.listCarrierProducts_200_response_inner_dangerousGoods_inner(
+                        kind = 'limited_quantity', 
+                        service_id = 'LQ', 
+                        parameters = zippendo.models.list_carrier_products_200_response_inner_dangerous_goods_inner_parameters.listCarrierProducts_200_response_inner_dangerousGoods_inner_parameters(
+                            un_number = 'lqUnNumber', 
+                            hazard_class = 'lqClass', 
+                            packing_group = 'lqPackagingGroup', 
+                            proper_shipping_name = 'adrDescription', 
+                            weight_grams_per_parcel = 'lqSubWeight', 
+                            weight_kg = 'adrWeight', 
+                            weight_kg_per_parcel = 'dangerousGoodsLqWeight', ), 
+                        owned_parameters = ["lqUnNumber","lqPackagingGroup","lqClass","lqCode","lqSubWeight"], 
+                        single_parcel = True, )
+                    ],
                 weight_limits = zippendo.models.list_carrier_products_200_response_inner_weight_limits.listCarrierProducts_200_response_inner_weightLimits(
                     min = 0.1, 
                     max = 35, 
