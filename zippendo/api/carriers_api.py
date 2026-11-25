@@ -366,7 +366,7 @@ class CarriersApi:
     ) -> str:
         """Disconnect carrier
 
-        Disconnects a carrier from the organization.
+        Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -407,6 +407,7 @@ class CarriersApi:
             '204': "str",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -439,7 +440,7 @@ class CarriersApi:
     ) -> ApiResponse[str]:
         """Disconnect carrier
 
-        Disconnects a carrier from the organization.
+        Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -480,6 +481,7 @@ class CarriersApi:
             '204': "str",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -512,7 +514,7 @@ class CarriersApi:
     ) -> RESTResponseType:
         """Disconnect carrier
 
-        Disconnects a carrier from the organization.
+        Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
 
         :param org_id: Organization ID (required)
         :type org_id: str
@@ -553,6 +555,7 @@ class CarriersApi:
             '204': "str",
             '403': "ListApiTokens401Response",
             '404': "ListApiTokens401Response",
+            '409': "ListApiTokens401Response",
         }
         response_data = self.api_client.call_api(
             *_param,

@@ -103,7 +103,7 @@ Name | Type | Description  | Notes
 
 Disconnect carrier
 
-Disconnects a carrier from the organization.
+Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
 
 ### Example
 
@@ -176,6 +176,7 @@ Name | Type | Description  | Notes
 **204** | Default Response |  -  |
 **403** | Default Response |  -  |
 **404** | Default Response |  -  |
+**409** | Default Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
